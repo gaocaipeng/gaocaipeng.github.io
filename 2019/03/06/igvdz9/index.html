@@ -1,0 +1,840 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="彩鹏"><meta name="copyright" content="彩鹏"><meta name="generator" content="Hexo 5.4.0"><meta name="theme" content="hexo-theme-yun"><title>Javascript - 汇总2 | 彩鹏的小站</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.25/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_j5gk85dg4pf.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="icon" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"hostname":"blog.gaocaipeng.com","root":"/","title":"彩鹏的小站","version":"1.6.1","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms"},"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"local_search":{"path":"/search.xml"},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/utils.js"></script><script src="/js/hexo-theme-yun.js"></script><meta name="description" content="介绍 js 有哪些内置对象？Object 是 JavaScript 中所有对象的父对象数据封装类对象：Object、Array、Boolean、Number 和 String其他对象：Function、Arguments、Math、Date、RegEx、Error 如何区分数组和对象？1、从原型入手，Array.prototype.isPrototypeOf(obj); 利用 isPrototyp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript - 汇总2">
+<meta property="og:url" content="https://blog.gaocaipeng.com/2019/03/06/igvdz9/index.html">
+<meta property="og:site_name" content="彩鹏的小站">
+<meta property="og:description" content="介绍 js 有哪些内置对象？Object 是 JavaScript 中所有对象的父对象数据封装类对象：Object、Array、Boolean、Number 和 String其他对象：Function、Arguments、Math、Date、RegEx、Error 如何区分数组和对象？1、从原型入手，Array.prototype.isPrototypeOf(obj); 利用 isPrototyp">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633708-254c22bf-d2f8-462a-8c5e-ba510386b42c.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633800-aedf9926-72be-4026-ac93-5d8423b7ed69.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633762-2fd23505-639f-4fb7-b295-797345e74ccf.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633817-6ee67ec6-c7e5-490e-a260-31c4eda35094.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633779-f42e7d21-ef99-478b-add5-7114d412b141.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633740-0714b838-5ca3-4da2-883b-a5e92042fe34.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633903-815d6079-be61-4a7a-948f-2b0e43f6f8f0.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633796-bdd27ae5-8c36-4875-8d2c-a090d9625339.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633761-aa910937-f3b5-4291-a8ee-0628c37d3bca.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633857-a198ab6a-3d0f-49e3-bc71-cf6dad655133.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633775-d6bf70e0-1bba-4fc0-8717-696b6d8eff3e.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633769-5ae71284-e687-4d4f-b57a-f0fa8193b3de.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://blog.gaocaipeng.com/2019/03/06/igvdz9/abc.png">
+<meta property="og:image" content="https://blog.gaocaipeng.com/2019/03/06/igvdz9/[http://buy.com/pay?touid=999&money=100](http://buy.com/pay?touid=999&money=100)">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633815-94ba5c50-88df-4b41-bd04-339671101aef.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633985-f87f543b-df4c-4b74-939a-46b42b1136d7.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="http://www.domain.com/xxx?comment=">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633803-172f0a99-7241-4f8c-ac2f-1ee151922d7e.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="og:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633813-0ac1cc67-733e-4191-a205-6ccfea5a6c2f.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15">
+<meta property="article:published_time" content="2019-03-06T05:19:54.000Z">
+<meta property="article:modified_time" content="2022-01-05T02:19:20.680Z">
+<meta property="article:author" content="彩鹏">
+<meta property="article:tag" content="js汇总2">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633708-254c22bf-d2f8-462a-8c5e-ba510386b42c.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15"><script src="/js/ui/mode.js"></script></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="Table of Contents"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="Overview"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="彩鹏"><img width="96" loading="lazy" src="/images/atm.webp" alt="彩鹏"><span class="site-author-status" title="永远相信美好的事情即将发生">😊</span></a><div class="site-author-name"><a href="/about/">彩鹏</a></div><a class="site-name" href="/about/site.html">彩鹏的小站</a><sub class="site-subtitle">All at sea.</sub><div class="site-desciption">希望能成为一个有趣的人</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="Archives"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">182</span></a></div><div class="site-state-item"><a href="/categories/" title="Categories"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">28</span></a></div><div class="site-state-item"><a href="/tags/" title="Tags"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">188</span></a></div><a class="site-state-item hty-icon-button" href="/" title="文档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/gaocaipeng" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://music.163.com/#/user/home?id=1309947697" title="网易云音乐" target="_blank" style="color:#C20C0C"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-netease-cloud-music-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.zhihu.com/people/du-xiao-sheng-dian-a" title="知乎" target="_blank" style="color:#0084FF"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhihu-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:peng25402@163.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-js-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">介绍 js 有哪些内置对象？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86%E6%95%B0%E7%BB%84%E5%92%8C%E5%AF%B9%E8%B1%A1%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">如何区分数组和对象？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F%E5%92%8C%E5%A3%B0%E6%98%8E%E5%87%BD%E6%95%B0%E7%9A%84%E6%8F%90%E5%8D%87%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="toc-number">3.</span> <span class="toc-text">声明变量和声明函数的提升有什么区别?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">4.</span> <span class="toc-text">&#x3D;&#x3D; 和 &#x3D;&#x3D;&#x3D; 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%88%E8%B0%88%E5%8F%98%E9%87%8F%E6%8F%90%E5%8D%87"><span class="toc-number">5.</span> <span class="toc-text">谈谈变量提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#break-%E5%92%8C-continue-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">6.</span> <span class="toc-text">break 和 continue 的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-number"></span> <span class="toc-text">面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JS-%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="toc-number"></span> <span class="toc-text">JS 运行机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JS-Web-API-%E7%9F%A5%E8%AF%86%E7%82%B9%E4%B8%8E%E9%AB%98%E9%A2%91%E8%80%83%E9%A2%98%E8%A7%A3%E6%9E%90"><span class="toc-number"></span> <span class="toc-text">JS-Web-API 知识点与高频考题解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF-window-%E5%AF%B9%E8%B1%A1-%E4%BB%80%E4%B9%88%E6%98%AF-document-%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.</span> <span class="toc-text">1，什么是 window 对象? 什么是 document 对象?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8C%E4%BA%8B%E4%BB%B6%E6%98%AF%EF%BC%9FIE-%E4%B8%8E%E7%81%AB%E7%8B%90%E7%9A%84%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F-%E5%A6%82%E4%BD%95%E9%98%BB%E6%AD%A2%E5%86%92%E6%B3%A1%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">2，事件是？IE 与火狐的事件机制有什么区别？ 如何阻止冒泡？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%8C%E8%A7%A3%E9%87%8A%E4%B8%80%E4%B8%8B%E4%BA%8B%E4%BB%B6%E4%BB%A3%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">3，解释一下事件代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%8CoffsetWidth-offsetHeight-clientWidth-clientHeight-%E4%B8%8E-scrollWidth-scrollHeight-%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%8C"><span class="toc-number">4.</span> <span class="toc-text">4，offsetWidth&#x2F;offsetHeight,clientWidth&#x2F;clientHeight 与 scrollWidth&#x2F;scrollHeight 的区别，</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%BC%8Cfocus-blur-%E4%B8%8E-focusin-focusout-%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB"><span class="toc-number">5.</span> <span class="toc-text">5，focus&#x2F;blur 与 focusin&#x2F;focusout 的区别与联系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%EF%BC%8Cmouseover-mouseout-%E4%B8%8E-mouseenter-mouseleave-%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB"><span class="toc-number">6.</span> <span class="toc-text">6，mouseover&#x2F;mouseout 与 mouseenter&#x2F;mouseleave 的区别与联系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%EF%BC%8C%E4%BB%8B%E7%BB%8D-DOM0%EF%BC%8CDOM2%EF%BC%8CDOM3-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F%E5%8C%BA%E5%88%AB"><span class="toc-number">7.</span> <span class="toc-text">7，介绍 DOM0，DOM2，DOM3 事件处理方式区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%EF%BC%8C%E4%BA%8B%E4%BB%B6%E7%9A%84%E4%B8%89%E4%B8%AA%E9%98%B6%E6%AE%B5"><span class="toc-number">8.</span> <span class="toc-text">8，事件的三个阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9%EF%BC%8C%E4%BB%8B%E7%BB%8D%E4%BA%8B%E4%BB%B6%E2%80%9C%E6%8D%95%E8%8E%B7%E2%80%9D%E5%92%8C%E2%80%9C%E5%86%92%E6%B3%A1%E2%80%9D%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%E5%92%8C%E4%BA%8B%E4%BB%B6%E7%9A%84%E6%89%A7%E8%A1%8C%E6%AC%A1%E6%95%B0%EF%BC%9F"><span class="toc-number">9.</span> <span class="toc-text">9，介绍事件“捕获”和“冒泡”执行顺序和事件的执行次数？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10%EF%BC%8Cwindow-onload-%E5%92%8C-document-DOMContentLoaded-%E6%B3%A8%EF%BC%9A-document-ready-%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">10.</span> <span class="toc-text">10，window.onload 和 document.DOMContentLoaded (注：$(document).ready()) 的区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM"><span class="toc-number">11.</span> <span class="toc-text">DOM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8Cdocumen-write-%E5%92%8C-innerHTML-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">12.</span> <span class="toc-text">1，documen.write 和 innerHTML 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8CDOM-%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94%E6%80%8E%E6%A0%B7%E6%B7%BB%E5%8A%A0%E3%80%81%E7%A7%BB%E9%99%A4%E3%80%81%E7%A7%BB%E5%8A%A8%E3%80%81%E5%A4%8D%E5%88%B6%E3%80%81%E5%88%9B%E5%BB%BA%E5%92%8C%E6%9F%A5%E6%89%BE%E8%8A%82%E7%82%B9"><span class="toc-number">13.</span> <span class="toc-text">2，DOM 操作——怎样添加、移除、移动、复制、创建和查找节点?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%8Cattribute-%E5%92%8C-property-%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">14.</span> <span class="toc-text">3，attribute 和 property 的区别是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%8Csrc-%E5%92%8C-href-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">15.</span> <span class="toc-text">4，src 和 href 的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%BC%E5%AE%B9%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="toc-number"></span> <span class="toc-text">兼容与优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8C%E9%A1%B5%E9%9D%A2%E9%87%8D%E6%9E%84%E6%80%8E%E4%B9%88%E6%93%8D%E4%BD%9C%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">1，页面重构怎么操作？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8C%E5%88%97%E4%B8%BE-IE-%E4%B8%8E%E5%85%B6%E4%BB%96%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8D%E4%B8%80%E6%A0%B7%E7%9A%84%E7%89%B9%E6%80%A7%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">2，列举 IE 与其他浏览器不一样的特性？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%8C%E4%BB%80%E4%B9%88%E5%8F%AB%E4%BC%98%E9%9B%85%E9%99%8D%E7%BA%A7%E5%92%8C%E6%B8%90%E8%BF%9B%E5%A2%9E%E5%BC%BA%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">3，什么叫优雅降级和渐进增强？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%8C%E8%AF%B4%E8%AF%B4%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%99%90%E5%88%B6"><span class="toc-number">4.</span> <span class="toc-text">4，说说严格模式的限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%BC%8C%E6%A3%80%E6%B5%8B%E6%B5%8F%E8%A7%88%E5%99%A8%E7%89%88%E6%9C%AC%E7%89%88%E6%9C%AC%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">5，检测浏览器版本版本有哪些方式？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%EF%BC%8C%E6%80%BB%E7%BB%93%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">6.</span> <span class="toc-text">6，总结前端性能优化的解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%EF%BC%8C%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD%E4%B8%8E%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-number">7.</span> <span class="toc-text">7，图片懒加载与预加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%EF%BC%8C%E6%8F%8F%E8%BF%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%EF%BC%8CDOM-%E6%A0%91%E5%92%8C%E6%B8%B2%E6%9F%93%E6%A0%91%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">8.</span> <span class="toc-text">8，描述浏览器的渲染过程，DOM 树和渲染树的区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9%EF%BC%8C%E9%87%8D%E7%BB%98%E5%92%8C%E5%9B%9E%E6%B5%81%EF%BC%88%E9%87%8D%E6%8E%92%EF%BC%89%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E5%85%B3%E7%B3%BB%EF%BC%9F"><span class="toc-number">9.</span> <span class="toc-text">9，重绘和回流（重排）的区别和关系？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10%EF%BC%8C%E5%A6%82%E4%BD%95%E6%9C%80%E5%B0%8F%E5%8C%96%E9%87%8D%E7%BB%98-repaint-%E5%92%8C%E5%9B%9E%E6%B5%81-reflow-%EF%BC%9F"><span class="toc-number">10.</span> <span class="toc-text">10，如何最小化重绘(repaint)和回流(reflow)？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11%EF%BC%8Cscript-%E7%9A%84%E4%BD%8D%E7%BD%AE%E6%98%AF%E5%90%A6%E4%BC%9A%E5%BD%B1%E5%93%8D%E9%A6%96%E5%B1%8F%E6%98%BE%E7%A4%BA%E6%97%B6%E9%97%B4%EF%BC%9F"><span class="toc-number">11.</span> <span class="toc-text">11，script 的位置是否会影响首屏显示时间？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81-js-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-number"></span> <span class="toc-text">常见 js 设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#js-%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%8E%A8%E8%8D%90%E7%9C%8B%E4%B8%80%E6%9C%AC%E4%B9%A6%E5%8F%AF%E4%BB%A5%E8%BE%BE%E5%88%B0%E6%9B%B4%E5%A5%BD%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">js 的设计模式推荐看一本书可以达到更好的理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">工厂模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">单例模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">适配器模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">装饰模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="toc-number">6.</span> <span class="toc-text">代理模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8"><span class="toc-number"></span> <span class="toc-text">存储</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cookie%EF%BC%8ClocalStorage%EF%BC%8CsessionStorage%EF%BC%8CindexDB"><span class="toc-number">1.</span> <span class="toc-text">cookie，localStorage，sessionStorage，indexDB</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#es6-es7-%E7%9B%B8%E5%85%B3"><span class="toc-number"></span> <span class="toc-text">es6&#x2F;es7 相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8C%E8%AF%B4%E8%AF%B4%E5%AF%B9-es6-%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%88%E8%AF%B4%E4%B8%80%E4%B8%8B-es6%EF%BC%8C%E7%9F%A5%E9%81%93-es6-%E5%90%97%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">1，说说对 es6 的理解（说一下 es6，知道 es6 吗）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8CES6-%E5%B8%B8%E7%94%A8%E7%89%B9%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">2，ES6 常用特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%8CES6-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84-this-%E5%92%8C%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C"><span class="toc-number">3.</span> <span class="toc-text">3，ES6 箭头函数中的 this 和普通函数中的有什么不同</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%8CES6-%E6%A8%A1%E5%9D%97%E5%8C%96%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">4，ES6 模块化如何使用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%BC%8CSet-%E5%92%8C-Map"><span class="toc-number">5.</span> <span class="toc-text">5，Set 和 Map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%EF%BC%8Cmap-filter-reduce"><span class="toc-number">6.</span> <span class="toc-text">6，map, filter, reduce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%EF%BC%8CES6-class-%E5%92%8C%E6%99%AE%E9%80%9A%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">7.</span> <span class="toc-text">7，ES6 class 和普通构造函数的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%EF%BC%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8A%E4%B8%8B%E6%96%87%E5%92%8C-%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8A%E4%B8%8B%E6%96%87-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">8.</span> <span class="toc-text">8，箭头函数的作用域上下文和 普通函数作用域上下文 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9%EF%BC%8CProxy"><span class="toc-number">9.</span> <span class="toc-text">9，Proxy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10%EF%BC%8CProxy-%E4%B8%8E-Object-defineProperty-%E5%AF%B9%E6%AF%94"><span class="toc-number">10.</span> <span class="toc-text">10，Proxy 与 Object.defineProperty 对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11%EF%BC%8Ces6-%E5%A6%82%E4%BD%95%E8%BD%AC%E4%B8%BA-es5%EF%BC%9F"><span class="toc-number">11.</span> <span class="toc-text">11，es6 如何转为 es5？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12%EF%BC%8Cbabel"><span class="toc-number">12.</span> <span class="toc-text">12，babel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13%EF%BC%8C%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">13.</span> <span class="toc-text">13，常见面试题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3"><span class="toc-number"></span> <span class="toc-text">浏览器相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8C%E8%B7%A8%E5%9F%9F"><span class="toc-number">1.</span> <span class="toc-text">1，跨域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2，浏览器的渲染原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%8C%E4%BB%8E%E8%BE%93%E5%85%A5-URL-%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E5%85%A8%E8%BF%87%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">3，从输入 URL 到页面加载全过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6"><span class="toc-number">4.</span> <span class="toc-text">4，浏览器缓存机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%BC%8C%E8%B0%83%E8%AF%95"><span class="toc-number">5.</span> <span class="toc-text">5，调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%EF%BC%8C%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">6.</span> <span class="toc-text">6，性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%EF%BC%8C%E5%9B%BE%E7%89%87%E6%A0%BC%E5%BC%8F"><span class="toc-number">7.</span> <span class="toc-text">6，图片格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%EF%BC%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98"><span class="toc-number">8.</span> <span class="toc-text">7，浏览器缓存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8"><span class="toc-number"></span> <span class="toc-text">前端安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8CXSS%EF%BC%88Cross-Site-Scripting%EF%BC%8C%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">1，XSS（Cross Site Scripting，跨站脚本攻击）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8CCSRF%EF%BC%88Cross-site-request-forgery%EF%BC%8C%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">2，CSRF（Cross-site request forgery，跨站请求伪造）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%8CXSS"><span class="toc-number">3.</span> <span class="toc-text">3，XSS</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#title"><span class="toc-number"></span> <span class="toc-text">XSS Demo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text">XSS Demo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%8CCSP"><span class="toc-number">1.</span> <span class="toc-text">4，CSP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%BC%8CCSRF"><span class="toc-number">2.</span> <span class="toc-text">5，CSRF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%EF%BC%8C%E7%82%B9%E5%87%BB%E5%8A%AB%E6%8C%81"><span class="toc-number">3.</span> <span class="toc-text">6，点击劫持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8CX-FRAME-OPTIONS"><span class="toc-number">4.</span> <span class="toc-text">1，X-FRAME-OPTIONS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8C-JS-%E9%98%B2%E5%BE%A1"><span class="toc-number">5.</span> <span class="toc-text">2， JS 防御</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9%EF%BC%8C%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB"><span class="toc-number">6.</span> <span class="toc-text">9，中间人攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95"><span class="toc-number"></span> <span class="toc-text">算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E5%B8%B8%E9%81%87%E8%A7%81%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">前端常遇见的数据结构：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%88%E7%8E%87%E6%98%AF%E9%80%9A%E8%BF%87%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6%E6%9D%A5%E8%A1%A1%E9%87%8F%E7%9A%84%EF%BC%88%E5%A4%A7-O-%E8%A1%A8%E7%A4%BA%E6%B3%95%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">算法的效率是通过算法复杂度来衡量的（大 O 表示法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%BA%E4%BA%BA%E9%83%BD%E8%A6%81%E6%8E%8C%E6%8F%A1%E7%9A%84%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">人人都要掌握的基础算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8C%E6%B5%85%E6%8B%B7%E8%B4%9D-vs-%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="toc-number">4.</span> <span class="toc-text">1，浅拷贝 vs 深拷贝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8C%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E6%95%B0%E7%BB%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95-JS-%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.</span> <span class="toc-text">2，常见的几种数组排序算法 JS 实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%8C%E8%AF%B4%E4%B8%80%E4%B8%8B-js-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E"><span class="toc-number">6.</span> <span class="toc-text">4，说一下 js 模板引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%BC%8C%E6%98%AF%E5%90%A6%E4%BA%86%E8%A7%A3%E5%85%AC%E9%92%A5%E5%8A%A0%E5%AF%86%E5%92%8C%E7%A7%81%E9%92%A5%E5%8A%A0%E5%AF%86%E3%80%82"><span class="toc-number">7.</span> <span class="toc-text">5，是否了解公钥加密和私钥加密。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%EF%BC%8C%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="toc-number">8.</span> <span class="toc-text">6，二分查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%EF%BC%8C%E6%95%B0%E7%BB%84%E9%99%8D%E7%BB%B4%EF%BC%88%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">7，数组降维（数组扁平化）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%EF%BC%8C%E9%98%B2%E6%8A%96"><span class="toc-number">10.</span> <span class="toc-text">8，防抖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9%EF%BC%8C%E6%89%8B%E5%86%99-call%E3%80%81apply-%E5%8F%8A-bind-%E5%87%BD%E6%95%B0"><span class="toc-number">11.</span> <span class="toc-text">9，手写 call、apply 及 bind 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88-0-1-0-2-0-3%EF%BC%9F%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E8%BF%99%E4%B8%AA%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">12.</span> <span class="toc-text">10，为什么 0.1 + 0.2 !&#x3D; 0.3？如何解决这个问题？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11%EF%BC%8C%E6%B1%82%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%EF%BC%88%E5%85%94%E5%AD%90%E6%95%B0%E5%88%97%EF%BC%89%E4%B8%AD%E7%9A%84%E7%AC%AC-n-%E9%A1%B9"><span class="toc-number">13.</span> <span class="toc-text">11，求斐波那契数列（兔子数列）中的第 n 项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF-%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0"><span class="toc-number"></span> <span class="toc-text">业务场景&#x2F;编程实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8C%E6%9C%89%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%EF%BC%8C%E9%9C%80%E8%A6%81%E6%8A%8A%E5%90%8E%E7%AB%AF%E7%9A%84%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E5%B1%95%E7%A4%BA%E5%87%BA%E6%9D%A5%EF%BC%8C%E5%90%8E%E7%AB%AF%E4%BC%9A%E4%B8%8D%E5%AE%9A%E6%97%B6%E7%9A%84%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%EF%BC%8C%E5%89%8D%E7%AB%AF%E9%9C%80%E8%A6%81%E5%AE%9E%E6%97%B6%E6%9B%B4%E6%96%B0%E5%88%B0%E9%A1%B5%E9%9D%A2%E4%B8%8A%EF%BC%8C%E4%BD%86%E6%98%AF%E5%89%8D%E7%AB%AF%E7%9A%84%E9%A1%B5%E9%9D%A2%E4%B8%8A%E6%AF%8F%E6%AC%A1%E9%83%BD%E5%8F%AA%E6%98%BE%E7%A4%BA-20-%E6%9D%A1%E6%95%B0%E6%8D%AE%EF%BC%8C%E5%83%8F%E4%B8%80%E4%B8%AA%E7%AB%96%E5%90%91%E8%BD%AE%E6%92%AD%E4%B8%80%E6%A0%B7%E4%B8%80%E7%9B%B4%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0"><span class="toc-number">1.</span> <span class="toc-text">1，有一个需求，需要把后端的更新日志展示出来，后端会不定时的更新日志，前端需要实时更新到页面上，但是前端的页面上每次都只显示 20 条数据，像一个竖向轮播一样一直持续更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8C%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">2，防抖和节流应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%8C%E8%B4%AD%E7%89%A9%E8%BD%A6%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">3，购物车实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%85%BC%E5%AE%B9%E7%9A%84-sticky"><span class="toc-number">4.</span> <span class="toc-text">4，实现一个兼容的 sticky</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%BC%8C%E5%89%8D%E7%AB%AF%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C-seo-%E4%BC%98%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">5，前端如何进行 seo 优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%EF%BC%8C%E7%99%BB%E5%BD%95%E5%AE%9E%E7%8E%B0"><span class="toc-number">6.</span> <span class="toc-text">6，登录实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%EF%BC%8C%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86-ajax-%E9%94%99%E8%AF%AF%E7%8A%B6%E6%80%81"><span class="toc-number">7.</span> <span class="toc-text">7，如何处理 ajax 错误状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0"><span class="toc-number"></span> <span class="toc-text">编程实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8C%E4%BD%BF%E7%94%A8-localStorage-%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%AA-Storage-%E5%AF%B9%E8%B1%A1%EF%BC%8C%E8%BE%BE%E5%88%B0%E5%A6%82%E4%B8%8B%E6%95%88%E6%9E%9C%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">1，使用 localStorage 封装一个 Storage 对象，达到如下效果：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8C%E8%A1%A5%E5%85%A8%E5%A6%82%E4%B8%8B%E5%87%BD%E6%95%B0%EF%BC%8C%E5%88%A4%E6%96%AD%E7%94%A8%E6%88%B7%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E7%B1%BB%E5%9E%8B%E3%80%82"><span class="toc-number">2.</span> <span class="toc-text">2，补全如下函数，判断用户的浏览器类型。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%8C%E5%86%99%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%EF%BC%8C%E5%8F%82%E6%95%B0%E4%B8%BA%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1%E6%AF%AB%E7%A7%92%E6%95%B0%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%EF%BC%8C%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%82%E5%81%87%E8%AE%BE%E5%8F%82%E6%95%B0%E4%B8%BA%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1%E6%AF%AB%E7%A7%92%E6%95%B0-t%EF%BC%8C"><span class="toc-number">3.</span> <span class="toc-text">3，写一个函数，参数为时间对象毫秒数的字符串格式，返回值为字符串。假设参数为时间对象毫秒数 t，</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%8C%E4%B8%80%E9%81%93%E7%BB%8F%E5%85%B8%E7%AC%94%E8%AF%95%E9%A2%98"><span class="toc-number">4.</span> <span class="toc-text">4，一道经典笔试题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%86%99%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%EF%BC%8C%E6%93%8D%E4%BD%9C%E6%95%B0%E7%BB%84%EF%BC%8C%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E6%96%B0%E6%95%B0%E7%BB%84%EF%BC%8C%E6%96%B0%E6%95%B0%E7%BB%84%E4%B8%AD%E5%8F%AA%E5%8C%85%E5%90%AB%E6%AD%A3%E6%95%B0%E3%80%82"><span class="toc-number">5.</span> <span class="toc-text">5. 写一个函数，操作数组，返回一个新数组，新数组中只包含正数。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%A1%A5%E5%85%A8%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E6%8C%89%E5%A7%93%E5%90%8D%E3%80%81%E5%B9%B4%E7%BA%AA%E3%80%81%E4%BB%BB%E6%84%8F%E5%AD%97%E6%AE%B5%E6%8E%92%E5%BA%8F%E3%80%82"><span class="toc-number">6.</span> <span class="toc-text">6. 补全代码，实现数组按姓名、年纪、任意字段排序。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E7%94%A8-splice-%E5%87%BD%E6%95%B0%E5%88%86%E5%88%AB%E5%AE%9E%E7%8E%B0-push%E3%80%81pop%E3%80%81shift%E3%80%81unshift-%E6%96%B9%E6%B3%95%E3%80%82"><span class="toc-number">7.</span> <span class="toc-text">7. 用 splice 函数分别实现 push、pop、shift、unshift 方法。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%EF%BC%8C%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0-async-await-%E4%B8%AD%E7%9A%84-async-%E5%87%BD%E6%95%B0"><span class="toc-number">8.</span> <span class="toc-text">8，简单实现 async&#x2F;await 中的 async 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9%EF%BC%8C%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0-promise-%E5%87%BD%E6%95%B0"><span class="toc-number">9.</span> <span class="toc-text">9，简单实现 promise 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10%EF%BC%8C%E9%AB%98%E7%BA%A7%E6%89%A9%E5%B1%95"><span class="toc-number">10.</span> <span class="toc-text">10，高级扩展</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://blog.gaocaipeng.com/2019/03/06/igvdz9/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="彩鹏"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="彩鹏的小站"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Javascript - 汇总2</h1><div class="post-meta"><div class="post-time" style="display:inline-block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="Created: 2019-03-06 05:19:54" itemprop="dateCreated datePublished" datetime="2019-03-06T05:19:54+00:00">2019-03-06</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="Modified: 2022-01-05 02:19:20" itemprop="dateModified" datetime="2022-01-05T02:19:20+00:00">2022-01-05</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/Javascript/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">Javascript</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/js%E6%B1%87%E6%80%BB2/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">js汇总2</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><h3 id="介绍-js-有哪些内置对象？"><a href="#介绍-js-有哪些内置对象？" class="headerlink" title="介绍 js 有哪些内置对象？"></a>介绍 js 有哪些内置对象？</h3><p>Object 是 JavaScript 中所有对象的父对象<br>数据封装类对象：Object、Array、Boolean、Number 和 String<br>其他对象：Function、Arguments、Math、Date、RegEx、Error</p>
+<h3 id="如何区分数组和对象？"><a href="#如何区分数组和对象？" class="headerlink" title="如何区分数组和对象？"></a>如何区分数组和对象？</h3><p>1、从原型入手，Array.prototype.isPrototypeOf(obj); 利用 isPrototypeOf()方法，判定 Array 是不是在 obj 的原型链中，如果是，则返回 true,否则 false。Array.prototype.isPrototype([]) //true<br>2、也可以从构造函数入手，利用对向的 constructor 属性<br>3、根据对象的 class 属性(类属性)，跨原型链调用 toString()方法。Object.prototype.toString.call(Window);<br>4、Array.isArray()方法。</p>
+<h3 id="声明变量和声明函数的提升有什么区别"><a href="#声明变量和声明函数的提升有什么区别" class="headerlink" title="声明变量和声明函数的提升有什么区别?"></a>声明变量和声明函数的提升有什么区别?</h3><p>(1) 变量声明提升：变量声明在进入执行上下文就完成了。<br>只要变量在代码中进行了声明，无论它在哪个位置上进行声明， js 引擎都会将它的声明放在范围作用域的顶部；</p>
+<p>(2) 函数声明提升：执行代码之前会先读取函数声明，意味着可以把函数申明放在调用它的语句后面。<br>只要函数在代码中进行了声明，无论它在哪个位置上进行声明， js 引擎都会将它的声明放在范围作用域的顶部；</p>
+<p>(3) 变量 or 函数声明：函数声明会覆盖变量声明，但不会覆盖变量赋值。<br>同一个名称标识 a，即有变量声明 var a，又有函数声明 function a() {}，不管二者声明的顺序，函数声明会覆盖变量声明，也就是说，此时 a 的值是声明的函数 function a() {}。注意：如果在变量声明的同时初始化 a，或是之后对 a 进行赋值，此时 a 的值变量的值。eg: var a; var c = 1; a = 1; function a() { return true; } console.log(a);</p>
+<h3 id="和-的区别"><a href="#和-的区别" class="headerlink" title="== 和 === 的区别"></a>== 和 === 的区别</h3><p>对于 == 来说，如果对比双方的类型<strong>不一样</strong>的话，就会进行<strong>类型转换</strong></p>
+<p>假如我们需要对比 x 和 y 是否相同，就会进行如下判断流程：</p>
+<p>首先会判断两者类型是否相同。相同的话就是比大小了<br>类型不相同的话，那么就会进行类型转换<br>会先判断是否在对比 null 和 undefined，是的话就会返回 true<br>判断两者类型是否为 string 和 number，是的话就会将字符串转换为 number<br>1 == ‘1’<br>↓<br>1 == 1<br>判断其中一方是否为 boolean，是的话就会把 boolean 转为 number 再进行判断<br>‘1’ == true<br>↓<br>‘1’ == 1<br>↓<br>1 == 1<br>判断其中一方是否为 object 且另一方为 string、number 或者 symbol，是的话就会把 object 转为原始类型再进行判断<br>‘1’ == { name: ‘yck’ }<br>↓<br>‘1’ == ‘[object Object]’</p>
+<p><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633708-254c22bf-d2f8-462a-8c5e-ba510386b42c.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"></p>
+<h3 id="谈谈变量提升"><a href="#谈谈变量提升" class="headerlink" title="谈谈变量提升"></a>谈谈变量提升</h3><p>当执行 JS 代码时，会生成执行环境，只要代码不是写在函数中的，就是在全局执行环境中，函数中的代码会产生函数执行环境，只此两种执行环境。<br>接下来让我们看一个老生常谈的例子，var<br>自动检测<br>b() // call b<br>console.log(a) // undefined<br>var a = ‘Hello world’<br>function b() {<br>console.log(‘call b’)<br>}<br>想必以上的输出大家肯定都已经明白了，这是因为函数和变量提升的原因。通常提升的解释是说将声明的代码移动到了顶部，这其实没有什么错误，便于大家理解。但是更准确的解释应该是：在生成执行环境时，会有两个阶段。第一个阶段是创建的阶段，JS 解释器会找出需要提升的变量和函数，并且给他们提前在内存中开辟好空间，函数的话会将整个函数存入内存中，变量只声明并且赋值为 undefined，所以在第二个阶段，也就是代码执行阶段，我们可以直接提前使用。<br>在提升的过程中，相同的函数会覆盖上一个函数，并且函数优先于变量提升<br>自动检测<br>b() // call b second<br>function b() {<br>console.log(‘call b fist’)<br>}<br>function b() {<br>console.log(‘call b second’)<br>}<br>var b = ‘Hello world’<br>var 会产生很多错误，所以在 ES6 中引入了 let。let 不能在声明前使用，但是这并不是常说的 let 不会提升，let 提升了，在第一阶段内存也已经为他开辟好了空间，但是因为这个声明的特性导致了并不能在声明前使用。</p>
+<h3 id="break-和-continue-的区别"><a href="#break-和-continue-的区别" class="headerlink" title="break 和 continue 的区别"></a>break 和 continue 的区别</h3><p>break 语句可以用于循环语句，也可以用于 switch（分子语句），而 continue 只能用在循环语句中<br>braek 用于终止循环，continue 用来跳出本次循环</p>
+<h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><h2 id="JS-运行机制"><a href="#JS-运行机制" class="headerlink" title="JS 运行机制"></a><strong>JS 运行机制</strong></h2><p>JavaScript 引擎是单线程运行的,浏览器无论在什么时候都只且只有一个线程在运行 JavaScript 程序.浏览器的内核是多线程的，它们在内核制控下相互配合以保持同步，一个浏览器至少实现三个常驻线程：javascript 引擎线程，GUI 渲染线程，浏览器事件触发线程。这些异步线程都会产生不同的异步的事件.</p>
+<ol>
+<li><pre><code>  javascript引擎是基于事件驱动单线程执行的，JS引擎一直等待着任务队列中任务的到来，然后加以处理，浏览器无论什么时候都只有一个JS线程在运行JS程序。
+</code></pre>
+</li>
+<li><pre><code>  GUI渲染线程负责渲染浏览器界面，当界面需要重绘（Repaint）或由于某种操作引发回流(reflow)时,该线程就会执行。但需要注意 GUI渲染线程与JS引擎是互斥的，当JS引擎执行时GUI线程会被挂起，GUI更新会被保存在一个队列中等到JS引擎空闲时立即被执行。
+</code></pre>
+</li>
+<li><pre><code>  事件触发线程，当一个事件被触发时该线程会把事件添加到待处理队列的队尾，等待JS引擎的处理。这些事件可来自JavaScript引擎当前执行的代码块如setTimeOut、也可来自浏览器内核的其他线程如鼠标点击、AJAX异步请求等，但由于JS的单线程关系所有这些事件都得排队等待JS引擎处理。（当线程中没有执行任何同步代码的前提下才会执行异步代码）
+</code></pre>
+</li>
+</ol>
+<p>当程序启动时, 一个进程被创建，同时也运行一个线程, 即为主线程，js 的运行机制为单线程 <img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633800-aedf9926-72be-4026-ac93-5d8423b7ed69.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy">程序中跑两个线程，一个负责程序本身的运行，作为主线程； 另一个负责主线程与其他线程的的通信，被称为“Event Loop 线程” 。每当遇到异步任务，交给 EventLoop 线程，然后自己往后运行，等到主线程运行完后，再去 EventLoop 线程拿结果。</p>
+<p>1）所有任务都在主线程上执行，形成一个执行栈（execution context stack）。</p>
+<p>2）主线程之外，还存在一个”任务队列”（task queue）。系统把异步任务放到”任务队列”之中，然后继续执行后续的任务。</p>
+<p>3）一旦”执行栈”中的所有任务执行完毕，系统就会读取”任务队列”。如果这个时候，异步任务已经结束了等待状态，就会从”任务队列”进入执行栈，恢复执行。</p>
+<p>4）主线程不断重复上面的第三步。</p>
+<p>“回调函数”（callback），就是那些会被主线程挂起来的代码。异步任务必须指定回调函数，当异步任务从”任务队列”回到执行栈，回调函数就会执行。”任务队列”是一个先进先出的数据结构，排在前面的事件，优先返回主线程。主线程的读取过程基本上是自动的，只要执行栈一清空，”任务队列”上第一位的事件就自动返回主线程。</p>
+<p>主线程从”任务队列”中读取事件，这个过程是循环不断的，所以整个的这种运行机制又称为<strong>Event Loop。</strong></p>
+<p><strong>从主线程的角度看，一个异步过程包括下面两个要素：</strong></p>
+<p>发起函数(或叫注册函数)A<br>回调函数 callbackFn<br>它们都是在主线程上调用的，其中注册函数用来发起异步过程，回调函数用来处理结果。</p>
+<p><strong>异步进程有:</strong></p>
+<p>类似 onclick 等，由浏览器内核的 DOM binding 模块处理，事件触发时，回调函数添加到任务队列中；<br>setTimeout 等，由浏览器内核的 Timer 模块处理，时间到达时，回调函数添加到任务队列中；<br>Ajax，由浏览器内核的 Network 模块处理，网络请求返回后，添加到任务队列中。</p>
+<p>例如 setTimeout(fn, 1000)，其中的 setTimeout 就是异步过程的发起函数，fn 是回调函数。用一句话概括：工作线程将消息放到消息队列，主线程通过事件循环过程去取消息。</p>
+<p>消息队列：消息队列是一个先进先出的队列，它里面存放着各种消息。<br>事件循环：事件循环是指主线程重复从消息队列中取消息、执行的过程。<br>​</p>
+<p><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633762-2fd23505-639f-4fb7-b295-797345e74ccf.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"></p>
+<p><strong>流程如下:</strong></p>
+<ol>
+<li><pre><code>  主线程读取js代码, 形成相应的堆和执行栈, 执行同步任务
+</code></pre>
+</li>
+<li><pre><code>  当主线程遇到异步任务,，指定给异步进程处理, 同时继续执行同步任务
+</code></pre>
+</li>
+<li><pre><code>  当异步进程处理完毕后， 将相应的异步任务推入到任务队列首部
+</code></pre>
+</li>
+<li><pre><code>  主线程任务处理完毕后,，查询任务队列，则取出一个任务队列推入到主线程的执行栈
+</code></pre>
+</li>
+<li><pre><code>  重复执行第2、3、4步，这就称为事件循环
+</code></pre>
+</li>
+</ol>
+<p>众所周知 JS 是门非阻塞单线程语言，因为在最初 JS 就是为了和浏览器交互而诞生的。如果 JS 是门多线程的语言话，我们在多个线程中处理 DOM 就可能会发生问题（一个线程中新加节点，另一个线程中删除节点），当然可以引入读写锁解决这个问题。</p>
+<p>JS 在执行的过程中会产生执行环境，这些执行环境会被顺序的加入到执行栈中。如果遇到异步的代码，会被挂起并加入到 Task（有多种 task） 队列中。一旦执行栈为空，Event Loop 就会从 Task 队列中拿出需要执行的代码并放入执行栈中执行，所以本质上来说 JS 中的异步还是同步行为。<br>自动检测<br>console.log(‘script start’);<br>setTimeout(function() {<br>console.log(‘setTimeout’);<br>}, 0);<br>console.log(‘script end’);</p>
+<p>以上代码虽然 setTimeout 延时为 0，其实还是异步。这是因为 HTML5 标准规定这个函数第二个参数不得小于 4 毫秒，不足会自动增加。所以 setTimeout 还是会在 script end 之后打印。<br>不同的任务源会被分配到不同的 Task 队列中，任务源可以分为 微任务（microtask） 和 宏任务（macrotask）。在 ES6 规范中，microtask 称为 jobs，macrotask 称为 task。<br>自动检测<br>console.log(‘script start’);<br>setTimeout(function() {<br>console.log(‘setTimeout’);<br>}, 0);<br>new Promise((resolve) =&gt; {<br>console.log(‘Promise’)<br>resolve()<br>}).then(function() {<br>console.log(‘promise1’);<br>}).then(function() {<br>console.log(‘promise2’);<br>});<br>console.log(‘script end’);<br>// script start =&gt; Promise =&gt; script end =&gt; promise1 =&gt; promise2 =&gt; setTimeout</p>
+<p>以上代码虽然 setTimeout 写在 Promise 之前，但是因为 Promise 属于微任务而 setTimeout 属于宏任务，所以会有以上的打印。</p>
+<p>微任务包括 process.nextTick，promise，Object.observe，MutationObserver<br>宏任务包括 script， setTimeout，setInterval，setImmediate，I/O，UI rendering</p>
+<p>很多人有个误区，认为微任务快于宏任务，其实是错误的。因为宏任务中包括了 script，浏览器会先执行一个宏任务，接下来有异步代码的话就先执行微任务。</p>
+<p>所以正确的一次 Event loop 顺序是这样的</p>
+<ol>
+<li>执行同步代码，这属于宏任务</li>
+<li>执行栈为空，查询是否有微任务需要执行</li>
+<li>执行所有微任务</li>
+<li>必要的话渲染 UI</li>
+<li>然后开始下一轮 Event loop，执行宏任务中的异步代码</li>
+</ol>
+<h2 id="JS-Web-API-知识点与高频考题解析"><a href="#JS-Web-API-知识点与高频考题解析" class="headerlink" title="JS-Web-API 知识点与高频考题解析"></a><strong>JS-Web-API 知识点与高频考题解析</strong></h2><p><strong>BOM</strong><br>BOM（浏览器对象模型）是浏览器本身的一些信息的设置和获取，例如获取浏览器的宽度、高度，设置让浏览器跳转到哪个地址。<br>navigator： 获取浏览器特性（即俗称的 UA）然后识别客户端<br>location： 获取网址、协议、path、参数、hash 等<br>history： 操作浏览器的历史纪录，（前进，后退等功能）</p>
+<h3 id="1，什么是-window-对象-什么是-document-对象"><a href="#1，什么是-window-对象-什么是-document-对象" class="headerlink" title="1，什么是 window 对象? 什么是 document 对象?"></a><strong>1，什么是 window 对象? 什么是 document 对象?</strong></h3><p>window:它是一个顶层对象,而不是另一个对象的属性，即浏览器的窗口。<br>document:代表整个 HTML 文档,可用来访问页面中的所有元素<br>Window 对象表示当前浏览器的窗口，是 JavaScript 的顶级对象。我们创建的所有对象、函数、变量都是 Window 对象的成员。<br>Window 对象的方法和属性是在全局范围内有效的。<br>Document 对象是 HTML 文档的根节点与所有其他节点（元素节点，文本节点，属性节点, 注释节点）<br>Document 对象使我们可以通过脚本对 HTML 页面中的所有元素进行访问<br>Document 对象是 Window 对象的一部分，可通过 window.document 属性对其进行访问</p>
+<h3 id="2，事件是？IE-与火狐的事件机制有什么区别？-如何阻止冒泡？"><a href="#2，事件是？IE-与火狐的事件机制有什么区别？-如何阻止冒泡？" class="headerlink" title="2，事件是？IE 与火狐的事件机制有什么区别？ 如何阻止冒泡？"></a><strong>2，事件是？IE 与火狐的事件机制有什么区别？ 如何阻止冒泡？</strong></h3><ol>
+<li>我们在网页中的某个操作（有的操作对应多个事件）。例如：当我们点击一个按钮就会产生一个事件。是可以被 JavaScript 侦测到的行为。</li>
+<li>事件处理机制：IE 是事件冒泡、Firefox 同时支持两种事件模型，也就是：捕获型事件和冒泡型事件；</li>
+<li>ev.stopPropagation();（旧 ie 的方法 ev.cancelBubble = true;）</li>
+</ol>
+<h3 id="3，解释一下事件代理"><a href="#3，解释一下事件代理" class="headerlink" title="3，解释一下事件代理"></a><strong>3，解释一下事件代理</strong></h3><p>事件代理的原理其实就和作用域链的原理差不多，但是事件代理是利用事件的冒泡原理来实现的，事件代理就是通过给祖先元素添加事件，通过事件目标对象开始向上查找找到匹配的子节点为止，如果找不到则到绑定事件的那个祖先元素为止，找到了就触发事件，并且可以通过 js 中 call 和 apply 来改变触发事件函数中的 this 为当前绑定节点，也是通过一层一层逐层向上的方式进行匹配查找而触发对应事件，好处就是可以使后添加的 dom 元素也同样有之前存在元素的事件，jquery 中可以使用 on，delegate，live 实现的，不过在 jquery1.7 版本以后吧 live 给废除了，原因就是 live 绑定事件的祖先元素是整个 html 页面的根节点，所以性能消耗比较大，在后边的版本中给删除了，使用 on，delegate 代替<br><strong>优点：</strong><br>使代码简洁<br>减少浏览器的内存占用<br>缺点： 使用不当会造成事件在不应该触发时触发</p>
+<h3 id="4，offsetWidth-offsetHeight-clientWidth-clientHeight-与-scrollWidth-scrollHeight-的区别，"><a href="#4，offsetWidth-offsetHeight-clientWidth-clientHeight-与-scrollWidth-scrollHeight-的区别，" class="headerlink" title="4，offsetWidth/offsetHeight,clientWidth/clientHeight 与 scrollWidth/scrollHeight 的区别，"></a><strong>4，offsetWidth/offsetHeight,clientWidth/clientHeight 与 scrollWidth/scrollHeight 的区别，</strong></h3><p>offsetWidth/offsetHeight 返回值包含 content + padding + border，效果与 e.getBoundingClientRect()相同<br>clientWidth/clientHeight 返回值只包含 content + padding，如果有滚动条，也不包含滚动条<br>scrollWidth/scrollHeight 返回值包含 content + padding + 溢出内容的尺寸</p>
+<h3 id="5，focus-blur-与-focusin-focusout-的区别与联系"><a href="#5，focus-blur-与-focusin-focusout-的区别与联系" class="headerlink" title="5，focus/blur 与 focusin/focusout 的区别与联系"></a><strong>5，focus/blur 与 focusin/focusout 的区别与联系</strong></h3><p>focus/blur 不冒泡，focusin/focusout 冒泡<br>focus/blur 兼容性好，focusin/focusout 在除 FireFox 外的浏览器下都保持良好兼容性，如需使用事件托管，可考虑在 FireFox 下使用事件捕获 elem.addEventListener(‘focus’, handler, true)<br>可获得焦点的元素：<br>window<br>链接被点击或键盘操作<br>表单空间被点击或键盘操作<br>设置 tabindex 属性的元素被点击或键盘操作</p>
+<h3 id="6，mouseover-mouseout-与-mouseenter-mouseleave-的区别与联系"><a href="#6，mouseover-mouseout-与-mouseenter-mouseleave-的区别与联系" class="headerlink" title="6，mouseover/mouseout 与 mouseenter/mouseleave 的区别与联系"></a><strong>6，mouseover/mouseout 与 mouseenter/mouseleave 的区别与联系</strong></h3><p>mouseover/mouseout 是标准事件，所有浏览器都支持；mouseenter/mouseleave 是 IE5.5 引入的特有事件后来被 DOM3 标准采纳，现代标准浏览器也支持<br>mouseover/mouseout 是冒泡事件；mouseenter/mouseleave 不冒泡。需要为多个元素监听鼠标移入/出事件时，推荐 mouseover/mouseout 托管，提高性能<br>标准事件模型中 event.target 表示发生移入/出的元素,vent.relatedTarget 对应移出/如元素；在老 IE 中 event.srcElement 表示发生移入/出的元素，event.toElement 表示移出的目标元素，event.fromElement 表示移入时的来源元素</p>
+<h3 id="7，介绍-DOM0，DOM2，DOM3-事件处理方式区别"><a href="#7，介绍-DOM0，DOM2，DOM3-事件处理方式区别" class="headerlink" title="7，介绍 DOM0，DOM2，DOM3 事件处理方式区别"></a><strong>7，介绍 DOM0，DOM2，DOM3 事件处理方式区别</strong></h3><p>DOM0 级事件处理方式：<br>btn.onclick = func;<br>btn.onclick = null;<br>DOM2 级事件处理方式：<br>btn.addEventListener(‘click’, func, false);<br>btn.removeEventListener(‘click’, func, false);<br>btn.attachEvent(“onclick”, func);<br>btn.detachEvent(“onclick”, func);<br>DOM3 级事件处理方式：<br>eventUtil.addListener(input, “textInput”, func);<br>eventUtil 是自定义对象，textInput 是 DOM3 级事件</p>
+<h3 id="8，事件的三个阶段"><a href="#8，事件的三个阶段" class="headerlink" title="8，事件的三个阶段"></a><strong>8，事件的三个阶段</strong></h3><p>捕获、目标、冒泡</p>
+<p>js 的冒泡(Bubbling Event)和捕获(Capture Event)的区别<br>冒泡型事件：事件按照从最特定的事件目标到最不特定的事件目标(document 对象)的顺序触发。<br>捕获型事件(event capturing)：事件从最不精确的对象(document 对象)开始触发，然后到最精确(也可以在窗口级别捕获事件，不过必须由开发人员特别指定)。<br>DOM 事件流：同时支持两种事件模型：捕获型事件和冒泡型事件，但是，捕获型事件先发生。两种事件流会触及 DOM 中的所有对象，从 document 对象开始，也在 document 对象结束。<br>事件捕获<br>当你使用事件捕获时，父级元素先触发，子级元素后触发，即 div 先触发，p 后触发。<br>事件冒泡<br>当你使用事件冒泡时，子级元素先触发，父级元素后触发，即 p 先触发，div 后触发。</p>
+<p>阻止冒泡<br>• 在 W3c 中，使用 stopPropagation（）方法<br>• 在 IE 下设置 cancelBubble = true；<br>在捕获的过程中 stopPropagation（）；后，后面的冒泡过程也不会发生了。<br>阻止捕获</p>
+<p>阻止事件的默认行为，例如 click <a>后的跳转<br>• 在 W3c 中，使用 preventDefault（）方法；<br>• 在 IE 下设置 window.event.returnValue = false;</p>
+<h3 id="9，介绍事件“捕获”和“冒泡”执行顺序和事件的执行次数？"><a href="#9，介绍事件“捕获”和“冒泡”执行顺序和事件的执行次数？" class="headerlink" title="9，介绍事件“捕获”和“冒泡”执行顺序和事件的执行次数？"></a><strong>9，介绍事件“捕获”和“冒泡”执行顺序和事件的执行次数？</strong></h3><p>按照 W3C 标准的事件：首是进入捕获阶段，直到达到目标元素，再进入冒泡阶段<br>事件执行次数（DOM2-addEventListener）：元素上绑定事件的个数<br>注意 1：前提是事件被确实触发<br>注意 2：事件绑定几次就算几个事件，即使类型和功能完全一样也不会“覆盖”<br>事件执行顺序：判断的关键是否目标元素<br>非目标元素：根据 W3C 的标准执行：捕获-&gt;目标元素-&gt;冒泡（不依据事件绑定顺序）<br>目标元素：依据事件绑定顺序：先绑定的事件先执行（不依据捕获冒泡标准）<br>最终顺序：父元素捕获-&gt;目标元素事件 1-&gt;目标元素事件 2-&gt;子元素捕获-&gt;子元素冒泡-&gt;父元素冒泡<br>注意：子元素事件执行前提 事件确实“落”到子元素布局区域上，而不是简单的具有嵌套关系<br>在一个 DOM 上同时绑定两个点击事件：一个用捕获，一个用冒泡。事件会执行几次，先执行冒泡还是捕获？</p>
+<p>该 DOM 上的事件如果被触发，会执行两次（执行次数等于绑定次数）<br>如果该 DOM 是目标元素，则按事件绑定顺序执行，不区分冒泡/捕获<br>如果该 DOM 是处于事件流中的非目标元素，则先执行捕获，后执行冒泡</p>
+<h3 id="10，window-onload-和-document-DOMContentLoaded-注：-document-ready-的区别？"><a href="#10，window-onload-和-document-DOMContentLoaded-注：-document-ready-的区别？" class="headerlink" title="10，window.onload 和 document.DOMContentLoaded (注：$(document).ready()) 的区别？"></a><strong>10，window.onload 和 document.DOMContentLoaded (注：$(document).ready()) 的区别？</strong></h3><p>一般情况下，DOMContentLoaded 事件要在 window.onload 之前执行，当 DOM 树构建完成的时候就会执行 DOMContentLoaded 事件，而 window.onload 是在页面载入完成的时候，才执行，这其中包括图片等元素。大多数时候我们只是想在 DOM 树构建完成后，绑定事件到元素，我们并不需要图片元素，加上有时候加载外域图片的速度非常缓慢。</p>
+<h3 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a><strong>DOM</strong></h3><p>讲 DOM 先从 HTML 讲起，讲 HTML 先从 XML 讲起。XML 是一种可扩展的标记语言，所谓可扩展就是它可以描述任何结构化的数据，它是一棵树！</p>
+<h3 id="1，documen-write-和-innerHTML-的区别"><a href="#1，documen-write-和-innerHTML-的区别" class="headerlink" title="1，documen.write 和 innerHTML 的区别"></a><strong>1，documen.write 和 innerHTML 的区别</strong></h3><p>document.write 只能重绘整个页面<br>innerHTML 可以重绘页面的一部分</p>
+<h3 id="2，DOM-操作——怎样添加、移除、移动、复制、创建和查找节点"><a href="#2，DOM-操作——怎样添加、移除、移动、复制、创建和查找节点" class="headerlink" title="2，DOM 操作——怎样添加、移除、移动、复制、创建和查找节点?"></a><strong>2，DOM 操作——怎样添加、移除、移动、复制、创建和查找节点?</strong></h3><p>1）创建新节点<br>createDocumentFragment() //创建一个 DOM 片段<br>createElement() //创建一个具体的元素<br>createTextNode() //创建一个文本节点<br>2）添加、移除、替换、插入<br>appendChild()<br>removeChild()<br>replaceChild()<br>insertBefore() //在已有的子节点前插入一个新的子节点<br>3）查找<br>getElementsByTagName() //通过标签名称<br>getElementsByName() //通过元素的 Name 属性的值(IE 容错能力较强，会得到一个数组，其中包括 id 等于 name 值的)<br>getElementById() //通过元素 Id，唯一性</p>
+<h3 id="3，attribute-和-property-的区别是什么？"><a href="#3，attribute-和-property-的区别是什么？" class="headerlink" title="3，attribute 和 property 的区别是什么？"></a><strong>3，attribute 和 property 的区别是什么？</strong></h3><p>attribute 是 dom 元素在文档中作为 html 标签拥有的属性；<br>property 就是 dom 元素在 js 中作为对象拥有的属性。<br>所以：<br>对于 html 的标准属性来说，attribute 和 property 是同步的，是会自动更新的，<br>但是对于自定义的属性来说，他们是不同步的，</p>
+<h3 id="4，src-和-href-的区别"><a href="#4，src-和-href-的区别" class="headerlink" title="4，src 和 href 的区别"></a><strong>4，src 和 href 的区别</strong></h3><p>src 用于替换当前元素，href 用于在当前文档和引用资源之间确立联系。<br>src 是 source 的缩写，指向外部资源的位置，指向的内容将会嵌入到文档中当前标签所在位置；在请求 src 资源时会将其指向的资源下载并应用到文档内，当浏览器解析到该元素时，会暂停其他资源的下载和处理，直到将该资源加载、编译、执行完毕，图片和框架等元素也如此，类似于将所指向资源嵌入当前标签内。这也是为什么将 js 脚本放在底部而不是头部。<br>Src source,指向外部资源的位置,如果我们添加<script src ="js.js"></script>浏览器会暂停其他资源的下载和处理,直到该资源加载,编译,执行完毕(图片和框架也是如此),这也就是为什么 js 脚本要放在底部。<br>src 用于替换当前元素,href 用于在当前文档和引入资源之间建立联系。</p>
+<h2 id="兼容与优化"><a href="#兼容与优化" class="headerlink" title="兼容与优化"></a><strong>兼容与优化</strong></h2><h3 id="1，页面重构怎么操作？"><a href="#1，页面重构怎么操作？" class="headerlink" title="1，页面重构怎么操作？"></a><strong>1，页面重构怎么操作？</strong></h3><p>网站重构：在不改变外部行为的前提下，简化结构、添加可读性，而在网站前端保持一致的行为。<br>也就是说是在不改变 UI 的情况下，对网站进行优化，在扩展的同时保持一致的 UI。<br>对于传统的网站来说重构通常是：<br>表格(table)布局改为 DIV+CSS<br>使网站前端兼容于现代浏览器(针对于不合规范的 CSS、如对 IE6 有效的)<br>对于移动平台的优化<br>针对于 SEO 进行优化<br>深层次的网站重构应该考虑的方面<br>减少代码间的耦合<br>让代码保持弹性<br>严格按规范编写代码<br>设计可扩展的 API<br>代替旧有的框架、语言(如 VB)<br>增强用户体验</p>
+<p>通常来说对于速度的优化也包含在重构中<br>压缩 JS、CSS、image 等前端资源(通常是由服务器来解决)<br>程序的性能优化(如数据读写)<br>采用 CDN 来加速资源加载<br>对于 JS DOM 的优化<br>HTTP 服务器的文件缓存</p>
+<h3 id="2，列举-IE-与其他浏览器不一样的特性？"><a href="#2，列举-IE-与其他浏览器不一样的特性？" class="headerlink" title="2，列举 IE 与其他浏览器不一样的特性？"></a><strong>2，列举 IE 与其他浏览器不一样的特性？</strong></h3><p>1、事件不同之处：<br>1-1，触发事件的元素被认为是目标（target）。而在 IE 中，目标包含在 event 对象的 srcElement 属性；<br>1-2，获取字符代码、如果按键代表一个字符（shift、ctrl、alt 除外），IE 的 keyCode 会返回字符代码（Unicode），DOM 中按键的代码和字符是分离的，要获取字符代码，需要使用 charCode 属性；<br>1-3，阻止某个事件的默认行为，IE 中阻止某个事件的默认行为，必须将 returnValue 属性设置为 false，Mozilla 中，需要调用 preventDefault() 方法；<br>1-4，停止事件冒泡，IE 中阻止事件进一步冒泡，需要设置 cancelBubble 为 true，Mozzilla 中，需要调用 stopPropagation()；</p>
+<h3 id="3，什么叫优雅降级和渐进增强？"><a href="#3，什么叫优雅降级和渐进增强？" class="headerlink" title="3，什么叫优雅降级和渐进增强？"></a><strong>3，什么叫优雅降级和渐进增强？</strong></h3><p>优雅降级：Web 站点在所有新式浏览器中都能正常工作，如果用户使用的是老式浏览器，则代码会针对旧版本的 IE 进行降级处理了,使之在旧式浏览器上以某种形式降级体验却不至于完全不能用。<br>如：border-shadow</p>
+<p>渐进增强：从被所有浏览器支持的基本功能开始，逐步地添加那些只有新版本浏览器才支持的功能,向页面增加不影响基础浏览器的额外样式和功能的。当浏览器支持时，它们会自动地呈现出来并发挥作用。<br>如：默认使用 flash 上传，但如果浏览器支持 HTML5 的文件上传功能，则使用 HTML5 实现更好的体验；</p>
+<h3 id="4，说说严格模式的限制"><a href="#4，说说严格模式的限制" class="headerlink" title="4，说说严格模式的限制"></a><strong>4，说说严格模式的限制</strong></h3><p>严格模式主要有以下限制：<br>变量必须声明后再使用<br>函数的参数不能有同名属性，否则报错<br>不能使用 with 语句<br>不能对只读属性赋值，否则报错<br>不能使用前缀 0 表示八进制数，否则报错<br>不能删除不可删除的属性，否则报错<br>不能删除变量 delete prop，会报错，只能删除属性 delete global[prop]<br>eval 不会在它的外层作用域引入变量<br>eval 和 arguments 不能被重新赋值<br>arguments 不会自动反映函数参数的变化<br>不能使用 arguments.callee<br>不能使用 arguments.caller<br>禁止 this 指向全局对象<br>不能使用 fn.caller 和 fn.arguments 获取函数调用的堆栈<br>增加了保留字（比如 protected、static 和 interface）<br>设立”严格模式”的目的，主要有以下几个：<br>消除 Javascript 语法的一些不合理、不严谨之处，减少一些怪异行为;<br>消除代码运行的一些不安全之处，保证代码运行的安全；<br>提高编译器效率，增加运行速度；<br>为未来新版本的 Javascript 做好铺垫。<br>注：经过测试 IE6,7,8,9 均不支持严格模式。</p>
+<h3 id="5，检测浏览器版本版本有哪些方式？"><a href="#5，检测浏览器版本版本有哪些方式？" class="headerlink" title="5，检测浏览器版本版本有哪些方式？"></a><strong>5，检测浏览器版本版本有哪些方式？</strong></h3><p>根据 navigator.userAgent // UA.toLowerCase().indexOf(‘chrome’)<br>根据 window 对象的成员 // ‘ActiveXObject’ in window</p>
+<h3 id="6，总结前端性能优化的解决方案"><a href="#6，总结前端性能优化的解决方案" class="headerlink" title="6，总结前端性能优化的解决方案"></a><strong>6，总结前端性能优化的解决方案</strong></h3><p><strong>优化原则和方向</strong><br>性能优化的原则是以更好的用户体验为标准，具体就是实现下面的目标：<br>多使用内存、缓存或者其他方法<br>减少 CPU 和 GPU 计算，更快展现</p>
+<p><strong>优化的方向有两个：</strong><br>减少页面体积，提升网络加载<br>优化页面渲染</p>
+<p><strong>减少页面体积，提升网络加载</strong><br>静态资源的压缩合并（JS 代码压缩合并、CSS 代码压缩合并、雪碧图）<br>静态资源缓存（资源名称加 MD5 戳）<br>使用 CDN 让资源加载更快</p>
+<p><strong>优化页面渲染</strong><br>CSS 放前面，JS 放后面<br>懒加载（图片懒加载、下拉加载更多）<br>减少 DOM 查询，对 DOM 查询做缓存<br>减少 DOM 操作，多个操作尽量合并在一起执行（DocumentFragment）<br>事件节流<br>尽早执行操作（DOMContentLoaded）<br>使用 SSR 后端渲染，数据直接输出到 HTML 中，减少浏览器使用 JS 模板渲染页面 HTML 的时间</p>
+<h3 id="7，图片懒加载与预加载"><a href="#7，图片懒加载与预加载" class="headerlink" title="7，图片懒加载与预加载"></a><strong>7，图片懒加载与预加载</strong></h3><p>图片懒加载的原理就是暂时不设置图片的 src 属性，而是将图片的 url 隐藏起来，比如先写在 data-src 里面，等某些事件触发的时候(比如滚动到底部，点击加载图片)再将图片真实的 url 放进 src 属性里面，从而实现图片的延迟加载<br>图片预加载是指在一些需要展示大量图片的网站，实现图片的提前加载。从而提升用户体验。常用的方式有两种，一种是隐藏在 css 的 background 的 url 属性里面，一种是通过 javascript 的 Image 对象设置实例对象的 src 属性实现图片的预加载。相关代码如下：</p>
+<p>CSS 预加载图片方式：<br>自动检测<br>#preload-01 { background: url(<a target="_blank" rel="noopener" href="http://domain.tld/image-01.png">http://domain.tld/image-01.png</a>) no-repeat -9999px -9999px; }<br>#preload-02 { background: url(<a target="_blank" rel="noopener" href="http://domain.tld/image-02.png">http://domain.tld/image-02.png</a>) no-repeat -9999px -9999px; }<br>#preload-03 { background: url(<a target="_blank" rel="noopener" href="http://domain.tld/image-03.png">http://domain.tld/image-03.png</a>) no-repeat -9999px -9999px; }</p>
+<p>Javascript 预加载图片的方式：<br>自动检测<br>function preloadImg(url) {<br>var img = new Image();<br>img.src = url;<br>if(img.complete) {<br>//接下来可以使用图片了<br>//do something here<br>} else {<br>img.onload = function() {<br>//接下来可以使用图片了<br>//do something here<br>};<br>}<br>}</p>
+<h3 id="8，描述浏览器的渲染过程，DOM-树和渲染树的区别？"><a href="#8，描述浏览器的渲染过程，DOM-树和渲染树的区别？" class="headerlink" title="8，描述浏览器的渲染过程，DOM 树和渲染树的区别？"></a><strong>8，描述浏览器的渲染过程，DOM 树和渲染树的区别？</strong></h3><p>浏览器的渲染过程：<br>解析 HTML 构建 DOM(DOM 树)，并行请求 css/image/js<br>CSS 文件下载完成，开始构建 CSSOM(CSS 树)<br>CSSOM 构建结束后，和 DOM 一起生成 Render Tree(渲染树)<br>布局(Layout)：计算出每个节点在屏幕中的位置<br>显示(Painting)：通过显卡把页面画到屏幕上<br>DOM 树 和 渲染树 的区别：<br>DOM 树与 HTML 标签一一对应，包括 head 和隐藏元素<br>渲染树不包括 head 和隐藏元素，大段文本的每一个行都是独立节点，每一个节点都有对应的 css 属性</p>
+<h3 id="9，重绘和回流（重排）的区别和关系？"><a href="#9，重绘和回流（重排）的区别和关系？" class="headerlink" title="9，重绘和回流（重排）的区别和关系？"></a><strong>9，重绘和回流（重排）的区别和关系？</strong></h3><p>重绘：当渲染树中的元素外观（如：颜色）发生改变，不影响布局时，产生重绘<br>回流：当渲染树中的元素的布局（如：尺寸、位置、隐藏/状态状态）发生改变时，产生重绘回流<br>注意：JS 获取 Layout 属性值（如：offsetLeft、scrollTop、getComputedStyle 等）也会引起回流。因为浏览器需要通过回流计算最新值<br>回流必将引起重绘，而重绘不一定会引起回流 。。。</p>
+<h3 id="10，如何最小化重绘-repaint-和回流-reflow-？"><a href="#10，如何最小化重绘-repaint-和回流-reflow-？" class="headerlink" title="10，如何最小化重绘(repaint)和回流(reflow)？"></a><strong>10，如何最小化重绘(repaint)和回流(reflow)？</strong></h3><p>需要要对元素进行复杂的操作时，可以先隐藏(display:”none”)，操作完成后再显示<br>需要创建多个 DOM 节点时，使用 DocumentFragment 创建完后一次性的加入 document<br>缓存 Layout 属性值，如：var left = elem.offsetLeft; 这样，多次使用 left 只产生一次回流<br>尽量避免用 table 布局（table 元素一旦触发回流就会导致 table 里所有的其它元素回流）<br>避免使用 css 表达式(expression)，因为每次调用都会重新计算值（包括加载页面）<br>尽量使用 css 属性简写，如：用 border 代替 border-width, border-style, border-color<br>批量修改元素样式：elem.className 和 elem.style.cssText 代替 elem.style.xxx</p>
+<h3 id="11，script-的位置是否会影响首屏显示时间？"><a href="#11，script-的位置是否会影响首屏显示时间？" class="headerlink" title="11，script 的位置是否会影响首屏显示时间？"></a><strong>11，script 的位置是否会影响首屏显示时间？</strong></h3><p>在解析 HTML 生成 DOM 过程中，js 文件的下载是并行的，不需要 DOM 处理到 script 节点。因此，script 的位置不影响首屏显示的开始时间。<br>浏览器解析 HTML 是自上而下的线性过程，script 作为 HTML 的一部分同样遵循这个原则<br>因此，script 会延迟 DomContentLoad，只显示其上部分首屏内容，从而影响首屏显示的完成时间</p>
+<h2 id="常见-js-设计模式"><a href="#常见-js-设计模式" class="headerlink" title="常见 js 设计模式"></a>常见 js 设计模式</h2><h3 id="js-的设计模式推荐看一本书可以达到更好的理解"><a href="#js-的设计模式推荐看一本书可以达到更好的理解" class="headerlink" title="js 的设计模式推荐看一本书可以达到更好的理解"></a>js 的设计模式推荐看一本书可以达到更好的理解</h3><p><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633817-6ee67ec6-c7e5-490e-a260-31c4eda35094.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"></p>
+<h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><p>工厂模式分为好几种，这里就不一一讲解了，以下是一个简单工厂模式的例子<br>自动检测<br>class Man {<br>constructor(name) {<br>this.name = name<br>}<br>alertName() {<br>alert(this.name)<br>}<br>}<br>class Factory {<br>static create(name) {<br>return new Man(name)<br>}<br>}<br>Factory.create(‘yck’).alertName()</p>
+<p>当然工厂模式并不仅仅是用来 new 出<strong>实例</strong>。<br>可以想象一个场景。假设有一份很复杂的代码需要用户去调用，但是用户并不关心这些复杂的代码，只需要你提供给我一个接口去调用，用户只负责传递需要的参数，至于这些参数怎么使用，内部有什么逻辑是不关心的，只需要你最后返回我一个实例。这个构造过程就是工厂。<br>工厂起到的作用就是隐藏了创建实例的复杂度，只需要提供一个接口，简单清晰。<br>在 Vue 源码中，你也可以看到工厂模式的使用，比如创建异步组件<br>自动检测<br>export function createComponent (<br>Ctor: Class<Component> | Function | Object | void,<br>data: ?VNodeData,<br>context: Component,<br>children: ?Array<VNode>,<br>tag?: string<br>): VNode | Array<VNode> | void {<br>// 逻辑处理…<br>const vnode = new VNode(<br><code>vue-component-$&#123;Ctor.cid&#125;$&#123;name ? </code>-${name}<code> : &#39;&#39;&#125;</code>,<br>data, undefined, undefined, undefined, context,<br>{ Ctor, propsData, listeners, tag, children },<br>asyncFactory<br>)<br>return vnode<br>}</p>
+<p>在上述代码中，我们可以看到我们只需要调用 createComponent 传入参数就能创建一个组件实例，但是创建这个实例是很复杂的一个过程，工厂帮助我们隐藏了这个复杂的过程，只需要一句代码调用就能实现功能。</p>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>单例模式很常用，比如全局缓存、全局状态管理等等这些只需要一个对象，就可以使用单例模式。<br>单例模式的核心就是保证全局只有一个对象可以访问。因为 JS 是门无类的语言，所以别的语言实现单例的方式并不能套入 JS 中，我们只需要用一个变量确保实例只创建一次就行，以下是如何实现单例模式的例子<br>自动检测<br>class Singleton {<br>constructor() {}<br>}<br>Singleton.getInstance = (function() {<br>let instance<br>return function() {<br>if (!instance) {<br>instance = new Singleton()<br>}<br>return instance<br>}<br>})()<br>let s1 = Singleton.getInstance()<br>let s2 = Singleton.getInstance()<br>console.log(s1 === s2) // true</p>
+<p>在 Vuex 源码中，你也可以看到单例模式的使用，虽然它的实现方式不大一样，通过一个外部变量来控制只安装一次 Vuex<br>自动检测<br>let Vue // bind on install<br>export function install (_Vue) {<br>if (Vue &amp;&amp; _Vue === Vue) {<br>// …<br>return<br>}<br>Vue = _Vue<br>applyMixin(Vue)<br>}</p>
+<h3 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h3><p>适配器用来解决两个接口不兼容的情况，不需要改变已有的接口，通过包装一层的方式实现两个接口的正常协作。<br>以下是如何实现适配器模式的例子<br>自动检测<br>class Plug {<br>getName() {<br>return ‘港版插头’<br>}<br>}<br>class Target {<br>constructor() {<br>this.plug = new Plug()<br>}<br>getName() {<br>return this.plug.getName() + ‘ 适配器转二脚插头’<br>}<br>}<br>let target = new Target()<br>target.getName() // 港版插头 适配器转二脚插头</p>
+<p>在 Vue 中，我们其实经常使用到适配器模式。比如父组件传递给子组件一个时间戳属性，组件内部需要将时间戳转为正常的日期显示，一般会使用 computed 来做转换这件事情，这个过程就使用到了适配器模式。</p>
+<h3 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a>装饰模式</h3><p>装饰模式不需要改变已有的接口，作用是给对象添加功能。就像我们经常需要给手机戴个保护套防摔一样，不改变手机自身，给手机添加了保护套提供防摔功能。<br>以下是如何实现装饰模式的例子，使用了 ES7 中的装饰器语法<br>自动检测<br>function readonly(target, key, descriptor) {<br>descriptor.writable = false<br>return descriptor<br>}<br>class Test {<br>@readonly<br>name = ‘yck’<br>}<br>let t = new Test()<br>t.yck = ‘111’ // 不可修改</p>
+<p>在 React 中，装饰模式其实随处可见<br>自动检测<br>import { connect } from ‘react-redux’<br>class MyComponent extends React.Component {<br>// …<br>}<br>export default connect(mapStateToProps)(MyComponent)</p>
+<h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><p>代理是为了控制对对象的访问，不让外部直接访问到对象。在现实生活中，也有很多代理的场景。比如你需要买一件国外的产品，这时候你可以通过代购来购买产品。<br>在实际代码中其实代理的场景很多，也就不举框架中的例子了，比如事件代理就用到了代理模式。<br>自动检测</p>
+<ul id="ul">
+<li>1</li>
+<li>2</li>
+<li>3</li>
+<li>4</li>
+<li>5</li>
+</ul>
+<script>
+let ul = document.querySelector('#ul')
+ul.addEventListener('click', (event) => {
+console.log(event.target);
+})
+</script>
+
+<p>因为存在太多的 li，不可能每个都去绑定事件。这时候可以通过给父节点绑定一个事件，让父节点作为代理去拿到真实点击的节点。<br>发布-订阅模式<br>发布-订阅模式也叫做观察者模式。通过一对一或者一对多的依赖关系，当对象发生改变时，订阅方都会收到通知。在现实生活中，也有很多类似场景，比如我需要在购物网站上购买一个产品，但是发现该产品目前处于缺货状态，这时候我可以点击有货通知的按钮，让网站在产品有货的时候通过短信通知我。<br>在实际代码中其实发布-订阅模式也很常见，比如我们点击一个按钮触发了点击事件就是使用了该模式<br>自动检测</p>
+<ul id="ul"></ul>
+<script>
+let ul = document.querySelector('#ul')
+ul.addEventListener('click', (event) => {
+console.log(event.target);
+})
+</script>
+在 Vue 中，如何实现响应式也是使用了该模式。对于需要实现响应式的对象来说，在 get的时候会进行依赖收集，当改变了对象的属性时，就会触发派发更新。
+
+<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>涉及面试题：<br>1，有几种方式可以实现存储功能，分别有什么优缺点？<br>2，如何实现跨标签页的 sessionStorage？<br>3，前端如何操作 cookie？</p>
+<h3 id="cookie，localStorage，sessionStorage，indexDB"><a href="#cookie，localStorage，sessionStorage，indexDB" class="headerlink" title="cookie，localStorage，sessionStorage，indexDB"></a>cookie，localStorage，sessionStorage，indexDB</h3><p>我们先来通过表格学习下这几种存储方式的区别</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>cookie</th>
+<th>localStorage</th>
+<th>sessionStorage</th>
+<th>indexDB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据生命周期</td>
+<td>一般由服务器生成，可以设置过期时间</td>
+<td>除非被清理，否则一直存在</td>
+<td>页面关闭就清理</td>
+<td>除非被清理，否则一直存在</td>
+</tr>
+<tr>
+<td>数据存储大小</td>
+<td>4K</td>
+<td>5M</td>
+<td>5M</td>
+<td>无限</td>
+</tr>
+<tr>
+<td>与服务端通信</td>
+<td>每次都会携带在 header 中，对于请求性能影响</td>
+<td>不参与</td>
+<td>不参与</td>
+<td>不参与</td>
+</tr>
+</tbody></table>
+<p>从上表可以看到，cookie 已经不建议用于存储。如果没有大量数据存储需求的话，可以使用 localStorage 和 sessionStorage 。对于不怎么改变的数据尽量使用 localStorage 存储，否则可以用 sessionStorage 存储。<br>对于 cookie 来说，我们还需要注意安全性。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>value</td>
+<td>如果用于保存用户登录态，应该将该值加密，不能使用明文的用户标识</td>
+</tr>
+<tr>
+<td>http-only</td>
+<td>不能通过 JS 访问 Cookie，减少 XSS 攻击</td>
+</tr>
+<tr>
+<td>secure</td>
+<td>只能在协议为 HTTPS 的请求中携带</td>
+</tr>
+<tr>
+<td>same-site</td>
+<td>规定浏览器不能在跨域请求中携带 Cookie，减少 CSRF 攻击</td>
+</tr>
+</tbody></table>
+<p>cookie：服务端和客户端都可以进行操作，存储在客户端，每一次 ajax 发送都会携带，新增 fetchApi 可以控制 cookie 是否发送，cookie 不允许跨域访问，并且存储大小比较小，对于客户端来说 api 简单需要自己封装一个实现（客户端操作只提供一个 document.cookie）</p>
+<p>session：服务端存储技术，客户端无法操作，session 会在客户的 cookie 中保存一个 sessionid 用来识别客户端</p>
+<p>localStorage：客户端存储方案，长期存储没有过期时间，有比较详细的 api 操作，但是只能存储字符串类型数据，需要自己封装一个支持多种数据类型操作，并且可以设置过期时间的 api</p>
+<p>sessionStorage：和 localStorage 的 api 一样，但是是零时存储，并且只起作用当前标签页，标签页关闭自动销毁，不能跨标签页使用，需要自己结合 localStorage 做进一步封装</p>
+<h2 id="es6-es7-相关"><a href="#es6-es7-相关" class="headerlink" title="es6/es7 相关"></a>es6/es7 相关</h2><h3 id="1，说说对-es6-的理解（说一下-es6，知道-es6-吗）"><a href="#1，说说对-es6-的理解（说一下-es6，知道-es6-吗）" class="headerlink" title="1，说说对 es6 的理解（说一下 es6，知道 es6 吗）"></a><strong>1，说说对 es6 的理解（说一下 es6，知道 es6 吗）</strong></h3><p>语法糖(箭头函数，类的定义，继承)，以及一些新的扩展（数组，字符串，对象，方法等），对作用域的重新定义，以及异步编程的解决方案（promise，async，await）、解构赋值的出现 , 新增的数据类型（symbol），新增数据结构 set,map，以及对模块的支持，字符串模版``</p>
+<h3 id="2，ES6-常用特性"><a href="#2，ES6-常用特性" class="headerlink" title="2，ES6 常用特性"></a><strong>2，ES6 常用特性</strong></h3><p>变量定义(let 和 const,可变与不可变，const 定义对象的特殊情况)<br>解构赋值<br>模板字符串<br>数组新 API(例：Array.from(),entries(),values(),keys())<br>箭头函数(rest 参数，扩展运算符，::绑定 this)<br>Set 和 Map 数据结构(set 实例成员值唯一存储 key 值，map 实例存储键值对(key-value))<br>Promise 对象(前端异步解决方案进化史，generator 函数，async 函数)<br>Class 语法糖(super 关键字)</p>
+<h3 id="3，ES6-箭头函数中的-this-和普通函数中的有什么不同"><a href="#3，ES6-箭头函数中的-this-和普通函数中的有什么不同" class="headerlink" title="3，ES6 箭头函数中的 this 和普通函数中的有什么不同"></a>3，ES6 箭头函数中的 this 和普通函数中的有什么不同</h3><p>箭头函数是 ES6 中新的函数定义形式，function name(arg1, arg2) {…}可以使用(arg1, arg2) =&gt; {…}来定义。箭头函数没有 this，他的 this 永远指向的是上层距离当前函数最近的 this<br>自动检测<br>// JS 普通函数<br>var arr = [1, 2, 3]<br>arr.map(function (item) {<br>console.log(index)<br>return item + 1<br>})<br>// ES6 箭头函数<br>const arr = [1, 2, 3]<br>arr.map((item, index) =&gt; {<br>console.log(index)<br>return item + 1<br>})<br>arr.map(item =&gt; item + 1)<br>function fn() {<br>console.log(‘real’, this) // {a: 100} ，该作用域下的 this 的真实的值<br>var arr = [1, 2, 3]<br>// 普通 JS<br>arr.map(function (item) {<br>console.log(‘js’, this) // window 。普通函数，这里打印出来的是全局变量，令人费解<br>return item + 1<br>})<br>// 箭头函数<br>arr.map(item =&gt; {<br>console.log(‘es6’, this) // {a: 100} 。箭头函数，这里打印的就是父作用域的 this<br>return item + 1<br>})<br>}<br>fn.call({a: 100})</p>
+<p>箭头函数存在的意义，第一写起来更加简洁，第二可以解决 ES6 之前函数执行中 this 是全局变量的问题，</p>
+<h3 id="4，ES6-模块化如何使用？"><a href="#4，ES6-模块化如何使用？" class="headerlink" title="4，ES6 模块化如何使用？"></a>4，ES6 模块化如何使用？</h3><p>ES6 中模块化语法更加简洁，主要就是两个点抛出 export，引入 import<br>如果只是输出一个唯一的对象，使用 export default 即可，代码如下<br>自动检测<br>// 创建 util1.js 文件，内容如<br>export default {<br>a: 100<br>}<br>// 创建 index.js 文件，内容如<br>import obj from ‘./util1.js’<br>console.log(obj)</p>
+<p>如果想要输出许多个对象，就不能用 default 了，且 import 时候要加{…}，代码如下<br>自动检测<br>// 创建 util2.js 文件，内容如<br>export function fn1() {<br>alert(‘fn1’)<br>}<br>export function fn2() {<br>alert(‘fn2’)<br>}<br>export const obj = {}<br>​</p>
+<p>// 创建 index.js 文件，内容如<br>import { fn1, fn2, obj } from ‘./util2.js’<br>fn1()<br>fn2()</p>
+<h3 id="5，Set-和-Map"><a href="#5，Set-和-Map" class="headerlink" title="5，Set 和 Map"></a>5，Set 和 Map</h3><p>Set 和 Map 都是 ES6 中新增的数据结构，是对当前 JS 数组和对象这两种重要数据结构的扩展。由于是新增的数据结构，目前尚未被大规模使用，但是作为前端程序员，提前了解是必须做到的。先总结一下两者最关键的地方：</p>
+<ul>
+<li>Set 类似于数组，但数组可以允许元素重复，Set 不允许元素重复</li>
+<li>Map 类似于对象，但普通对象的 key 必须是字符串或者数字，而 Map 的 key 可以是任何数据类型</li>
+</ul>
+<p><strong>Set</strong><br>Set 实例不允许元素有重复，可以通过以下示例证明。可以通过一个数组初始化一个 Set 实例，或者通过 add 添加元素，元素不能重复，重复的会被忽略。<br>自动检测<br>// 例 1<br>const set = new Set([1, 2, 3, 4, 4]);<br>console.log(set) // Set(4) {1, 2, 3, 4}<br>// 例 2<br>const set = new Set();<br>[2, 3, 5, 4, 5, 8, 8].forEach(item =&gt; set.add(item));<br>for (let item of set) {<br>console.log(item);<br>}<br>// 2 3 5 4 8<br>Set 实例的属性和方法有</p>
+<ul>
+<li>size：获取元素数量。</li>
+<li>add(value)：添加元素，返回 Set 实例本身。</li>
+<li>delete(value)：删除元素，返回一个布尔值，表示删除是否成功。</li>
+<li>has(value)：返回一个布尔值，表示该值是否是 Set 实例的元素。</li>
+<li>clear()：清除所有元素，没有返回值。</li>
+</ul>
+<p>自动检测<br>const s = new Set();<br>s.add(1).add(2).add(2); // 添加元素<br>s.size // 2<br>​</p>
+<p>s.has(1) // true<br>s.has(2) // true<br>s.has(3) // false<br>s.delete(2);<br>s.has(2) // false<br>s.clear();<br>console.log(s); // Set(0) {}</p>
+<p>Set 实例的遍历，可使用如下方法</p>
+<ul>
+<li>keys()：返回键名的遍历器。</li>
+<li>values()：返回键值的遍历器。不过由于 Set 结构没有键名，只有键值（或者说键名和键值是同一个值），所以 keys()和 values()返回结果一致。</li>
+<li>entries()：返回键值对的遍历器。</li>
+<li>forEach()：使用回调函数遍历每个成员。</li>
+</ul>
+<p>自动检测<br>let set = new Set([‘aaa’, ‘bbb’, ‘ccc’]);<br>for (let item of set.keys()) {<br>console.log(item);<br>}<br>// aaa<br>// bbb<br>// ccc<br>for (let item of set.values()) {<br>console.log(item);<br>}<br>// aaa<br>// bbb<br>// ccc<br>for (let item of set.entries()) {<br>console.log(item);<br>}<br>// [“aaa”, “aaa”]<br>// [“bbb”, “bbb”]<br>// [“ccc”, “ccc”]<br>​</p>
+<p>set.forEach((value, key) =&gt; console.log(key + ‘ : ‘ + value))<br>// aaa : aaa<br>// bbb : bbb<br>// ccc : ccc</p>
+<p><strong>Map</strong><br>Map 的用法和普通对象基本一致，先看一下它能用非字符串或者数字作为 key 的特性。<br>自动检测<br>const map = new Map();<br>const obj = {p: ‘Hello World’};<br>map.set(obj, ‘OK’)<br>map.get(obj) // “OK”<br>map.has(obj) // true<br>map.delete(obj) // true<br>map.has(obj) // false</p>
+<p>需要使用 new Map()初始化一个实例，下面代码中 set get has delete 顾名即可思义（下文也会演示）。其中，map.set(obj, ‘OK’)就是用对象作为的 key （不光可以是对象，任何数据类型都可以），并且后面通过 map.get(obj)正确获取了。</p>
+<p>Map 实例的属性和方法如下：</p>
+<p>size：获取成员的数量<br>set：设置成员 key 和 value<br>get：获取成员属性值<br>has：判断成员是否存在<br>delete：删除成员<br>clear：清空所有</p>
+<p>自动检测<br>const map = new Map();<br>map.set(‘aaa’, 100);<br>map.set(‘bbb’, 200);<br>map.size // 2<br>map.get(‘aaa’) // 100<br>map.has(‘aaa’) // true<br>map.delete(‘aaa’)<br>map.has(‘aaa’) // false<br>map.clear()</p>
+<p>Map 实例的遍历方法有：</p>
+<ul>
+<li>keys()：返回键名的遍历器。</li>
+<li>values()：返回键值的遍历器。</li>
+<li>entries()：返回所有成员的遍历器。</li>
+<li>forEach()：遍历 Map 的所有成员。</li>
+</ul>
+<p>自动检测<br>const map = new Map();<br>map.set(‘aaa’, 100);<br>map.set(‘bbb’, 200);<br>for (let key of map.keys()) {<br>console.log(key);<br>}<br>// “aaa”<br>// “bbb”<br>for (let value of map.values()) {<br>console.log(value);<br>}<br>// 100<br>// 200<br>for (let item of map.entries()) {<br>console.log(item[0], item[1]);<br>}<br>// aaa 100<br>// bbb 200<br>// 或者<br>for (let [key, value] of map.entries()) {<br>console.log(key, value);<br>}<br>// aaa 100<br>// bbb 200</p>
+<h3 id="6，map-filter-reduce"><a href="#6，map-filter-reduce" class="headerlink" title="6，map, filter, reduce"></a>6，map, filter, reduce</h3><p>涉及面试题：map, filter, reduce 各自有什么作用？<br>map 作用是生成一个新数组，遍历原数组，将每个元素拿出来做一些变换然后放入到新的数组中。<br>自动检测<br>[1, 2, 3].map(v =&gt; v + 1) // -&gt; [2, 3, 4]<br>另外 map 的回调函数接受三个参数，分别是当前索引元素，索引，原数组<br>自动检测<br>[‘1’,’2’,’3’].map(parseInt)</p>
+<ul>
+<li>第一轮遍历 parseInt(‘1’, 0) -&gt; 1</li>
+<li>第二轮遍历 parseInt(‘2’, 1) -&gt; NaN</li>
+<li>第三轮遍历 parseInt(‘3’, 2) -&gt; NaN</li>
+</ul>
+<p>filter 的作用也是生成一个新数组，在遍历数组的时候将返回值为 true 的元素放入新数组，我们可以利用这个函数删除一些不需要的元素，作用就是数组过滤<br>自动检测<br>let array = [1, 2, 4, 6]<br>let newArray = array.filter(item =&gt; item !== 6)<br>console.log(newArray) // [1, 2, 4]<br>和 map 一样，filter 的回调函数也接受三个参数，用处也相同。<br>最后我们来讲解 reduce 这块的内容，同时也是最难理解的一块内容。reduce 可以将数组中的元素通过回调函数最终转换为一个值。<br>如果我们想实现一个功能将函数里的元素全部相加得到一个值，可能会这样写代码<br>自动检测<br>const arr = [1, 2, 3]<br>let total = 0<br>for (let i = 0; i &lt; arr.length; i++) {<br>total += arr[i]<br>}<br>console.log(total) //6</p>
+<p>但是如果我们使用 reduce 的话就可以将遍历部分的代码优化为一行代码<br>自动检测<br>const arr = [1, 2, 3]<br>const sum = arr.reduce((acc, current) =&gt; acc + current, 0)<br>console.log(sum)</p>
+<p>对于 reduce 来说，它接受两个参数，分别是回调函数和初始值，接下来我们来分解上述代码中 reduce 的过程</p>
+<ul>
+<li>首先初始值为 0，该值会在执行第一次回调函数时作为第一个参数传入</li>
+<li>回调函数接受四个参数，分别为累计值、当前元素、当前索引、原数组，后三者想必大家都可以明白作用，这里着重分析第一个参数</li>
+<li>在一次执行回调函数时，当前值和初始值相加得出结果 1，该结果会在第二次执行回调函数时当做第一个参数传入</li>
+<li>所以在第二次执行回调函数时，相加的值就分别是 1 和 2，以此类推，循环结束后得到结果 6</li>
+</ul>
+<p>想必通过以上的解析大家应该明白 reduce 是如何通过回调函数将所有元素最终转换为一个值的，当然 reduce 还可以实现很多功能，接下来我们就通过 reduce 来实现 map 函数<br>自动检测<br>const arr = [1, 2, 3]<br>const mapArray = arr.map(value =&gt; value _ 2)<br>const reduceArray = arr.reduce((acc, current) =&gt; {<br>acc.push(current _ 2)<br>return acc<br>}, [])<br>console.log(mapArray, reduceArray) // [2, 4, 6]</p>
+<h3 id="7，ES6-class-和普通构造函数的区别"><a href="#7，ES6-class-和普通构造函数的区别" class="headerlink" title="7，ES6 class 和普通构造函数的区别"></a><strong>7，ES6 class 和普通构造函数的区别</strong></h3><p>class 其实一直是 JS 的关键字（保留字），但是一直没有正式使用，直到 ES6 。 ES6 的 class 就是取代之前构造函数初始化对象的形式，从语法上更加符合面向对象的写法</p>
+<ol>
+<li><pre><code>  class 是一种新的语法形式，是class Name &#123;...&#125;这种形式，和函数的写法完全不一样
+</code></pre>
+</li>
+<li><pre><code>  两者对比，构造函数函数体的内容要放在 class 中的constructor函数中，constructor即构造器，初始化实例时默认执行
+</code></pre>
+</li>
+<li>   class 中函数的写法是add() {…}这种形式，并没有function关键字<br> 自动检测<br> // JS 构造函数的写法<br> function MathHandle(x, y) {<br> this.x = x;<br> this.y = y;<br> }<br> MathHandle.aa = ‘111’<br> MathHandle.prototype.add = function () {<br> return this.x + this.y;<br> };<br> var m = new MathHandle(1, 2);<br> console.log(m.add())<br> // 用 ES6 class 的写法<br> class MathHandle {<br> stati aa = ‘111’<br> constructor(x, y) {<br> this.x = x;<br> this.y = y;<br> }<br> aa = ‘aaa’<br> add() {<br> return this.x + this.y;<br> }<br> }<br> const m = new MathHandle(1, 2);<br> console.log(m.add())</li>
+</ol>
+<p>而且使用 class 来实现继承就更加简单了<br>在 class 中直接 extends 关键字就可以实现继承，而不像之前的继承实现有多种不同的实现方式，在 es6 中就只有一种<br>自动检测<br>// JS 构造函数实现继承<br>// 动物<br>function Animal() {<br>this.eat = function () {<br>console.log(‘animal eat’)<br>}<br>}<br>// 狗<br>function Dog() {<br>this.bark = function () {<br>console.log(‘dog bark’)<br>}<br>}<br>Dog.prototype = new Animal()<br>// 哈士奇<br>var hashiqi = new Dog()<br>// ES6 class 实现继承<br>class Animal {<br>constructor(name) {<br>this.name = name<br>}<br>eat() {<br>console.log(<code>$&#123;this.name&#125; eat</code>)<br>}<br>}<br>class Dog extends Animal {<br>constructor(name) {<br>super(name)<br>this.name = name<br>}<br>say() {<br>console.log(<code>$&#123;this.name&#125; say</code>)<br>}<br>}<br>const dog = new Dog(‘哈士奇’)<br>dog.say()<br>dog.eat()</p>
+<p>注意以下两点：<br>使用 extends 即可实现继承，更加符合经典面向对象语言的写法，如 Java<br>子类的 constructor 一定要执行 super()，以调用父类的 constructor</p>
+<h3 id="8，箭头函数的作用域上下文和-普通函数作用域上下文-的区别"><a href="#8，箭头函数的作用域上下文和-普通函数作用域上下文-的区别" class="headerlink" title="8，箭头函数的作用域上下文和 普通函数作用域上下文 的区别"></a><strong>8，箭头函数的作用域上下文和 普通函数作用域上下文 的区别</strong></h3><p>箭头函数其实只是一个密名函数的语法糖，区别在于普通函数作用域中的 this 有特定的指向，一般指向 window，而箭头函数中的 this 只有一个指向那就是指当前函数所在的对象，其实现原理其实就是类似于之前编程的时候在函数外围定义 that 一样，用了箭头函数就不用定义 that 了直接使用 this</p>
+<h3 id="9，Proxy"><a href="#9，Proxy" class="headerlink" title="9，Proxy"></a>9，Proxy</h3><p>涉及面试题：Proxy 可以实现什么功能？<br>如果你平时有关注 Vue 的进展的话，可能已经知道了在 Vue3.0 中将会通过 Proxy 来替换原本的 Object.defineProperty 来实现数据响应式。 Proxy 是 ES6 中新增的功能，它可以用来自定义对象中的操作。<br>let p = new Proxy(target, handler)<br>target 代表需要添加代理的对象，handler 用来自定义对象中的操作，比如可以用来自定义 set 或者 get 函数。<br>接下来我们通过 Proxy 来实现一个数据响应式<br>自动检测<br>let onWatch = (obj, setBind, getLogger) =&gt; {<br>let handler = {<br>get(target, property,receiver{ getLogger(target, property)<br>return Reflect.get(target, property, receiver)<br>},<br>set(target, property, value, receiver) {<br>setBind(value, property)<br>return Reflect.set(target, property, value)<br>}<br>}<br>return new Proxy(obj, handler)<br>}<br>let obj = { a: 1 }<br>let p = onWatch(<br>obj,<br>(v, property) =&gt; {<br>console.log(<code>监听到属性$&#123;property&#125;改变为$&#123;v&#125;</code>)<br>},<br>(target, property) =&gt; {<br>console.log(<code>&#39;$&#123;property&#125;&#39; = $&#123;target[property]&#125;</code>)<br>}<br>)<br>p.a = 2 // 监听到属性 a 改变<br>p.a // ‘a’ = 2<br>在上述代码中，我们通过自定义 set 和 get 函数的方式，在原本的逻辑中插入了我们的函数逻辑，实现了在对对象任何属性进行读写时发出通知。<br>当然这是简单版的响应式实现，如果需要实现一个 Vue 中的响应式，需要我们在 get 中收集依赖，在 set 派发更新，之所以 Vue3.0 要使用 Proxy 替换原本的 API 原因在于 Proxy 无需一层层递归为每个属性添加代理，一次即可完成以上操作，性能上更好，并且原本的实现有一些数据更新不能监听到，但是 Proxy 可以完美监听到任何方式的数据改变，唯一缺陷可能就是浏览器的兼容性不好了。<br>Proxy 无需一层层递归为每个属性添加代理有疑问，以下是实现代码。<br>自动检测<br>get(target, property, receiver) {<br>getLogger(target, property)<br>// 这句判断代码是新增的<br>if (typeof target[property] === ‘object’ &amp;&amp; target[property] !== null) {<br>return new Proxy(target[property], handler);<br>} else {<br>return Reflect.get(target, property);<br>}<br>}</p>
+<h3 id="10，Proxy-与-Object-defineProperty-对比"><a href="#10，Proxy-与-Object-defineProperty-对比" class="headerlink" title="10，Proxy 与 Object.defineProperty 对比"></a>10，Proxy 与 Object.defineProperty 对比</h3><p>Object.defineProperty 虽然已经能够实现双向绑定了，但是他还是有缺陷的。</p>
+<ol>
+<li>只能对属性进行数据劫持，所以需要深度遍历整个对象</li>
+<li>对于数组不能监听到数据的变化</li>
+</ol>
+<p>虽然 Vue 中确实能检测到数组数据的变化，但是其实是使用了 hack 的办法，并且也是有缺陷的。<br>自动检测<br>const arrayProto = Array.prototype<br>export const arrayMethods = Object.create(arrayProto)<br>// hack 以下几个函数<br>const methodsToPatch = [<br>‘push’,<br>‘pop’,<br>‘shift’,<br>‘unshift’,<br>‘splice’,<br>‘sort’,<br>‘reverse’<br>]<br>methodsToPatch.forEach(function (method) {<br>// 获得原生函数<br>const original = arrayProto[method]<br>def(arrayMethods, method, function mutator (…args) {<br>// 调用原生函数<br>const result = original.apply(this, args)<br>const ob = this.<strong>ob</strong><br>let inserted<br>switch (method) {<br>case ‘push’:<br>case ‘unshift’:<br>inserted = args<br>break<br>case ‘splice’:<br>inserted = args.slice(2)<br>break<br>}<br>if (inserted) ob.observeArray(inserted)<br>// 触发更新<br>ob.dep.notify()<br>return result<br>})<br>})</p>
+<p>反观 Proxy 就没以上的问题，原生支持监听数组变化，并且可以直接对整个对象进行拦截，所以 Vue 也将在下个大版本中使用 Proxy 替换 Object.defineProperty<br>自动检测<br>let onWatch = (obj, setBind, getLogger) =&gt; {<br>let handler = {<br>get(target, property, receiver) {<br>getLogger(target, property)<br>return Reflect.get(target, property, receiver);<br>},<br>set(target, property, value, receiver) {<br>setBind(value);<br>return Reflect.set(target, property, value);<br>}<br>};<br>return new Proxy(obj, handler);<br>};<br>let obj = { a: 1 }<br>let value<br>let p = onWatch(obj, (v) =&gt; {<br>value = v<br>}, (target, property) =&gt; {<br>console.log(<code>Get &#39;$&#123;property&#125;&#39; = $&#123;target[property]&#125;</code>);<br>})<br>p.a = 2 // bind <code>value</code> to <code>2</code><br>p.a // -&gt; Get ‘a’ = 2</p>
+<h3 id="11，es6-如何转为-es5？"><a href="#11，es6-如何转为-es5？" class="headerlink" title="11，es6 如何转为 es5？"></a><strong>11，es6 如何转为 es5？</strong></h3><p>使用 Babel 转码器，Babel 的配置文件是.babelrc，存放在项目的根目录下。使用 Babel 的第一步，就是配置这个文件。</p>
+<h3 id="12，babel"><a href="#12，babel" class="headerlink" title="12，babel"></a>12，babel</h3><h3 id="13，常见面试题"><a href="#13，常见面试题" class="headerlink" title="13，常见面试题"></a>13，常见面试题</h3><ol>
+<li>var、let 及 const 区别？</li>
+<li>使用解构，实现两个变量的值的交换？</li>
+<li>解构赋值？</li>
+<li>函数默认参数？</li>
+<li>JavaScript 中什么是变量提升？什么是暂时性死区？</li>
+<li>箭头函数？</li>
+<li>箭头函数与普通函数有什么区别？</li>
+<li>反引号 ` 标识？</li>
+<li>属性简写、方法简写？</li>
+<li>for of 循环？</li>
+<li>字符串新增方法？</li>
+<li>如何改变函数内部的 this 指针的指向？</li>
+<li>如何判断 this？箭头函数的 this 是什么？</li>
+<li>call、apply 以及 bind 函数内部实现是怎么样的？</li>
+<li>import 和 export？</li>
+<li>ES6 中的 class 了解吗？ES6 中的 class 和 ES5 的类有什么区别？</li>
+<li>知道 ECMAScript6 怎么写 class 么？为什么会出现 class 这种东西?</li>
+<li>原型如何实现继承？Class 如何实现继承？Class 本质是什么？</li>
+<li>Promise 有几种状态？Promise 的特点是什么，分别有什么优缺点？</li>
+<li>Promise 构造函数是同步还是异步执行？then 呢？Promise 如何实现 then 处理？</li>
+<li>Promise 和 setTimeout 的区别？</li>
+<li>如何实现 Promise.all() ？</li>
+<li>如何实现 Promise.prototype.finally() ？</li>
+<li>all() 的用法？</li>
+<li>es6 的展开运算符… 属于浅拷贝还是深拷贝。 答：浅拷贝，只拷贝了最外面的一层数据，如果数组是一个二维数组，拷贝的就是数组的引用</li>
+<li>说说你对 Promise 的了解？</li>
+</ol>
+<h2 id="浏览器相关"><a href="#浏览器相关" class="headerlink" title="浏览器相关"></a>浏览器相关</h2><h3 id="1，跨域"><a href="#1，跨域" class="headerlink" title="1，跨域"></a>1，跨域</h3><h3 id="2，浏览器的渲染原理"><a href="#2，浏览器的渲染原理" class="headerlink" title="2，浏览器的渲染原理"></a>2，浏览器的渲染原理</h3><p>我们知道执行 JS 有一个 JS 引擎，那么执行渲染也有一个渲染引擎。同样，渲染引擎在不同的浏览器中也不是都相同的。比如在 Firefox 中叫做 <strong>Gecko</strong>，在 Chrome 和 Safari 中都是基于 <strong>WebKit</strong> 开发的。在这一章节中，我们也会主要学习关于 <strong>WebKit</strong> 的这部分渲染引擎内容。</p>
+<p><strong>浏览器接收到 HTML 文件并转换为 DOM 树</strong></p>
+<p>当我们打开一个网页时，浏览器都会去请求对应的 HTML 文件。虽然平时我们写代码时都会分为 JS、CSS、HTML 文件，也就是字符串，但是计算机硬件是不理解这些字符串的，所以在网络中传输的内容其实都是 0 和 1 这些字节数据。当浏览器接收到这些字节数据以后，它会将这些字节数据转换为字符串，也就是我们写的代码。</p>
+<p>当数据转换为字符串以后，浏览器会先将这些字符串通过词法分析转换为标记（token），这一过程在词法分析中叫做标记化（tokenization）。</p>
+<p>那么什么是标记呢？这其实属于编译原理这一块的内容了。简单来说，标记还是字符串，是构成代码的最小单位。这一过程会将代码分拆成一块块，并给这些内容打上标记，便于理解这些最小单位的代码是什么意思。<img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633779-f42e7d21-ef99-478b-add5-7114d412b141.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"><br>当结束标记化后，这些标记会紧接着转换为 Node，最后这些 Node 会根据不同 Node 之间的联系构建为一颗 DOM 树。<br><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633740-0714b838-5ca3-4da2-883b-a5e92042fe34.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"><br>以上就是浏览器从网络中接收到 HTML 文件然后一系列的转换过程。<br><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633903-815d6079-be61-4a7a-948f-2b0e43f6f8f0.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"><br>当然，在解析 HTML 文件的时候，浏览器还会遇到 CSS 和 JS 文件，这时候浏览器也会去下载并解析这些文件，接下来就让我们先来学习浏览器如何解析 CSS 文件。<br>将 CSS 文件转换为 CSSOM 树<br>其实转换 CSS 到 CSSOM 树的过程和上一小节的过程是极其类似的<br><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633796-bdd27ae5-8c36-4875-8d2c-a090d9625339.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"><br>在这一过程中，浏览器会确定下每一个节点的样式到底是什么，并且这一过程其实是很消耗资源的。因为样式你可以自行设置给某个节点，也可以通过继承获得。在这一过程中，浏览器得递归 CSSOM 树，然后确定具体的元素到底是什么样式。<br>如果你有点不理解为什么会消耗资源的话，我这里举个例子<br>自动检测</p>
+<div>
+<a> <span></span> </a>
+</div>
+<style>
+span {
+color: red;
+}
+div > a > span {
+color: red;
+}
+</style>
+对于第一种设置样式的方式来说，浏览器只需要找到页面中所有的 span 标签然后设置颜色，但是对于第二种设置样式的方式来说，浏览器首先需要找到所有的 span 标签，然后找到 span 标签上的 a 标签，最后再去找到 div 标签，然后给符合这种条件的 span 标签设置颜色，这样的递归过程就很复杂。所以我们应该尽可能的避免写过于具体的 CSS 选择器，然后对于 HTML 来说也尽量少的添加无意义标签，保证层级扁平。
+
+<p><strong>生成渲染树</strong><br>当我们生成 DOM 树和 CSSOM 树以后，就需要将这两棵树组合为渲染树。<br><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633761-aa910937-f3b5-4291-a8ee-0628c37d3bca.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"><br>在这一过程中，不是简单的将两者合并就行了。渲染树只会包括需要显示的节点和这些节点的样式信息，如果某个节点是 display: none 的，那么就不会在渲染树中显示。<br>当浏览器生成渲染树以后，就会根据渲染树来进行布局（也可以叫做回流），然后调用 GPU 绘制，合成图层，显示在屏幕上。对于这一部分的内容因为过于底层，还涉及到了硬件相关的知识，这里就不再继续展开内容了。<br>那么通过以上内容，我们已经详细了解到了浏览器从接收文件到将内容渲染在屏幕上的这一过程。接下来，我们将会来学习上半部分遗留下来的一些知识点。</p>
+<p><strong>为什么操作 DOM 慢</strong><br>想必大家都听过操作 DOM 性能很差，但是这其中的原因是什么呢？<br>因为 DOM 是属于渲染引擎中的东西，而 JS 又是 JS 引擎中的东西。当我们通过 JS 操作 DOM 的时候，其实这个操作涉及到了两个线程之间的通信，那么势必会带来一些性能上的损耗。操作 DOM 次数一多，也就等同于一直在进行线程之间的通信，并且操作 DOM 可能还会带来重绘回流的情况，所以也就导致了性能上的问题。<br>经典面试题：插入几万个 DOM，如何实现页面不卡顿？<br>对于这道题目来说，首先我们肯定不能一次性把几万个 DOM 全部插入，这样肯定会造成卡顿，所以解决问题的重点应该是如何分批次部分渲染 DOM。大部分人应该可以想到通过 requestAnimationFrame 的方式去循环的插入 DOM，其实还有种方式去解决这个问题：虚拟滚动（virtualized scroller）。<br>这种技术的原理就是只渲染可视区域内的内容，非可见区域的那就完全不渲染了，当用户在滚动的时候就实时去替换渲染的内容。<br><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633857-a198ab6a-3d0f-49e3-bc71-cf6dad655133.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"><br>从上图中我们可以发现，即使列表很长，但是渲染的 DOM 元素永远只有那么几个，当我们滚动页面的时候就会实时去更新 DOM，这个技术就能顺利解决这道经典面试题。如果你想了解更多的内容可以了解下这个 <a href="https://link.juejin.im/?target=https://github.com/bvaughn/react-virtualized">react-virtualized</a>。</p>
+<p><strong>什么情况阻塞渲染</strong><br>首先渲染的前提是生成渲染树，所以 HTML 和 CSS 肯定会阻塞渲染。如果你想渲染的越快，你越应该降低一开始需要渲染的文件大小，并且扁平层级，优化选择器。<br>然后当浏览器在解析到 script 标签时，会暂停构建 DOM，完成后才会从暂停的地方重新开始。也就是说，如果你想首屏渲染的越快，就越不应该在首屏就加载 JS 文件，这也是都建议将 script 标签放在 body 标签底部的原因。<br>当然在当下，并不是说 script 标签必须放在底部，因为你可以给 script 标签添加 defer 或者 async 属性。<br>当 script 标签加上 defer 属性以后，表示该 JS 文件会并行下载，但是会放到 HTML 解析完成后顺序执行，所以对于这种情况你可以把 script 标签放在任意位置。<br>对于没有任何依赖的 JS 文件可以加上 async 属性，表示 JS 文件下载和解析不会阻塞渲染。</p>
+<p><strong>重绘（Repaint）和回流（Reflow）</strong><br>重绘和回流会在我们设置节点样式时频繁出现，同时也会很大程度上影响性能。<br>重绘是当节点需要更改外观而不会影响布局的，比如改变 color 就叫称为重绘<br>回流是布局或者几何属性需要改变就称为回流。<br>回流必定会发生重绘，重绘不一定会引发回流。回流所需的成本比重绘高的多，改变父节点里的子节点很可能会导致父节点的一系列回流。<br>以下几个动作可能会导致性能问题：<br>改变 window 大小<br>改变字体<br>添加或删除样式<br>文字改变<br>定位或者浮动<br>盒模型<br>并且很多人不知道的是，重绘和回流其实也和 Eventloop 有关。<br>当 Eventloop 执行完 Microtasks 后，会判断 document 是否需要更新，因为浏览器是 60Hz 的刷新率，每 16.6ms 才会更新一次。<br>然后判断是否有 resize 或者 scroll 事件，有的话会去触发事件，所以 resize 和 scroll 事件也是至少 16ms 才会触发一次，并且自带节流功能。<br>判断是否触发了 media query<br>更新动画并且发送事件<br>判断是否有全屏操作事件<br>执行 requestAnimationFrame 回调<br>执行 IntersectionObserver 回调，该方法用于判断元素是否可见，可以用于懒加载上，但是兼容性不好<br>更新界面<br>以上就是一帧中可能会做的事情。如果在一帧中有空闲时间，就会去执行 requestIdleCallback 回调。<br>以上内容来自于 <a href="https://link.juejin.im/?target=https://html.spec.whatwg.org/multipage/webappapis.html%23event-loop-processing-model">HTML 文档</a>。<br>既然我们已经知道了重绘和回流会影响性能，那么接下来我们将会来学习如何减少重绘和回流的次数。</p>
+<p><strong>减少重绘和回流</strong></p>
+<p>使用 transform 替代 top<br>自动检测</p>
+<div class="test"></div>
+<style>
+.test {
+position: absolute;
+top: 10px;
+width: 100px;
+height: 100px;
+background: red;
+}
+</style>
+<script>
+setTimeout(() => {
+// 引起回流
+document.querySelector('.test').style.top = '100px'
+}, 1000)
+</script>
+使用 visibility 替换 display: none ，因为前者只会引起重绘，后者会引发回流（改变了布局）
+
+<p>不要把节点的属性值放在一个循环里当成循环里的变量<br>自动检测<br>for(let i = 0; i &lt; 1000; i++) {<br>// 获取 offsetTop 会导致回流，因为需要去获取正确的值<br>console.log(document.querySelector(‘.test’).style.offsetTop)<br>}<br>不要使用 table 布局，可能很小的一个小改动会造成整个 table 的重新布局</p>
+<p>动画实现的速度的选择，动画速度越快，回流次数越多，也可以选择使用 requestAnimationFrame</p>
+<p>CSS 选择符从右往左匹配查找，避免节点层级过多</p>
+<p>将频繁重绘或者回流的节点设置为图层，图层能够阻止该节点的渲染行为影响别的节点。比如对于 video 标签来说，浏览器会自动将该节点变为图层。<br><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633775-d6bf70e0-1bba-4fc0-8717-696b6d8eff3e.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"><br>设置节点为图层的方式有很多，我们可以通过以下几个常用属性可以生成新图层<br>will-change<br>video、iframe 标签</p>
+<p><strong>思考题</strong><br>思考题：在不考虑缓存和优化网络协议的前提下，考虑可以通过哪些方式来最快的渲染页面，也就是常说的关键渲染路径，这部分也是性能优化中的一块内容。<br>首先你可能会疑问，那怎么测量到底有没有加快渲染速度呢<br><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633769-5ae71284-e687-4d4f-b57a-f0fa8193b3de.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"><br>当发生 DOMContentLoaded 事件后，就会生成渲染树，生成渲染树就可以进行渲染了，这一过程更大程度上和硬件有关系了。<br>提示如何加速：<br>从文件大小考虑<br>从 script 标签使用上来考虑<br>从 CSS、HTML 的代码书写上来考虑<br>从需要下载的内容是否需要在首屏使用上来考虑</p>
+<h3 id="3，从输入-URL-到页面加载全过程"><a href="#3，从输入-URL-到页面加载全过程" class="headerlink" title="3，从输入 URL 到页面加载全过程"></a>3，从输入 URL 到页面加载全过程</h3><ol>
+<li>首先做 DNS 查询，如果这一步做了智能 DNS 解析的话，会提供访问速度最快的 IP 地址回来</li>
+<li>接下来是 TCP 握手，应用层会下发数据给传输层，这里 TCP 协议会指明两端的端口号，然后下发给网络层。网络层中的 IP 协议会确定 IP 地址，并且指示了数据传输中如何跳转路由器。然后包会再被封装到数据链路层的数据帧结构中，最后就是物理层面的传输了</li>
+<li>TCP 握手结束后会进行 TLS 握手，然后就开始正式的传输数据</li>
+<li>数据在进入服务端之前，可能还会先经过负责负载均衡的服务器，它的作用就是将请求合理的分发到多台服务器上，这时假设服务端会响应一个 HTML 文件</li>
+<li>首先浏览器会判断状态码是什么，如果是 200 那就继续解析，如果 400 或 500 的话就会报错，如果 300 的话会进行重定向，这里会有个重定向计数器，避免过多次的重定向，超过次数也会报错</li>
+<li>浏览器开始解析文件，如果是 gzip 格式的话会先解压一下，然后通过文件的编码格式知道该如何去解码文件</li>
+<li>文件解码成功后会正式开始渲染流程，先会根据 HTML 构建 DOM 树，有 CSS 的话会去构建 CSSOM 树。如果遇到 script 标签的话，会判断是否存在 async 或者 defer，前者会并行进行下载并执行 JS，后者会先下载文件，然后等待 HTML 解析完成后顺序执行，如果以上都没有，就会阻塞住渲染流程直到 JS 执行完毕。遇到文件下载的会去下载文件，这里如果使用 HTTP 2.0 协议的话会极大的提高多图的下载效率。</li>
+<li>初始的 HTML 被完全加载和解析后会触发 DOMContentLoaded 事件</li>
+<li>CSSOM 树和 DOM 树构建完成后会开始生成 Render 树，这一步就是确定页面元素的布局、样式等等诸多方面的东西</li>
+<li>在生成 Render 树的过程中，浏览器就开始调用 GPU 绘制，合成图层，将内容显示在屏幕上了</li>
+</ol>
+<h3 id="4，浏览器缓存机制"><a href="#4，浏览器缓存机制" class="headerlink" title="4，浏览器缓存机制"></a>4，浏览器缓存机制</h3><p>缓存对于前端性能优化来说是个很重要的点，良好的缓存策略可以降低资源的重复加载提高网页的整体加载速度。<br>通常浏览器缓存策略分为两种：强缓存和协商缓存。</p>
+<p><strong>强缓存</strong><br>实现强缓存可以通过两种响应头实现：Expires 和 Cache-Control。强缓存表示在缓存期间不需要请求，state code 为 200<br>Expires: Wed, 22 Oct 2019 08:41:00 GMT<br>复制代码<br>Expires 是 HTTP / 1.0 的产物，表示资源会在 Wed, 22 Oct 2019 08:41:00 GMT 后过期，需要再次请求。并且 Expires 受限于本地时间，如果修改了本地时间，可能会造成缓存失效。<br>自动检测<br>Cache-control: max-age=30<br>Cache-Control 出现于 HTTP / 1.1，优先级高于 Expires。该属性表示资源会在 30 秒后过期，需要再次请求。</p>
+<p><strong>协商缓存</strong><br>如果缓存过期了，我们就可以使用协商缓存来解决问题。协商缓存需要请求，如果缓存有效会返回 304。<br>协商缓存需要客户端和服务端共同实现，和强缓存一样，也有两种实现方式。</p>
+<p><strong>Last-Modified 和 If-Modified-Since</strong><br>Last-Modified 表示本地文件最后修改日期，If-Modified-Since 会将 Last-Modified 的值发送给服务器，询问服务器在该日期后资源是否有更新，有更新的话就会将新的资源发送回来。<br>但是如果在本地打开缓存文件，就会造成 Last-Modified 被修改，所以在 HTTP / 1.1 出现了 ETag。</p>
+<p><strong>ETag 和 If-None-Match</strong><br>ETag 类似于文件指纹，If-None-Match 会将当前 ETag 发送给服务器，询问该资源 ETag 是否变动，有变动的话就将新的资源发送回来。并且 ETag 优先级比 Last-Modified 高。</p>
+<p><strong>选择合适的缓存策略</strong><br>对于大部分的场景都可以使用强缓存配合协商缓存解决，但是在一些特殊的地方可能需要选择特殊的缓存策略</p>
+<ul>
+<li>对于某些不需要缓存的资源，可以使用 Cache-control: no-store，表示该资源不需要缓存</li>
+<li>对于频繁变动的资源，可以使用 Cache-Control: no-cache 并配合 ETag 使用，表示该资源已被缓存，但是每次都会发送请求询问资源是否更新。</li>
+<li>对于代码文件来说，通常使用 Cache-Control: max-age=31536000 并配合策略缓存使用，然后对文件进行指纹处理，一旦文件名变动就会立刻下载新的文件。</li>
+</ul>
+<p><strong>实际场景应用缓存策略</strong><br>单纯了解理论而不付诸于实践是没有意义的，接下来我们来通过几个场景学习下如何使用这些理论。</p>
+<p>1，频繁变动的资源</p>
+<p>对于频繁变动的资源，首先需要使用 Cache-Control: no-cache 使浏览器每次都请求服务器，然后配合 ETag 或者 Last-Modified 来验证资源是否有效。这样的做法虽然不能节省请求数量，但是能显著减少响应数据大小。</p>
+<p>2，代码文件</p>
+<p>这里特指除了 HTML 外的代码文件，因为 HTML 文件一般不缓存或者缓存时间很短。</p>
+<p>一般来说，现在都会使用工具来打包代码，那么我们就可以对文件名进行哈希处理，只有当代码修改后才会生成新的文件名。基于此，我们就可以给代码文件设置缓存有效期一年 Cache-Control: max-age=31536000，这样只有当 HTML 文件中引入的文件名发生了改变才会去下载最新的代码文件，否则就一直使用缓存。</p>
+<h3 id="5，调试"><a href="#5，调试" class="headerlink" title="5，调试"></a>5，调试</h3><h3 id="6，性能优化"><a href="#6，性能优化" class="headerlink" title="6，性能优化"></a>6，性能优化</h3><p><strong>静态资源的压缩合并</strong><br>如果不合并，每个都会走一遍之前介绍的请求过程<br>自动检测</p>
+<script src="a.js"></script>
+<script src="b.js"></script>
+<script src="c.js"></script>
+
+<p>如果合并了，就只走一遍请求过程<br>自动检测</p>
+<script src="abc.js"></script>
+
+<p><strong>静态资源缓存</strong><br>通过链接名称控制缓存,,,,.<br>自动检测</p>
+<script src="abc_1.js"></script>
+
+<p>只有内容改变的时候，链接名称才会改变<br>自动检测</p>
+<script src="abc_2.js"></script>
+
+<p>这个名称不用手动改，可通过前端构建工具根据文件内容，为文件名称添加 MD5 后缀。<br>使用 CDN 让资源加载更快<br>CDN 会提供专业的加载优化方案，静态资源要尽量放在 CDN 上。例如：<br>自动检测</p>
+<script src="https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+
+<p><strong>重绘（Repaint）和回流（Reflow）</strong><br>重绘和回流是渲染步骤中的一小节，但是这两个步骤对于性能影响很大。</p>
+<ul>
+<li>重绘是当节点需要更改外观而不会影响布局的，比如改变 color 就叫称为重绘</li>
+<li>回流是布局或者几何属性需要改变就称为回流。</li>
+</ul>
+<p>回流必定会发生重绘，重绘不一定会引发回流。回流所需的成本比重绘高的多，改变深层次的节点很可能导致父节点的一系列回流。<br>所以以下几个动作可能会导致性能问题：</p>
+<ul>
+<li>改变 window 大小</li>
+<li>改变字体</li>
+<li>添加或删除样式</li>
+<li>文字改变</li>
+<li>定位或者浮动</li>
+<li>盒模型</li>
+</ul>
+<p><strong>使用 SSR 后端渲染</strong><br>可一次性输出 HTML 内容，不用在页面渲染完成之后，再通过 Ajax 加载数据、再渲染。例如使用 smarty、Vue SSR 等。<br>CSS 放前面，JS 放后面</p>
+<p><strong>懒加载</strong><br>一开始先给为 src 赋值成一个通用的预览图，下拉时候再动态赋值成正式的图片。如下，preview.png 是预览图片，比较小，加载很快，而且很多图片都共用这个 preview.png，加载一次即可。待页面下拉，图片显示出来时，再去替换 src 为 data-realsrc 的值。<br>自动检测<br><img src="preview.png" data-realsrc="abc.png"/ loading="lazy"><br>另外，这里为何要用 data-开头的属性值？—— 所有 HTML 中自定义的属性，都应该用 data-开头，因为 data-开头的属性浏览器渲染的时候会忽略掉，提高渲染性能。</p>
+<p><strong>DOM 查询做缓存</strong><br>两段代码做一下对比：<br>自动检测<br>var pList = document.getElementsByTagName(‘p’) // 只查询一个 DOM ，缓存在 pList 中了<br>var i<br>for (i = 0; i &lt; pList.length; i++) {<br>}<br>var i<br>for (i = 0; i &lt; document.getElementsByTagName(‘p’).length; i++) { // 每次循环，都会查询 DOM ，耗费性能<br>}<br>总结：DOM 操作，无论查询还是修改，都是非常耗费性能的，应尽量减少。</p>
+<p><strong>合并 DOM 插入</strong><br>DOM 操作是非常耗费性能的，因此插入多个标签时，先插入 Fragment 然后再统一插入 DOM。<br>自动检测<br>var listNode = document.getElementById(‘list’)<br>// 要插入 10 个 li 标签<br>var frag = document.createDocumentFragment();<br>var x, li;<br>for(x = 0; x &lt; 10; x++) {<br>li = document.createElement(“li”);<br>li.innerHTML = “List item “ + x;<br>frag.appendChild(li); // 先放在 frag 中，最后一次性插入到 DOM 结构中。<br>}<br>listNode.appendChild(frag);</p>
+<p><strong>事件节流</strong><br>例如要在文字改变时触发一个 change 事件，通过 keyup 来监听。使用节流。<br>自动检测<br>var textarea = document.getElementById(‘text’)<br>var timeoutId<br>textarea.addEventListener(‘keyup’, function () {<br>if (timeoutId) {<br>clearTimeout(timeoutId)<br>}<br>timeoutId = setTimeout(function () {<br>// 触发 change 事件<br>}, 100)<br>})<br>// 尽早执行操作<br>window.addEventListener(‘load’, function () {<br>// 页面的全部资源加载完才会执行，包括图片、视频等<br>})<br>document.addEventListener(‘DOMContentLoaded’, function () {<br>// DOM 渲染完即可执行，此时图片、视频还可能没有加载完<br>})</p>
+<p><strong>DNS 预解析</strong><br>DNS 解析也是需要时间的，可以通过预解析的方式来预先获得域名所对应的 IP。<br>自动检测</p>
+<link rel="dns-prefetch" href="//yuchengkai.cn">
+
+<p><strong>节流</strong><br>考虑一个场景，滚动事件中会发起网络请求，但是我们并不希望用户在滚动过程中一直发起请求，而是隔一段时间发起一次，对于这种情况我们就可以使用节流。<br>理解了节流的用途，我们就来实现下这个函数<br>自动检测<br>// func 是用户传入需要防抖的函数<br>// wait 是等待时间<br>const throttle = (func, wait = 50) =&gt; {<br>// 上一次执行该函数的时间<br>let lastTime = 0<br>return function(…args) {<br>// 当前时间<br>let now = +new Date()<br>// 将当前时间和上一次执行函数时间对比<br>// 如果差值大于设置的等待时间就执行函数<br>if (now - lastTime &gt; wait) {<br>lastTime = now<br>func.apply(this, args)<br>}<br>}<br>}<br>setInterval(<br>throttle(() =&gt; {<br>console.log(1)<br>}, 500),<br>1<br>)</p>
+<p><strong>防抖</strong><br>考虑一个场景，有一个按钮点击会触发网络请求，但是我们并不希望每次点击都发起网络请求，而是当用户点击按钮一段时间后没有再次点击的情况才去发起网络请求，对于这种情况我们就可以使用防抖。<br>理解了防抖的用途，我们就来实现下这个函数<br>自动检测<br>// func 是用户传入需要防抖的函数<br>// wait 是等待时间<br>const debounce = (func, wait = 50) =&gt; {<br>// 缓存一个定时器 id<br>let timer = 0<br>// 这里返回的函数是每次用户实际调用的防抖函数<br>// 如果已经设定过定时器了就清空上一次的定时器<br>// 开始一个新的定时器，延迟执行用户传入的方法<br>return function(…args) {<br>if (timer) clearTimeout(timer)<br>timer = setTimeout(() =&gt; {<br>func.apply(this, args)<br>}, wait)<br>}<br>}</p>
+<p><strong>预加载</strong><br>在开发中，可能会遇到这样的情况。有些资源不需要马上用到，但是希望尽早获取，这时候就可以使用预加载。<br>预加载其实是声明式的 fetch ，强制浏览器请求资源，并且不会阻塞 onload 事件，可以使用以下代码开启预加载<br>自动检测</p>
+<link rel="preload" href="http://example.com">
+预加载可以一定程度上降低首屏的加载时间，因为可以将一些不影响首屏但重要的文件延后加载，唯一缺点就是兼容性不好。
+
+<p><strong>预渲染</strong><br>可以通过预渲染将下载的文件预先在后台渲染，可以使用以下代码开启预渲染<br>自动检测</p>
+<link rel="prerender" href="http://example.com"> 
+预渲染虽然可以提高页面的加载速度，但是要确保该页面大概率会被用户在之后打开，否则就是白白浪费资源去渲染。
+
+<p><strong>懒执行</strong><br>懒执行就是将某些逻辑延迟到使用时再计算。该技术可以用于首屏优化，对于某些耗时逻辑并不需要在首屏就使用的，就可以使用懒执行。懒执行需要唤醒，一般可以通过定时器或者事件的调用来唤醒。</p>
+<p><strong>懒加载</strong><br>懒加载就是将不关键的资源延后加载。<br>懒加载的原理就是只加载自定义区域（通常是可视区域，但也可以是即将进入可视区域）内需要加载的东西。对于图片来说，先设置图片标签的 src 属性为一张占位图，将真实的图片资源放入一个自定义属性中，当进入自定义区域时，就将自定义属性替换为 src 属性，这样图片就会去下载资源，实现了图片懒加载。<br>懒加载不仅可以用于图片，也可以使用在别的资源上。比如进入可视区域才开始播放视频等等。</p>
+<p><strong>CDN</strong><br>CDN 的原理是尽可能的在各个地方分布机房缓存数据，这样即使我们的根服务器远在国外，在国内的用户也可以通过国内的机房迅速加载资源。<br>因此，我们可以将静态资源尽量使用 CDN 加载，由于浏览器对于单个域名有并发请求上限，可以考虑使用多个 CDN 域名。并且对于 CDN 加载静态资源需要注意 CDN 域名要与主站不同，否则每次请求都会带上主站的 Cookie，平白消耗流量。</p>
+<p><strong>计算图片大小</strong><br>对于一张 100 _ 100 像素的图片来说，图像上有 10000 个像素点，如果每个像素的值是 <strong>RGBA</strong> 存储的话，那么也就是说每个像素有 4 个通道，每个通道 1 个字节（8 位 = 1 个字节），所以该图片大小大概为 39KB（10000 _ 1 * 4 / 1024）。<br>但是在实际项目中，一张图片可能并不需要使用那么多颜色去显示，我们可以通过减少每个像素的调色板来相应缩小图片的大小。<br>了解了如何计算图片大小的知识，那么对于如何优化图片，想必大家已经有 2 个思路了：</p>
+<ul>
+<li><strong>减少像素点</strong></li>
+<li><strong>减少每个像素点能够显示的颜色</strong></li>
+</ul>
+<p><strong>图片加载优化</strong></p>
+<ol>
+<li>不用图片。很多时候会使用到很多修饰类图片，其实这类修饰图片完全可以用 CSS 去代替。</li>
+<li>对于移动端来说，屏幕宽度就那么点，完全没有必要去加载原图浪费带宽。一般图片都用 CDN 加载，可以计算出适配屏幕的宽度，然后去请求相应裁剪好的图片。</li>
+<li>小图使用 base64 格式</li>
+<li>将多个图标文件整合到一张图片中（雪碧图）</li>
+<li>选择正确的图片格式：</li>
+<li>对于能够显示 WebP 格式的浏览器尽量使用 WebP 格式。因为 WebP 格式具有更好的图像数据压缩算法，能带来更小的图片体积，而且拥有肉眼识别无差异的图像质量，缺点就是兼容性并不好</li>
+<li>小图使用 PNG，其实对于大部分图标这类图片，完全可以使用 SVG 代替</li>
+<li>照片使用 JPEG</li>
+</ol>
+<p><strong>其他文件优化</strong><br>CSS 文件放在 head 中<br>服务端开启文件压缩功能<br>将 script 标签放在 body 底部，因为 JS 文件执行会阻塞渲染。当然也可以把 script 标签放在任意位置然后加上 defer ，表示该文件会并行下载，但是会放到 HTML 解析完成后顺序执行。对于没有任何依赖的 JS 文件可以加上 async ，表示加载和渲染后续文档元素的过程将和 JS 文件的加载与执行并行无序进行。<br>执行 JS 代码过长会卡住渲染，对于需要很多时间计算的代码可以考虑使用 Webworker。Webworker 可以让我们另开一个线程执行脚本而不影响渲染。</p>
+<p><strong>使用 Webpack 优化项目</strong><br>对于 Webpack4，打包项目使用 production 模式，这样会自动开启代码压缩<br>使用 ES6 模块来开启 tree shaking，这个技术可以移除没有使用的代码<br>优化图片，对于小图可以使用 base64 的方式写入文件中<br>按照路由拆分代码，实现按需加载<br>给打包出来的文件名添加哈希，实现浏览器缓存文件</p>
+<p><strong>性能优化怎么做</strong><br>上面提到的都是性能优化的单个点，性能优化项目具体实施起来，应该按照下面步骤推进：</p>
+<ol>
+<li>建立性能数据收集平台，摸底当前性能数据，通过性能打点，将上述整个页面打开过程消耗时间记录下来</li>
+<li>分析耗时较长时间段原因，寻找优化点，确定优化目标</li>
+<li>开始优化</li>
+<li>通过数据收集平台记录优化效果</li>
+<li>不断调整优化点和预期目标，循环 2~4 步骤</li>
+</ol>
+<p>性能优化是个长期的事情，不是一蹴而就的，应该本着先摸底、再分析、后优化的原则逐步来做。</p>
+<h3 id="6，图片格式"><a href="#6，图片格式" class="headerlink" title="6，图片格式"></a>6，图片格式</h3><p><a target="_blank" rel="noopener" href="https://juejin.im/post/5ce189e051882525ce3930ee">https://juejin.im/post/5ce189e051882525ce3930ee</a></p>
+<h3 id="7，浏览器缓存"><a href="#7，浏览器缓存" class="headerlink" title="7，浏览器缓存"></a>7，浏览器缓存</h3><p>缓存可以说是性能优化中<strong>简单高效</strong>的一种优化方式了，它可以<strong>显著减少网络传输所带来的损耗</strong>。<br>对于一个数据请求来说，可以分为发起网络请求、后端处理、浏览器响应三个步骤。浏览器缓存可以帮助我们在第一和第三步骤中优化性能。比如说直接使用缓存而不发起请求，或者发起了请求但后端存储的数据和前端一致，那么就没有必要再将数据回传回来，这样就减少了响应数据。<br>接下来的内容中我们将通过以下几个部分来探讨浏览器缓存机制：</p>
+<ul>
+<li>缓存位置</li>
+<li>缓存策略</li>
+<li>实际场景应用缓存策略</li>
+</ul>
+<p><strong>缓存位置</strong><br>从缓存位置上来说分为四种，并且各自有<strong>优先级</strong>，当依次查找缓存且都没有命中的时候，才会去请求网络</p>
+<ol>
+<li>Service Worker</li>
+<li>Memory Cache</li>
+<li>Disk Cache</li>
+<li>Push Cache</li>
+<li>网络请求</li>
+</ol>
+<p><strong>Service Worker</strong><br>在上一章节中我们已经介绍了 Service Worker 的内容，这里就不演示相关的代码了。<br>Service Worker 的缓存与浏览器其他内建的缓存机制不同，它可以让我们<strong>自由控制</strong>缓存哪些文件、如何匹配缓存、如何读取缓存，并且<strong>缓存是持续性的</strong>。<br>当 Service Worker 没有命中缓存的时候，我们需要去调用 fetch 函数获取数据。也就是说，如果我们没有在 Service Worker 命中缓存的话，会根据缓存查找优先级去查找数据。<strong>但是不管我们是从 Memory Cache 中还是从网络请求中获取的数据，浏览器都会显示我们是从 Service Worker 中获取的内容。</strong></p>
+<p><strong>Memory Cache</strong><br>Memory Cache 也就是内存中的缓存，读取内存中的数据肯定比磁盘快。<strong>但是内存缓存虽然读取高效，可是缓存持续性很短，会随着进程的释放而释放。</strong> 一旦我们关闭 Tab 页面，内存中的缓存也就被释放了。<br>当我们访问过页面以后，再次刷新页面，可以发现很多数据都来自于内存缓存<br>从内存中读取缓存<br>那么既然内存缓存这么高效，我们是不是能让数据都存放在内存中呢？<br>先说结论，这是<strong>不可能</strong>的。首先计算机中的内存一定比硬盘容量小得多，操作系统需要精打细算内存的使用，所以能让我们使用的内存必然不多。内存中其实可以存储大部分的文件，比如说 JSS、HTML、CSS、图片等等。但是浏览器会把哪些文件丢进内存这个过程就很<strong>玄学</strong>了，我查阅了很多资料都没有一个定论。<br>当然，我通过一些实践和猜测也得出了一些结论：</p>
+<ul>
+<li>对于大文件来说，大概率是不存储在内存中的，反之优先</li>
+<li>当前系统内存使用率高的话，文件优先存储进硬盘</li>
+</ul>
+<p><strong>Disk Cache</strong><br>Disk Cache 也就是存储在硬盘中的缓存，读取速度慢点，但是什么都能存储到磁盘中，比之 Memory Cache <strong>胜在容量和存储时效性上。</strong><br>在所有浏览器缓存中，Disk Cache 覆盖面基本是最大的。它会根据 HTTP Herder 中的字段判断哪些资源需要缓存，哪些资源可以不请求直接使用，哪些资源已经过期需要重新请求。<strong>并且即使在跨站点的情况下，相同地址的资源一旦被硬盘缓存下来，就不会再次去请求数据。</strong></p>
+<p><strong>Push Cache</strong><br>Push Cache 是 HTTP/2 中的内容，当以上三种缓存都没有命中时，它才会被使用。<strong>并且缓存时间也很短暂，只在会话（Session）中存在，一旦会话结束就被释放。</strong><br>Push Cache 在国内能够查到的资料很少，也是因为 HTTP/2 在国内不够普及，但是 HTTP/2 将会是日后的一个趋势。这里推荐阅读 <a href="https://link.juejin.im/?target=https://jakearchibald.com/2017/h2-push-tougher-than-i-thought/">HTTP/2 push is tougher than I thought</a> 这篇文章，但是内容是英文的，我翻译一下文章中的几个结论，有能力的同学还是推荐自己阅读</p>
+<ul>
+<li>所有的资源都能被推送，但是 Edge 和 Safari 浏览器兼容性不怎么好</li>
+<li>可以推送 no-cache 和 no-store 的资源</li>
+<li>一旦连接被关闭，Push Cache 就被释放</li>
+<li>多个页面可以使用相同的 HTTP/2 连接，也就是说能使用同样的缓存</li>
+<li>Push Cache 中的缓存只能被使用一次</li>
+<li>浏览器可以拒绝接受已经存在的资源推送</li>
+<li>你可以给其他域名推送资源</li>
+</ul>
+<p><strong>网络请求</strong><br>如果所有缓存都没有命中的话，那么只能发起请求来获取资源了。<br>那么为了性能上的考虑，大部分的接口都应该选择好缓存策略，接下来我们就来学习缓存策略这部分的内容。</p>
+<p><strong>缓存策略</strong><br>通常浏览器缓存策略分为两种：<strong>强缓存</strong>和<strong>协商缓存</strong>，并且缓存策略都是通过设置 HTTP Header 来实现的。</p>
+<p><strong>强缓存</strong><br>强缓存可以通过设置两种 HTTP Header 实现：Expires 和 Cache-Control 。强缓存表示在缓存期间不需要请求，state code 为 200。<br>Expires<br>Expires: Wed, 22 Oct 2019 08:41:00 GMT<br>Expires 是 HTTP/1 的产物，表示资源会在 Wed, 22 Oct 2019 08:41:00 GMT 后过期，需要再次请求。并且 Expires <strong>受限于本地时间</strong>，如果修改了本地时间，可能会造成缓存失效。<br>Cache-control<br>Cache-control: max-age=30<br>Cache-Control 出现于 HTTP/1.1，<strong>优先级高于 Expires</strong> 。该属性值表示资源会在 30 秒后过期，需要再次请求。<br>Cache-Control <strong>可以在请求头或者响应头中设置</strong>，并且可以组合使用多种指令<br>多种指令配合流程图<br>从图中我们可以看到，我们可以将<strong>多个指令配合起来一起使用</strong>，达到多个目的。比如说我们希望资源能被缓存下来，并且是客户端和代理服务器都能缓存，还能设置缓存失效时间等等。<br>接下来我们就来学习一些常见指令的作用<br>常见指令作用<br><strong>协商缓存</strong><br>如果缓存过期了，就需要发起请求验证资源是否有更新。协商缓存可以通过设置两种 HTTP Header 实现：Last-Modified 和 ETag 。<br>当浏览器发起请求验证资源时，如果资源没有做改变，那么服务端就会返回 304 状态码，并且更新浏览器缓存有效期。<br>协商缓存<br>Last-Modified 和 If-Modified-Since<br>Last-Modified 表示本地文件最后修改日期，If-Modified-Since 会将 Last-Modified 的值发送给服务器，询问服务器在该日期后资源是否有更新，有更新的话就会将新的资源发送回来，否则返回 304 状态码。<br>但是 Last-Modified 存在一些弊端：</p>
+<ul>
+<li>如果本地打开缓存文件，即使没有对文件进行修改，但还是会造成 Last-Modified 被修改，服务端不能命中缓存导致发送相同的资源</li>
+<li>因为 Last-Modified 只能以秒计时，如果在不可感知的时间内修改完成文件，那么服务端会认为资源还是命中了，不会返回正确的资源</li>
+</ul>
+<p>因为以上这些弊端，所以在 HTTP / 1.1 出现了 ETag 。<br>ETag 和 If-None-Match<br>ETag 类似于文件指纹，If-None-Match 会将当前 ETag 发送给服务器，询问该资源 ETag 是否变动，有变动的话就将新的资源发送回来。并且 ETag 优先级比 Last-Modified 高。<br>以上就是缓存策略的所有内容了，看到这里，不知道你是否存在这样一个疑问。<strong>如果什么缓存策略都没设置，那么浏览器会怎么处理？</strong><br>对于这种情况，浏览器会采用一个启发式的算法，通常会取响应头中的 Date 减去 Last-Modified 值的 10% 作为缓存时间。</p>
+<p><strong>实际场景应用缓存策略</strong><br>单纯了解理论而不付诸于实践是没有意义的，接下来我们来通过几个场景学习下如何使用这些理论。</p>
+<p><strong>频繁变动的资源</strong><br>对于频繁变动的资源，首先需要使用 Cache-Control: no-cache 使浏览器每次都请求服务器，然后配合 ETag 或者 Last-Modified 来验证资源是否有效。这样的做法虽然不能节省请求数量，但是能显著减少响应数据大小。</p>
+<p><strong>代码文件</strong><br>这里特指除了 HTML 外的代码文件，因为 HTML 文件一般不缓存或者缓存时间很短。<br>一般来说，现在都会使用工具来打包代码，那么我们就可以对文件名进行哈希处理，只有当代码修改后才会生成新的文件名。基于此，我们就可以给代码文件设置缓存有效期一年 Cache-Control: max-age=31536000，这样只有当 HTML 文件中引入的文件名发生了改变才会去下载最新的代码文件，否则就一直使用缓存。</p>
+<h2 id="前端安全"><a href="#前端安全" class="headerlink" title="前端安全"></a><strong>前端安全</strong></h2><h3 id="1，XSS（Cross-Site-Scripting，跨站脚本攻击）"><a href="#1，XSS（Cross-Site-Scripting，跨站脚本攻击）" class="headerlink" title="1，XSS（Cross Site Scripting，跨站脚本攻击）"></a><strong>1，XSS（Cross Site Scripting，跨站脚本攻击）</strong></h3><p>这是前端最常见的攻击方式，很多大型网站（如 Facebook）都被 XSS 攻击过。</p>
+<p>举一个例子，我在一个博客网站正常发表一篇文章，输入汉字、英文和图片，完全没有问题。但是如果我写的是恶意的 JS 脚本，例如获取到 document.cookie 然后传输到自己的服务器上，那我这篇博客的每一次浏览都会执行这个脚本，都会把访客 cookie 中的信息偷偷传递到我的服务器上来。</p>
+<p>其实原理上就是黑客通过某种方式（发布文章、发布评论等）将一段特定的 JS 代码隐蔽地输入进去。然后别人再看这篇文章或者评论时，之前注入的这段 JS 代码就执行了。JS 代码一旦执行，那可就不受控制了，因为它跟网页原有的 JS 有同样的权限，例如可以获取 server 端数据、可以获取 cookie 等。于是，攻击就这样发生了。</p>
+<p>XSS 的危害<br>XSS 的危害相当大，如果页面可以随意执行别人不安全的 JS 代码，轻则会让页面错乱、功能缺失，重则会造成用户的信息泄露。</p>
+<p>比如早些年社交网站经常爆出 XSS 蠕虫，通过发布的文章内插入 JS，用户访问了感染不安全 JS 注入的文章，会自动重新发布新的文章，这样的文章会通过推荐系统进入到每个用户的文章列表面前，很快就会造成大规模的感染。</p>
+<p>还有利用获取 cookie 的方式，将 cookie 传入入侵者的服务器上，入侵者就可以模拟 cookie 登录网站，对用户的信息进行篡改。</p>
+<p>XSS 的预防<br>那么如何预防 XSS 攻击呢？—— 最根本的方式，就是对用户输入的内容进行验证和替换，需要替换的字符有：</p>
+<p>&amp; 替换为：&amp;<br>&lt; 替换为：&lt;</p>
+<blockquote>
+<p>替换为：&gt;<br>” 替换为：”<br>‘ 替换为：’<br>/ 替换为：/<br>替换了这些字符之后，黑客输入的攻击代码就会失效，XSS 攻击将不会轻易发生。</p>
+</blockquote>
+<p>除此之外，还可以通过对 cookie 进行较强的控制，比如对敏感的 cookie 增加 http-only 限制，让 JS 获取不到 cookie 的内容。</p>
+<h3 id="2，CSRF（Cross-site-request-forgery，跨站请求伪造）"><a href="#2，CSRF（Cross-site-request-forgery，跨站请求伪造）" class="headerlink" title="2，CSRF（Cross-site request forgery，跨站请求伪造）"></a><strong>2，CSRF（Cross-site request forgery，跨站请求伪造）</strong></h3><p>CSRF 是借用了当前操作者的权限来偷偷地完成某个操作，而不是拿到用户的信息。</p>
+<p>例如，一个支付类网站，给他人转账的接口是<a target="_blank" rel="noopener" href="http://buy.com/pay?touid=999&money=100">http://buy.com/pay?touid=999&amp;money=100</a>，而这个接口在使用时没有任何密码或者 token 的验证，只要打开访问就直接给他人转账。一个用户已经登录了<a target="_blank" rel="noopener" href="http://buy.com/">http://buy.com</a>，在选择商品时，突然收到一封邮件，而这封邮件正文有这么一行代码<img src="[http://buy.com/pay?touid=999&money=100](http://buy.com/pay?touid=999&money=100)"/ loading="lazy">，他访问了邮件之后，其实就已经完成了购买。</p>
+<p>CSRF 的发生其实是借助了一个 cookie 的特性。我们知道，登录了<a target="_blank" rel="noopener" href="http://buy.com/">http://buy.com</a>之后，cookie 就会有登录过的标记了，此时请求<a target="_blank" rel="noopener" href="http://buy.com/pay?touid=999&money=100">http://buy.com/pay?touid=999&amp;money=100</a>是会带着 cookie 的，因此 server 端就知道已经登录了。而如果在<a target="_blank" rel="noopener" href="http://buy.com/">http://buy.com</a>去请求其他域名的 API 例如<a target="_blank" rel="noopener" href="http://abc.com/api">http://abc.com/api</a>时，是不会带 cookie 的，这是浏览器的同源策略的限制。但是 —— 此时在其他域名的页面中，请求<a target="_blank" rel="noopener" href="http://buy.com/pay?touid=999&money=100">http://buy.com/pay?touid=999&amp;money=100</a>，会带着<a target="_blank" rel="noopener" href="http://buy.com/">buy.com</a>的 cookie ，这是发生 CSRF 攻击的理论基础。</p>
+<p>预防 CSRF 就是加入各个层级的权限验证，例如现在的购物网站，只要涉及现金交易，肯定要输入密码或者指纹才行。除此之外，敏感的接口使用 POST 请求而不是 GET 也是很重要的。</p>
+<h3 id="3，XSS"><a href="#3，XSS" class="headerlink" title="3，XSS"></a>3，XSS</h3><p>涉及面试题：什么是 XSS 攻击？如何防范 XSS 攻击？什么是 CSP？<br>XSS 简单点来说，就是攻击者想尽一切办法将可以执行的代码注入到网页中。<br>XSS 可以分为多种类型，但是总体上我认为分为两类：<strong>持久型和非持久型</strong>。<br>持久型也就是攻击的代码被服务端写入进<strong>数据库</strong>中，这种攻击危害性很大，因为如果网站访问量很大的话，就会导致大量正常访问页面的用户都受到攻击。<br>举个例子，对于评论功能来说，就得防范持久型 XSS 攻击，因为我可以在评论中输入以下内容<br><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633815-94ba5c50-88df-4b41-bd04-339671101aef.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"><br>这种情况如果前后端没有做好防御的话，这段评论就会被存储到数据库中，这样每个打开该页面的用户都会被攻击到。<br>非持久型相比于前者危害就小的多了，一般通过<strong>修改 URL 参数</strong>的方式加入攻击代码，诱导用户访问链接从而进行攻击。<br>举个例子，如果页面需要从 URL 中获取某些参数作为内容的话，不经过过滤就会导致攻击代码被执行</p>
+<!-- [http://www.domain.com?name=](http://www.domain.com/?name=)<script>alert(1)</script> -->
+<div></div>                                                  
+但是对于这种攻击方式来说，如果用户使用 Chrome 这类浏览器的话，浏览器就能自动帮助用户防御攻击。但是我们不能因此就不防御此类攻击了，因为我不能确保用户都使用了该类浏览器。
+![](https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633825-af1a5fd6-d680-40d3-ae09-e205d5bc6144.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15)
+对于 XSS 攻击来说，通常有两种方式可以用来防御。
+
+<p><strong>转义字符</strong><br>首先，对于用户的输入应该是永远不信任的。最普遍的做法就是转义输入输出的内容，对于引号、尖括号、斜杠进行转义<br>自动检测<br>function escape(str) {<br>str = str.replace(/&amp;/g, ‘&amp;’)<br>str = str.replace(/&lt;/g, ‘&lt;’)<br>str = str.replace(/&gt;/g, ‘&gt;’)<br>str = str.replace(/“/g, ‘&quto;’)<br>str = str.replace(/‘/g, ‘’’)<br>str = str.replace(/<code>/g, &#39;</code>‘)<br>str = str.replace(///g, ‘/‘)<br>return str<br>}<br>通过转义可以将攻击代码 <script>alert(1)</script> 变成<br>// -&gt; <script>alert(1)</script><br>escape(‘<script>alert(1)</script>‘)</p>
+<p>但是对于显示富文本来说，显然不能通过上面的办法来转义所有字符，因为这样会把需要的格式也过滤掉。对于这种情况，通常采用白名单过滤的办法，当然也可以通过黑名单过滤，但是考虑到需要过滤的标签和标签属性实在太多，更加推荐使用白名单的方式。<br>自动检测<br>const xss = require(‘xss’)<br>let html = xss(‘<h1 id="title">XSS Demo</h1><script>alert("xss");</script>‘)<br>// -&gt; <h1>XSS Demo</h1><script>alert("xss");</script><br>console.log(html)</p>
+<p>以上示例使用了 js-xss 来实现，可以看到在输出中保留了 h1 标签且过滤了 script 标签。</p>
+<h3 id="4，CSP"><a href="#4，CSP" class="headerlink" title="4，CSP"></a>4，CSP</h3><p>CSP 本质上就是建立白名单，开发者明确告诉浏览器哪些外部资源可以加载和执行。我们只需要配置规则，如何拦截是由浏览器自己实现的。我们可以通过这种方式来尽量减少 XSS 攻击。<br>通常可以通过两种方式来开启 CSP：</p>
+<ol>
+<li>设置 HTTP Header 中的 Content-Security-Policy</li>
+<li>设置 meta 标签的方式 <meta http-equiv="Content-Security-Policy"></li>
+</ol>
+<p>这里以设置 HTTP Header 来举例<br>只允许加载本站资源</p>
+<ul>
+<li>Content-Security-Policy: default-src ‘self’</li>
+</ul>
+<p>只允许加载 HTTPS 协议图片</p>
+<ul>
+<li>Content-Security-Policy: img-src https://*</li>
+</ul>
+<p>允许加载任何来源框架</p>
+<ul>
+<li>Content-Security-Policy: child-src ‘none’</li>
+</ul>
+<p>当然可以设置的属性远不止这些，你可以通过查阅 <a href="https://link.juejin.im/?target=https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">文档</a> 的方式来学习，这里就不过多赘述其他的属性了。<br>对于这种方式来说，只要开发者配置了正确的规则，那么即使网站存在漏洞，攻击者也不能执行它的攻击代码，并且 CSP 的兼容性也不错。<br><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633985-f87f543b-df4c-4b74-939a-46b42b1136d7.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"></p>
+<h3 id="5，CSRF"><a href="#5，CSRF" class="headerlink" title="5，CSRF"></a>5，CSRF</h3><p>涉及面试题：什么是 CSRF 攻击？如何防范 CSRF 攻击？<br>CSRF 中文名为跨站请求伪造。原理就是攻击者构造出一个后端请求地址，诱导用户点击或者通过某些途径自动发起请求。如果用户是在登录状态下的话，后端就以为是用户在操作，从而进行相应的逻辑。<br>举个例子，假设网站中有一个通过 GET 请求提交用户评论的接口，那么攻击者就可以在钓鱼网站中加入一个图片，图片的地址就是评论接口<br><img src="http://www.domain.com/xxx?comment='attack'"/ loading="lazy"><br>那么你是否会想到使用 POST 方式提交请求是不是就没有这个问题了呢？其实并不是，使用这种方式也不是百分百安全的，攻击者同样可以诱导用户进入某个页面，在页面中通过表单提交 POST 请求。</p>
+<p><strong>如何防御</strong><br>防范 CSRF 攻击可以遵循以下几种规则：</p>
+<ol>
+<li>Get 请求不对数据进行修改</li>
+<li>不让第三方网站访问到用户 Cookie</li>
+<li>阻止第三方网站请求接口</li>
+<li>请求时附带验证信息，比如验证码或者 Token</li>
+</ol>
+<p>SameSite<br>可以对 Cookie 设置 SameSite 属性。该属性表示 Cookie 不随着跨域请求发送，可以很大程度减少 CSRF 的攻击，但是该属性目前并不是所有浏览器都兼容。<br>验证 Referer<br>对于需要防范 CSRF 的请求，我们可以通过验证 Referer 来判断该请求是否为第三方网站发起的。<br>Token<br>服务器下发一个随机 Token，每次发起请求时将 Token 携带上，服务器验证 Token 是否有效。</p>
+<h3 id="6，点击劫持"><a href="#6，点击劫持" class="headerlink" title="6，点击劫持"></a>6，点击劫持</h3><p>涉及面试题：什么是点击劫持？如何防范点击劫持？<br>点击劫持是一种视觉欺骗的攻击手段。攻击者将需要攻击的网站通过 iframe 嵌套的方式嵌入自己的网页中，并将 iframe 设置为透明，在页面中透出一个按钮诱导用户点击。<br><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633803-172f0a99-7241-4f8c-ac2f-1ee151922d7e.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"><br>对于这种攻击方式，推荐防御的方法有两种。</p>
+<h3 id="1，X-FRAME-OPTIONS"><a href="#1，X-FRAME-OPTIONS" class="headerlink" title="1，X-FRAME-OPTIONS"></a><strong>1，X-FRAME-OPTIONS</strong></h3><p>X-FRAME-OPTIONS 是一个 HTTP 响应头，在现代浏览器有一个很好的支持。这个 HTTP 响应头 就是为了防御用 iframe 嵌套的点击劫持攻击。<br>该响应头有三个值可选，分别是</p>
+<ul>
+<li>DENY，表示页面不允许通过 iframe 的方式展示</li>
+<li>SAMEORIGIN，表示页面可以在相同域名下通过 iframe 的方式展示</li>
+<li>ALLOW-FROM，表示页面可以在指定来源的 iframe 中展示</li>
+</ul>
+<h3 id="2，-JS-防御"><a href="#2，-JS-防御" class="headerlink" title="2， JS 防御"></a>2， JS 防御</h3><p>对于某些远古浏览器来说，并不能支持上面的这种方式，那我们只有通过 JS 的方式来防御点击劫持了。<br>自动检测</p>
+<head>
+<style id="click-jack">
+html {
+display: none !important;
+}
+</style>
+</head>
+<body>
+<script>
+if (self == top) {
+var style = document.getElementById('click-jack')
+document.body.removeChild(style)
+} else {
+top.location = self.location
+}
+</script>
+</body>
+
+<p>以上代码的作用就是当通过 iframe 的方式加载页面时，攻击者的网页直接不显示所有内容了。</p>
+<h3 id="9，中间人攻击"><a href="#9，中间人攻击" class="headerlink" title="9，中间人攻击"></a>9，中间人攻击</h3><p>涉及面试题：什么是中间人攻击？如何防范中间人攻击？<br>中间人攻击是攻击方同时与服务端和客户端建立起了连接，并让对方认为连接是安全的，但是实际上整个通信过程都被攻击者控制了。攻击者不仅能获得双方的通信信息，还能修改通信信息。<br>通常来说不建议使用公共的 Wi-Fi，因为很可能就会发生中间人攻击的情况。如果你在通信的过程中涉及到了某些敏感信息，就完全暴露给攻击方了。<br>当然防御中间人攻击其实并不难，只需要增加一个安全通道来传输信息。HTTPS 就可以用来防御中间人攻击，但是并不是说使用了 HTTPS 就可以高枕无忧了，因为如果你没有完全关闭 HTTP 访问的话，攻击方可以通过某些方式将 HTTPS 降级为 HTTP 从而实现中间人攻击。</p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h3 id="前端常遇见的数据结构："><a href="#前端常遇见的数据结构：" class="headerlink" title="前端常遇见的数据结构："></a>前端常遇见的数据结构：</h3><ul>
+<li>简单数据结构（必须理解掌握）</li>
+<li>有序数据结构：栈、队列、链表，有序数据结构省空间（存储空间小）</li>
+<li>无序数据结构：集合、字典、散列表，无序数据结构省时间（读取时间快）</li>
+<li>复杂数据结构</li>
+<li>树、堆</li>
+<li>图</li>
+</ul>
+<p>对于简单数据结构，在 ES 中对应的是数组（Array）和对象（Object）。可以想一下，数组的存储是有序的，对象的存储是无序的，但是我要在对象中根据 key 找到一个值是立即返回的，数组则需要查找的过程。<br>这里我通过一个真实面试题目来说明介绍下数据结构设计。<br>题目：使用 ECMAScript（JS）代码实现一个事件类 Event，包含下面功能：绑定事件、解绑事件和派发事件。<br>在稍微复杂点的页面中，比如组件化开发的页面，同一个页面由两三个人来开发，为了保证组件的独立性和降低组件间耦合度，我们往往使用「订阅发布模式」，即组件间通信使用事件监听和派发的方式，而不是直接相互调用组件方法，这就是题目要求写的 Event 类。<br>这个题目的核心是一个事件类型对应回调函数的数据设计。为了实现绑定事件，我们需要一个_cache 对象来记录绑定了哪些事件。而事件发生的时候，我们需要从_cache 中读取出来事件回调，依次执行它们。一般页面中事件派发（读）要比事件绑定（写）多。所以我们设计的数据结构应该尽量地能够在事件发生时，更加快速地找到对应事件的回调函数们，然后执行。<br>经过这样一番考虑，我简单写了下代码实现：<br>自动检测<br>class Event {<br>constructor() {<br>// 存储事件的数据结构<br>// 为了查找迅速，使用了对象（字典）<br>this._cache = {};<br>}<br>// 绑定<br>on(type, callback) {<br>// 为了按类查找方便和节省空间，<br>// 将同一类型事件放到一个数组中<br>// 这里的数组是队列，遵循先进先出<br>// 即先绑定的事件先触发<br>let fns = (this._cache[type] = this._cache[type] || []);<br>if (fns.indexOf(callback) === -1) {<br>fns.push(callback);<br>}<br>return this;<br>}<br>// 触发<br>trigger(type, data) {<br>let fns = this._cache[type];<br>if (Array.isArray(fns)) {<br>fns.forEach((fn) =&gt; {<br>fn(data);<br>});<br>}<br>return this;<br>}<br>// 解绑<br>off(type, callback) {<br>let fns = this._cache[type];<br>if (Array.isArray(fns)) {<br>if (callback) {<br>let index = fns.indexOf(callback);<br>if (index !== -1) {<br>fns.splice(index, 1);<br>}<br>} else {<br>//全部清空<br>fns.length = 0;<br>}<br>}<br>return this;<br>}<br>}<br>// 测试用例<br>const event = new Event();<br>event.on(‘test’, (a) =&gt; {<br>console.log(a);<br>});<br>event.trigger(‘test’, ‘hello world’);<br>event.off(‘test’);<br>event.trigger(‘test’, ‘hello world’);<br>类似于树、堆、图这些高级数据结构，前端一般也不会考查太多，但是它们的查找方法却常考，后面介绍。高级数据应该平时多积累，好好理解，比如理解了堆是什么样的数据结构，在面试中遇见的「查找最大的 K 个数」这类算法问题，就会迎刃而解。</p>
+<h3 id="算法的效率是通过算法复杂度来衡量的（大-O-表示法）"><a href="#算法的效率是通过算法复杂度来衡量的（大-O-表示法）" class="headerlink" title="算法的效率是通过算法复杂度来衡量的（大 O 表示法）"></a>算法的效率是通过算法复杂度来衡量的（大 O 表示法）</h3><p>算法的好坏可以通过算法复杂度来衡量，算法复杂度包括时间复杂度和空间复杂度两个。时间复杂度由于好估算、好评估等特点，是面试中考查的重点。空间复杂度在面试中考查得不多。<br>常见的时间复杂度有：</p>
+<ul>
+<li>常数阶 O(1)</li>
+<li>对数阶 O(logN)</li>
+<li>线性阶 O(n)</li>
+<li>线性对数阶 O(nlogN)</li>
+<li>平方阶 O(n^2)</li>
+<li>立方阶 O(n^3)</li>
+<li>!k 次方阶 O(n^k)</li>
+<li>指数阶 O(2^n)</li>
+</ul>
+<p>随着问题规模 n 的不断增大，上述时间复杂度不断增大，算法的执行效率越低。<br>一般做算法复杂度分析的时候，遵循下面的技巧：</p>
+<ol>
+<li>看看有几重循环，一般来说一重就是 O(n)，两重就是 O(n^2)，以此类推</li>
+<li>如果有二分，则为 O(logN)</li>
+<li>保留最高项，去除常数项</li>
+</ol>
+<p>题目：分析下面代码的算法复杂度（为了方便，我已经在注释中加了代码分析）<br>自动检测<br>let i =0; // 语句执行一次<br>while (i &lt; n) { // 语句执行 n 次<br>console.log(<code>Current i is $&#123;i&#125;</code>); //语句执行 n 次<br>i++; // 语句执行 n 次<br>}<br>根据注释可以得到，算法复杂度为 1 + n + n + n = 1 + 3n，去除常数项，为 O(n)。<br>自动检测<br>let number = 1; // 语句执行一次<br>while (number &lt; n) { // 语句执行 logN 次<br>number _= 2; // 语句执行 logN 次<br>}<br>上面代码 while 的跳出判断条件是 number&lt;n，而循环体内 number 增长速度是(2^n)，所以循环代码实际执行 logN 次，复杂度为：1 + 2 _ logN = O(logN)<br>自动检测<br>for (let i = 0; i &lt; n; i++) {// 语句执行 n 次<br>for (let j = 0; j &lt; n; j++) {// 语句执行 n^2 次<br>console.log(‘I am here!’); // 语句执行 n^2 次<br>}<br>}<br>上面代码是两个 for 循环嵌套，很容易得出复杂度为：O(n^2)</p>
+<h3 id="人人都要掌握的基础算法"><a href="#人人都要掌握的基础算法" class="headerlink" title="人人都要掌握的基础算法"></a>人人都要掌握的基础算法</h3><p>枚举(迭代)和递归是最最简单的算法，也是复杂算法的基础，人人都应该掌握！枚举相对比较简单，我们重点说下递归。<br>递归由下面两部分组成：</p>
+<ol>
+<li>递归主体，就是要循环解决问题的代码</li>
+<li>递归的跳出条件，递归不能一直递归下去，需要完成一定条件后跳出</li>
+</ol>
+<h3 id="1，浅拷贝-vs-深拷贝"><a href="#1，浅拷贝-vs-深拷贝" class="headerlink" title="1，浅拷贝 vs 深拷贝"></a><strong>1，浅拷贝 vs 深拷贝</strong></h3><p>拷贝其实就是对象复制，为了解决对象复制是产生的引用类型问题</p>
+<p>浅拷贝：利用迭代器，循环对象将对象中的所有可枚举属性复制到另一个对象上，但是浅拷贝的有一个问题就是只是拷贝了对象的一级，其他级还如果是引用类型的值的话依旧解决不了</p>
+<p>深拷贝：深拷贝解决了浅拷贝的问题，利用递归的形势便利对象的每一级，实现起来较为复杂，得判断值是数组还是对象，简单的说就是，在内存中存在两个数据结构完全相同又相互独立的数据，将引用型类型进行复制，而不是只复制其引用关系。</p>
+<p><strong>深拷贝：</strong><br>这个问题通常可以通过 JSON.parse(JSON.stringify(object))来解决。<br>自动检测<br>let a = {<br>age: 1,<br>jobs: {<br>first: ‘FE’<br>}<br>}<br>let b = JSON.parse(JSON.stringify(a))<br>a.jobs.first = ‘native’<br>console.log(b.jobs.first) // FE</p>
+<p>但是该方法也是有局限性的：</p>
+<ul>
+<li>会忽略 undefined</li>
+<li>会忽略 symbol</li>
+<li>不能序列化函数</li>
+<li>不能解决循环引用的对象</li>
+</ul>
+<p>自动检测<br>let obj = {<br>a: 1,<br>b: {<br>c: 2,<br>d: 3,<br>},<br>}<br>obj.c = obj.b<br>obj.e = obj.a<br>obj.b.c = obj.c<br>obj.b.d = obj.b<br>obj.b.e = obj.b.c<br>let newObj = JSON.parse(JSON.stringify(obj))<br>console.log(newObj)</p>
+<p>如果你有这么一个循环引用对象，你会发现你不能通过该方法深拷贝<br><img src="https://oss-peng.oss-cn-beijing.aliyuncs.com/blog/1601449633813-0ac1cc67-733e-4191-a205-6ccfea5a6c2f.png?x-oss-process=image/auto-orient,1/quality,q_90/watermark,text_6auY5b2p6bmP,color_ef9191,size_30,shadow_100,x_15,y_15" loading="lazy"><br>在遇到函数、 undefined 或者 symbol 的时候，该对象也不能正常的序列化<br>自动检测<br>let a = {<br>age: undefined,<br>sex: Symbol(‘male’),<br>jobs: function() {},<br>name: ‘yck’<br>}<br>let b = JSON.parse(JSON.stringify(a))<br>console.log(b) // {name: “yck”}</p>
+<p>你会发现在上述情况中，该方法会忽略掉函数和 undefined。<br>但是在通常情况下，复杂数据都是可以序列化的，所以这个函数可以解决大部分问题，并且该函数是内置函数中处理深拷贝性能最快的。当然如果你的数据中含有以上三种情况下，可以使用 <a href="https://link.juejin.im/?target=https://lodash.com/docs%23cloneDeep">lodash 的深拷贝函数</a>。<br>如果你所需拷贝的对象含有内置类型并且不包含函数，可以使用 MessageChannel<br>自动检测<br>function structuralClone(obj) {<br>return new Promise(resolve =&gt; {<br>const {port1, port2} = new MessageChannel();<br>port2.onmessage = ev =&gt; resolve(ev.data);<br>port1.postMessage(obj);<br>});<br>}<br>var obj = {a: 1, b: {<br>c: b<br>}}<br>// 注意该方法是异步的<br>// 可以处理 undefined 和循环引用对象<br>(async () =&gt; {<br>const clone = await structuralClone(obj)<br>})()<br>或者：<br>自动检测<br>function deepClone(o1, o2) {<br>for (let k in o2) {<br>if (typeof o2[k] === ‘object’) {<br>o1[k] = {};<br>deepClone(o1[k], o2[k]);<br>} else {<br>o1[k] = o2[k];<br>}<br>}<br>}<br>// 测试用例<br>let obj = {<br>a: 1,<br>b: [1, 2, 3],<br>c: {}<br>};<br>let emptyObj = Object.create(null);<br>deepClone(emptyObj, obj);<br>console.log(emptyObj.a == obj.a);<br>console.log(emptyObj.b == obj.b);</p>
+<h3 id="2，常见的几种数组排序算法-JS-实现"><a href="#2，常见的几种数组排序算法-JS-实现" class="headerlink" title="2，常见的几种数组排序算法 JS 实现"></a><strong>2，常见的几种数组排序算法 JS 实现</strong></h3><p>**1，快速排序 **<br>从给定的数据中，随机抽出一项，这项的左边放所有比它小的，右边放比它大的，然后再分别这两边执行上述操作，采用的是递归的思想，总结出来就是 实现一层，分别给两边递归，设置好出口<br>自动检测<br>function fastSort(array,head,tail){<br>//考虑到给每个分区操作的时候都是在原有的数组中进行操作的，所以这里 head,tail 来确定分片的位置<br>/<em>生成随机项</em>/<br>var randomnum = Math.floor(ranDom(head,tail));<br>var random = array[randomnum];<br>/<em>将小于 random 的项放置在其左边 策略就是通过一个临时的数组来储存分好区的结果，再到原数组中替换</em>/<br>var arrayTemp = [];<br>var unshiftHead = 0;<br>for(var i = head;i &lt;= tail;i++){<br>if(array[i]&lt;random){<br>arrayTemp.unshift(array[i]);<br>unshiftHead++;<br>}else if(array[i]&gt;random){<br>arrayTemp.push(array[i]);<br>}<br>/<em>当它等于的时候放哪，这里我想选择放到队列的前面，也就是从 unshift 后的第一个位置放置</em>/<br>if(array[i]===random){<br>arrayTemp.splice(unshiftHead,0,array[i]);<br>}<br>}<br>/<em>将对应项覆盖原来的记录</em>/<br>for(var j = head , u=0;j &lt;= tail;j++,u++){<br>array.splice(j,1,arrayTemp[u]);<br>}<br>/<em>寻找中间项所在的 index</em>/<br>var nowIndex = array.indexOf(random);<br>/<em>设置出口，当要放进去的片段只有 2 项的时候就可以收工了</em>/<br>if(arrayTemp.length &lt;= 2){<br>return;<br>}<br>/<em>递归，同时应用其左右两个区域</em>/<br>fastSort(array,head,nowIndex);<br>fastSort(array,nowIndex+1,tail);<br>}</p>
+<p>**2，插入排序 **<br>思想就是在已经排好序的数组中插入到相应的位置，以从小到大排序为例，扫描已经排好序的片段的每一项，如大于，则继续往后，直到他小于一项时，将其插入到这项的前面<br>自动检测<br>function insertSort(array){<br>/<em>start 根据已排列好的项数决定</em>/<br>var start=1;<br>/<em>按顺序，每一项检查已排列好的序列</em>/<br>for(var i=start; i&lt;array.length; start++,i++){<br>/<em>跟已排好序的序列做对比，并插入到合适的位置</em>/<br>for(var j=0; j&lt;start; j++){<br>/<em>小于或者等于时（我们是升序）插入到该项前面</em>/<br>if(array[i]&lt;=array[j]){<br>console.log(array[i]+’ ‘+array[j]);<br>array.splice(j,0,array[i]);<br>/<em>删除原有项</em>/<br>array.splice(i+1,1);<br>break;<br>}<br>}<br>}<br>}</p>
+<p>**3，冒泡排序 **<br>故名思意 ，就是一个个冒泡到最前端或者最后端，主要是通过两两依次比较，以升序为例，如果前一项比后一项大则交换顺序，一直比到最后一对<br>自动检测<br>function bubbleSort(array){<br>/<em>给每个未确定的位置做循环</em>/<br>for(var unfix=array.length-1; unfix&gt;0; unfix–){<br>/<em>给进度做个记录，比到未确定位置</em>/<br>for(var i=0; i&lt;unfix;i++){<br>if(array[i]&gt;array[i+1]){<br>var temp = array[i];<br>array.splice(i,1,array[i+1]);<br>array.splice(i+1,1,temp);<br>}<br>}<br>}<br>}</p>
+<p>**4，选择排序 **<br>将当前未确定块的 min 或者 max 取出来插到最前面或者后面<br>自动检测<br>function selectSort(array){<br>/<em>给每个插入后的未确定的范围循环，初始是从 0 开始</em>/<br>for(var unfixed=0; unfixed&lt;array.length; unfixed++){<br>/_设置当前范围的最小值和其索引_/<br>var min = array[unfixed];<br>var minIndex = unfixed;<br>/_在该范围内选出最小值_/<br>for(var j=unfixed+1; j&lt;array.length; j++){<br>if(min&gt;array[j]){<br>min = array[j];<br>minIndex = j;<br>}<br>}<br>/<em>将最小值插入到 unfixed，并且把它所在的原有项替换成</em>/<br>array.splice(unfixed,0,min);<br>array.splice(minIndex+1,1);<br>}<br>}</p>
+<p><strong>3，写一个数组去重的方法</strong><br>自动检测<br>/** 方法一：</p>
+<ul>
+<li>1.构建一个新的数组存放结果</li>
+<li>2.for 循环中每次从原数组中取出一个元素，用这个元素循环与结果数组对比</li>
+<li>3.若结果数组中没有该元素，则存到结果数组中</li>
+<li>缺陷：不能去重数组中得引用类型的值和 NaN<br>*/<br>function unique(array){<br>var result = [];<br>for(var i = 0;i &lt; array.length; i++){<br>if(result.indexOf(array[i]) == -1) {<br>result.push(array[i]);<br>}<br>}<br>return result;<br>}<br>// [1,2,1,2,’1’,’2’,0,’1’,’你好’,’1’,’你好’,NaN,NaN] =&gt; [1, 2, “1”, “2”, 0, “你好”,NaN,NaN]<br>// [{id: ‘1’}, {id: ‘1’}] =&gt; [{id: ‘1’}, {id: ‘1’}]</li>
+</ul>
+<p>//方法二：ES6<br>自动检测<br>Array.from(new Set(array))<br>// [1,2,1,2,’1’,’2’,0,’1’,’你好’,’1’,’你好’,NaN,NaN] =&gt; [1, 2, “1”, “2”, 0, “你好”, NaN]</p>
+<h3 id="4，说一下-js-模板引擎"><a href="#4，说一下-js-模板引擎" class="headerlink" title="4，说一下 js 模板引擎"></a><strong>4，说一下 js 模板引擎</strong></h3><p>模板引擎原理总结起来就是：先获取 html 中对应的 id 下得 innerHTML，利用开始标签和关闭标签进行字符串切分，其实是将模板划分成两部份内容，一部分是 html 部分，一部分是逻辑部分，通过区别一些特殊符号比如 each、if 等来将字符串拼接成函数式的字符串,将两部分各自经过处理后，再次拼接到一起，最后将拼接好的字符串采用 new Function()的方式转化成所需要的函数。<br>常用的模版引擎主要有，Template.js，handlebars.js</p>
+<h3 id="5，是否了解公钥加密和私钥加密。"><a href="#5，是否了解公钥加密和私钥加密。" class="headerlink" title="5，是否了解公钥加密和私钥加密。"></a><strong>5，是否了解公钥加密和私钥加密。</strong></h3><p>一般情况下是指私钥用于对数据进行签名，公钥用于对签名进行验证;<br>HTTP 网站在浏览器端用公钥加密敏感数据，然后在服务器端再用私钥解密。</p>
+<h3 id="6，二分查找"><a href="#6，二分查找" class="headerlink" title="6，二分查找"></a>6，二分查找</h3><p>二分查找法主要是解决「在一堆有序的数中找出指定的数」这类问题，不管这些数是一维数组还是多维数组，只要有序，就可以用二分查找来优化。<br>二分查找是一种「分治」思想的算法，大概流程如下：</p>
+<ol>
+<li>数组中排在中间的数字 A，与要找的数字比较大小</li>
+<li>因为数组是有序的，所以： a) A 较大则说明要查找的数字应该从前半部分查找 b) A 较小则说明应该从查找数字的后半部分查找</li>
+<li>这样不断查找缩小数量级（扔掉一半数据），直到找完数组为止</li>
+</ol>
+<p>题目：在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。<br>自动检测<br>function Find(target, array) {<br>let i = 0;<br>let j = array[i].length - 1;<br>while (i &lt; array.length &amp;&amp; j &gt;= 0) {<br>if (array[i][j] &lt; target) {<br>i++;<br>} else if (array[i][j] &gt; target) {<br>j–;<br>} else {<br>return true;<br>}<br>}<br>return false;<br>}<br>//测试用例<br>console.log(Find(10, [<br>[1, 2, 3, 4],<br>[5, 9, 10, 11],<br>[13, 20, 21, 23]<br>])<br>);<br>另外笔者在面试中遇见过下面的问题：<br>题目：现在我有一个 1~1000 区间中的正整数，需要你猜下这个数字是几，你只能问一个问题：大了还是小了？问需要猜几次才能猜对？<br>拿到这个题目，笔者想到的就是电视上面有个「猜价格」的购物节目，在规定时间内猜对价格就可以把实物抱回家。所以问题就是让面试官不停地回答我猜的数字比这个数字大了还是小了。这就是二分查找！<br>猜几次呢？其实这个问题就是个二分查找的算法时间复杂度问题，二分查找的时间复杂度是 O(logN)，所以求 log1000 的解就是猜的次数。我们知道 2^10=1024，所以可以快速估算出：log1000 约等于 10，最多问 10 次就能得到这个数！</p>
+<h3 id="7，数组降维（数组扁平化）"><a href="#7，数组降维（数组扁平化）" class="headerlink" title="7，数组降维（数组扁平化）"></a>7，数组降维（数组扁平化）</h3><p>自动检测<br>[1, [2], 3].flatMap((v) =&gt; v + 1)<br>// -&gt; [2, 3, 4]</p>
+<dl><dt>如果想将一个多维数组彻底的降维，可以这样实现<br>自动检测<br>const flattenDeep = (arr) =&gt; Array.isArray(arr)<br>? arr.reduce( (a, b) =&gt; […a, …flattenDeep(b)] , [])</dt><dd>[arr]<br>flattenDeep([1, [[2], [3, [4]], 5]])</dd></dl><h3 id="8，防抖"><a href="#8，防抖" class="headerlink" title="8，防抖"></a>8，防抖</h3><p>你是否在日常开发中遇到一个问题，在滚动事件中需要做个复杂计算或者实现一个按钮的防二次点击操作。<br>这些需求都可以通过函数防抖动来实现。尤其是第一个需求，如果在频繁的事件回调中做复杂计算，很有可能导致页面卡顿，不如将多次计算合并为一次计算，只在一个精确点做操作。<br>PS：防抖和节流的作用都是防止函数多次调用。区别在于，假设一个用户一直触发这个函数，且每次触发函数的间隔小于 wait，防抖的情况下只会调用一次，而节流的 情况会每隔一定时间（参数 wait）调用函数。<br>我们先来看一个袖珍版的防抖理解一下防抖的实现：<br>自动检测<br>// func 是用户传入需要防抖的函数<br>// wait 是等待时间<br>const debounce = (func, wait = 50) =&gt; {<br>// 缓存一个定时器 id<br>let timer = 0<br>// 这里返回的函数是每次用户实际调用的防抖函数<br>// 如果已经设定过定时器了就清空上一次的定时器<br>// 开始一个新的定时器，延迟执行用户传入的方法<br>return function(…args) {<br>if (timer) clearTimeout(timer)<br>timer = setTimeout(() =&gt; {<br>func.apply(this, args)<br>}, wait)<br>}<br>}<br>// 不难看出如果用户调用该函数的间隔小于 wait 的情况下，上一次的时间还未到就被清除了，并不会执行函数</p>
+<p>这是一个简单版的防抖，但是有缺陷，这个防抖只能在最后调用。一般的防抖会有 immediate 选项，表示是否立即调用。这两者的区别，举个栗子来说：</p>
+<ul>
+<li>例如在搜索引擎搜索问题的时候，我们当然是希望用户输入完最后一个字才调用查询接口，这个时候适用延迟执行的防抖函数，它总是在一连串（间隔小于 wait 的）函数触发之后调用。</li>
+<li>例如用户给 interviewMap 点 star 的时候，我们希望用户点第一下的时候就去调用接口，并且成功之后改变 star 按钮的样子，用户就可以立马得到反馈是否 star 成功了，这个情况适用立即执行的防抖函数，它总是在第一次调用，并且下一次调用必须与前一次调用的时间间隔大于 wait 才会触发。</li>
+</ul>
+<p>下面我们来实现一个带有立即执行选项的防抖函数<br>自动检测<br>// 这个是用来获取当前时间戳的<br>function now() {<br>return +new Date()<br>}<br>/**</p>
+<ul>
+<li>防抖函数，返回函数连续调用时，空闲时间必须大于或等于 wait，func 才会执行</li>
+<li></li>
+<li>@param {function} func 回调函数</li>
+<li>@param {number} wait 表示时间窗口的间隔</li>
+<li>@param {boolean} immediate 设置为 ture 时，是否立即调用函数</li>
+<li>@return {function} 返回客户调用函数<br>*/<br>function debounce (func, wait = 50, immediate = true) {<br>let timer, context, args<br>// 延迟执行函数<br>const later = () =&gt; setTimeout(() =&gt; {<br>// 延迟函数执行完毕，清空缓存的定时器序号<br>timer = null<br>// 延迟执行的情况下，函数会在延迟函数中执行<br>// 使用到之前缓存的参数和上下文<br>if (!immediate) {<br>func.apply(context, args)<br>context = args = null<br>}<br>}, wait)<br>// 这里返回的函数是每次实际调用的函数<br>return function(…params) {<br>// 如果没有创建延迟执行函数（later），就创建一个<br>if (!timer) {<br>timer = later()<br>// 如果是立即执行，调用函数<br>// 否则缓存参数和调用上下文<br>if (immediate) {<br>func.apply(this, params)<br>} else {<br>context = this<br>args = params<br>}<br>// 如果已有延迟执行函数（later），调用的时候清除原来的并重新设定一个<br>// 这样做延迟函数会重新计时<br>} else {<br>clearTimeout(timer)<br>timer = later()<br>}<br>}<br>}</li>
+</ul>
+<p>整体函数实现的不难，总结一下。</p>
+<ul>
+<li>对于按钮防点击来说的实现：如果函数是立即执行的，就立即调用，如果函数是延迟执行的，就缓存上下文和参数，放到延迟函数中去执行。一旦我开始一个定时器，只要我定时器还在，你每次点击我都重新计时。一旦你点累了，定时器时间到，定时器重置为 null，就可以再次点击了。</li>
+<li>对于延时执行函数来说的实现：清除定时器 ID，如果是延迟调用就调用函数</li>
+</ul>
+<h3 id="9，手写-call、apply-及-bind-函数"><a href="#9，手写-call、apply-及-bind-函数" class="headerlink" title="9，手写 call、apply 及 bind 函数"></a>9，手写 call、apply 及 bind 函数</h3><p>涉及面试题：call、apply 及 bind 函数内部实现是怎么样的？<br>首先从以下几点来考虑如何实现这几个函数</p>
+<ul>
+<li>不传入第一个参数，那么上下文默认为 window</li>
+<li>改变了 this 指向，让新的对象可以执行该函数，并能接受参数</li>
+</ul>
+<p>那么我们先来实现 call<br>自动检测<br>Function.prototype.myCall = function(context) {<br>if (typeof this !== ‘function’) {<br>throw new TypeError(‘Error’)<br>}<br>context = context || window<br>context.fn = this<br>const args = […arguments].slice(1)<br>const result = context.fn(…args)<br>delete context.fn<br>return result<br>}<br>以下是对实现的分析：</p>
+<ul>
+<li>首先 context 为可选参数，如果不传的话默认上下文为 window</li>
+<li>接下来给 context 创建一个 fn 属性，并将值设置为需要调用的函数</li>
+<li>因为 call 可以传入多个参数作为调用函数的参数，所以需要将参数剥离出来</li>
+<li>然后调用函数并将对象上的函数删除</li>
+</ul>
+<p>以上就是实现 call 的思路，apply 的实现也类似，区别在于对参数的处理，所以就不一一分析思路了<br>自动检测<br>Function.prototype.myApply = function(context) {<br>if (typeof this !== ‘function’) {<br>throw new TypeError(‘Error’)<br>}<br>context = context || window<br>context.fn = this<br>let result<br>// 处理参数和 call 有区别<br>if (arguments[1]) {<br>result = context.fn(…arguments[1])<br>} else {<br>result = context.fn()<br>}<br>delete context.fn<br>return result<br>}<br>bind 的实现对比其他两个函数略微地复杂了一点，因为 bind 需要返回一个函数，需要判断一些边界问题，以下是 bind 的实现<br>自动检测<br>Function.prototype.myBind = function (context) {<br>if (typeof this !== ‘function’) {<br>throw new TypeError(‘Error’)<br>}<br>const _this = this<br>const args = […arguments].slice(1)<br>// 返回一个函数<br>return function F() {<br>// 因为返回了一个函数，我们可以 new F()，所以需要判断<br>if (this instanceof F) {<br>return new _this(…args, …arguments)<br>}<br>return _this.apply(context, args.concat(…arguments))<br>}<br>}<br>以下是对实现的分析：</p>
+<ul>
+<li>前几步和之前的实现差不多，就不赘述了</li>
+<li>bind 返回了一个函数，对于函数来说有两种方式调用，一种是直接调用，一种是通过 new 的方式，我们先来说直接调用的方式</li>
+<li>对于直接调用来说，这里选择了 apply 的方式实现，但是对于参数需要注意以下情况：因为 bind 可以实现类似这样的代码 f.bind(obj, 1)(2)，所以我们需要将两边的参数拼接起来，于是就有了这样的实现 args.concat(…arguments)</li>
+<li>最后来说通过 new 的方式，在之前的章节中我们学习过如何判断 this，对于 new 的情况来说，不会被任何方式改变 this，所以对于这种情况我们需要忽略传入的 this</li>
+</ul>
+<h3 id="10，为什么-0-1-0-2-0-3？如何解决这个问题？"><a href="#10，为什么-0-1-0-2-0-3？如何解决这个问题？" class="headerlink" title="10，为什么 0.1 + 0.2 != 0.3？如何解决这个问题？"></a>10，为什么 0.1 + 0.2 != 0.3？如何解决这个问题？</h3><p>先说原因，因为 JS 采用 IEEE 754 双精度版本（64 位），并且只要采用 IEEE 754 的语言都有该问题。</p>
+<p>我们都知道计算机是通过二进制来存储东西的，那么 0.1 在二进制中会表示为</p>
+<p>// (0011) 表示循环<br>0.1 = 2^-4 * 1.10011(0011)<br>我们可以发现，0.1 在二进制中是无限循环的一些数字，其实不只是 0.1，其实很多十进制小数用二进制表示都是无限循环的。这样其实没什么问题，但是 JS 采用的浮点数标准却会裁剪掉我们的数字。</p>
+<p>IEEE 754 双精度版本（64 位）将 64 位分为了三段</p>
+<p>第一位用来表示符号<br>接下去的 11 位用来表示指数<br>其他的位数用来表示有效位，也就是用二进制表示 0.1 中的 10011(0011)<br>那么这些循环的数字被裁剪了，就会出现精度丢失的问题，也就造成了 0.1 不再是 0.1 了，而是变成了 0.100000000000000002</p>
+<p>0.100000000000000002 === 0.1 // true<br>那么同样的，0.2 在二进制也是无限循环的，被裁剪后也失去了精度变成了 0.200000000000000002</p>
+<p>0.200000000000000002 === 0.2 // true<br>所以这两者相加不等于 0.3 而是 0.300000000000000004</p>
+<p>0.1 + 0.2 === 0.30000000000000004 // true<br>那么可能你又会有一个疑问，既然 0.1 不是 0.1，那为什么 console.log(0.1) 却是正确的呢？</p>
+<p>因为在输入内容的时候，二进制被转换为了十进制，十进制又被转换为了字符串，在这个转换的过程中发生了取近似值的过程，所以打印出来的其实是一个近似值，你也可以通过以下代码来验证</p>
+<p>console.log(0.100000000000000002) // 0.1<br>那么说完了为什么，最后来说说怎么解决这个问题吧。其实解决的办法有很多，这里我们选用原生提供的方式来最简单的解决问题</p>
+<p>parseFloat((0.1 + 0.2).toFixed(10)) === 0.3 // true</p>
+<h3 id="11，求斐波那契数列（兔子数列）中的第-n-项"><a href="#11，求斐波那契数列（兔子数列）中的第-n-项" class="headerlink" title="11，求斐波那契数列（兔子数列）中的第 n 项"></a>11，求斐波那契数列（兔子数列）中的第 n 项</h3><p>斐波那契数列就是从 0 和 1 开始，后面的数都是前两个数之和<br>0，1，1，2，3，5，8，13，21，34，55，89….</p>
+<p>下面的代码中 count 记录递归的次数，我们看下两种差异性的代码中的 count 的值：<br>自动检测<br>let count = 0;<br>function fn(n) {<br>let cache = {};<br>function _fn(n) {<br>if (cache[n]) {<br>return cache[n];<br>}<br>count++;<br>if (n == 1 || n == 2) {<br>return 1;<br>}<br>let prev = _fn(n - 1);<br>cache[n - 1] = prev;<br>let next = _fn(n - 2);<br>cache[n - 2] = next;<br>return prev + next;<br>}<br>return _fn(n);<br>}<br>let count2 = 0;<br>function fn2(n) {<br>count2++;<br>if (n == 1 || n == 2) {<br>return 1;<br>}<br>return fn2(n - 1) + fn2(n - 2);<br>}<br>console.log(fn(20), count); // 6765 20<br>console.log(fn2(20), count2); // 6765 13529</p>
+<h2 id="业务场景-编程实现"><a href="#业务场景-编程实现" class="headerlink" title="业务场景/编程实现"></a>业务场景/编程实现</h2><h3 id="1，有一个需求，需要把后端的更新日志展示出来，后端会不定时的更新日志，前端需要实时更新到页面上，但是前端的页面上每次都只显示-20-条数据，像一个竖向轮播一样一直持续更新"><a href="#1，有一个需求，需要把后端的更新日志展示出来，后端会不定时的更新日志，前端需要实时更新到页面上，但是前端的页面上每次都只显示-20-条数据，像一个竖向轮播一样一直持续更新" class="headerlink" title="1，有一个需求，需要把后端的更新日志展示出来，后端会不定时的更新日志，前端需要实时更新到页面上，但是前端的页面上每次都只显示 20 条数据，像一个竖向轮播一样一直持续更新"></a>1，有一个需求，需要把后端的更新日志展示出来，后端会不定时的更新日志，前端需要实时更新到页面上，但是前端的页面上每次都只显示 20 条数据，像一个竖向轮播一样一直持续更新</h3><p>这个类需求可以看字眼实时，记住和实时相关那么我们就向使用 scoket，对于这个需求我们可以回调，通过 scoket 接受实时数据并且将实时数据添加到日志数组的前面进行实时展示</p>
+<h3 id="2，防抖和节流应用场景"><a href="#2，防抖和节流应用场景" class="headerlink" title="2，防抖和节流应用场景"></a>2，防抖和节流应用场景</h3><p>添加购物车时，如果用户多次点击添加购物车按钮，这时候会不断的向后端发送数据，如果用户连续点击了好几十次甚至上百次，服务器的压力是很巨大的，怎么防止这个问题</p>
+<p>给你一个 input 框，实现一个搜索功能，需要注意哪些问题？</p>
+<h3 id="3，购物车实现"><a href="#3，购物车实现" class="headerlink" title="3，购物车实现"></a>3，购物车实现</h3><h3 id="4，实现一个兼容的-sticky"><a href="#4，实现一个兼容的-sticky" class="headerlink" title="4，实现一个兼容的 sticky"></a>4，实现一个兼容的 sticky</h3><p><a target="_blank" rel="noopener" href="https://juejin.im/post/5c871e025188257e5d0ecfc8">https://juejin.im/post/5c871e025188257e5d0ecfc8</a></p>
+<h3 id="5，前端如何进行-seo-优化"><a href="#5，前端如何进行-seo-优化" class="headerlink" title="5，前端如何进行 seo 优化"></a>5，前端如何进行 seo 优化</h3><ul>
+<li>合理的 title、description、keywords：搜索对着三项的权重逐个减小，title 值强调重点即可；description 把页面内容高度概括，不可过分堆砌关键词；keywords 列举出重要关键词。</li>
+<li>语义化的 HTML 代码，符合 W3C 规范：语义化代码让搜索引擎容易理解网页</li>
+<li>重要内容 HTML 代码放在最前：搜索引擎抓取 HTML 顺序是从上到下，保证重要内容一定会被抓取</li>
+<li>重要内容不要用 js 输出：爬虫不会执行 js 获取内容</li>
+<li>少用 iframe：搜索引擎不会抓取 iframe 中的内容</li>
+<li>非装饰性图片必须加 alt</li>
+<li>提高网站速度：网站速度是搜索引擎排序的一个重要指标</li>
+</ul>
+<h3 id="6，登录实现"><a href="#6，登录实现" class="headerlink" title="6，登录实现"></a>6，登录实现</h3><p>登录的目的主要是为了区分客户端用户，在客户端一般都需要用到路由拦截判断用户的登录状态，一般都是通过 token 的形式，token 一般都可以使用 jsonwebtoken 进行生成，常见的几种实现方法是<br>1，公共参数<br>登录通过账号密码换取 token，并且存储在客户端本地存储中，之后所有 ajax 请求都会携带一个公共的 header 参数 token，将登录换取 token 发送到服务端，服务端验证 token 的正确性</p>
+<p>2，cookie 形式<br>cookie 形式比较简单，客户端无需做什么操作，服务端直接操作 cookie，生成 token，因为 cookie 会通过 ajax 请求自动发送到服务端</p>
+<p>登录体验优化的几个场景<br>1，登录后的回调页面，一般登录后需要跳转到其他页面，而其他页面决定于用户是在哪一步操作跳转到的登录页面，这个时候我们应该在登录页面的路由上传递一个登录成功的回调地址</p>
+<p>2，登录回退，一般我门在操作过程中需要登录的时候才登录这个时候登录后，用户后退不应该让用户退回到登录页面</p>
+<h3 id="7，如何处理-ajax-错误状态"><a href="#7，如何处理-ajax-错误状态" class="headerlink" title="7，如何处理 ajax 错误状态"></a>7，如何处理 ajax 错误状态</h3><p>在项目开发中我们一般情况下错误状态都有统一规范，前端的话为了统一，一般我们都需要做公共的错误处理，可以封装 ajax 请求拦截器，在请求失败的回调中，通过状态码，判断错误类型，并且弹出对应的错误提示内容</p>
+<h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><h3 id="1，使用-localStorage-封装一个-Storage-对象，达到如下效果："><a href="#1，使用-localStorage-封装一个-Storage-对象，达到如下效果：" class="headerlink" title="1，使用 localStorage 封装一个 Storage 对象，达到如下效果："></a><strong>1，使用 localStorage 封装一个 Storage 对象，达到如下效果：</strong></h3><p>自动检测<br>Storage.set(‘name’, 哈哈哈’) // 设置 name 字段存储的值为’哈哈哈’。<br>Storage.set(‘age’, 2, 30);<br>Storage.set(‘people’, [‘Oli’, ‘Aman’, ‘Dante’], 60)<br>Storage.get(‘name’) // ‘前端一万小时’<br>Storage.get(‘age’) // 如果不超过 30 秒，返回数字类型的 2；如果超过 30 秒，返回 undefined，并且 localStorage 里清除 age 字段。<br>Storage.get(‘people’) // 如果不超过 60 秒，返回数组； 如果超过 60 秒，返回 undefined。</p>
+<h3 id="2，补全如下函数，判断用户的浏览器类型。"><a href="#2，补全如下函数，判断用户的浏览器类型。" class="headerlink" title="2，补全如下函数，判断用户的浏览器类型。"></a>2，补全如下函数，判断用户的浏览器类型。</h3><p>自动检测<br>function isAndroid(){<br>// 补全<br>}<br>function isIphone(){<br>// 补全<br>}<br>function isIpad(){<br>// 补全<br>}<br>function isIOS(){<br>// 补全<br>}</p>
+<h3 id="3，写一个函数，参数为时间对象毫秒数的字符串格式，返回值为字符串。假设参数为时间对象毫秒数-t，"><a href="#3，写一个函数，参数为时间对象毫秒数的字符串格式，返回值为字符串。假设参数为时间对象毫秒数-t，" class="headerlink" title="3，写一个函数，参数为时间对象毫秒数的字符串格式，返回值为字符串。假设参数为时间对象毫秒数 t，"></a>3，写一个函数，参数为时间对象毫秒数的字符串格式，返回值为字符串。假设参数为时间对象毫秒数 t，</h3><p>根据 t 的时间分别返回如下字符串：</p>
+<ul>
+<li>刚刚（ t 距当前时间不到 1 分钟时间间隔）；</li>
+<li>3 分钟前（t 距当前时间大于等于 1 分钟，小于 1 小时）；</li>
+<li>8 小时前（t 距离当前时间大于等于 1 小时，小于 24 小时）；</li>
+<li>3 天前（t 距离当前时间大于等于 24 小时，小于 30 天）；</li>
+<li>2 个月前（t 距离当前时间大于等于 30 天小于 12 个月）；</li>
+<li>8 年前（t 距离当前时间大于等于 12 个月）。<br>自动检测<br>function friendlyDate(time){<br>// 补充<br>}<br>var str = friendlyDate( ‘1556286683394’ ) //–&gt; x 分钟前（以当前时间为准）<br>var str2 = friendlyDate(‘1555521999999’) //–&gt; x 天前（以当前时间为准）</li>
+</ul>
+<h3 id="4，一道经典笔试题"><a href="#4，一道经典笔试题" class="headerlink" title="4，一道经典笔试题"></a>4，一道经典笔试题</h3><p>自动检测<br>function Foo() {<br>getName = function() { alert(1); }<br>return this<br>}<br>Foo.getName = function() { alert(2); }<br>Foo.prototype.getName = function() { alert(3); }<br>var getName = function () { alert(4); }<br>function getName() { alert(5); }<br>// 输出值？<br>Foo.getName();<br>getName();<br>Foo().getName();<br>getName();<br>new Foo.getName()<br>new Foo().getName()<br>new new Foo().getName()</p>
+<h3 id="5-写一个函数，操作数组，返回一个新数组，新数组中只包含正数。"><a href="#5-写一个函数，操作数组，返回一个新数组，新数组中只包含正数。" class="headerlink" title="5. 写一个函数，操作数组，返回一个新数组，新数组中只包含正数。"></a>5. 写一个函数，操作数组，返回一个新数组，新数组中只包含正数。</h3><p>自动检测<br>function filterPositive(arr){<br>}<br>var arr = [3, -1, 2, true]<br>filterPositive(arr)<br>console.log(filterPositive(arr)) //–&gt;[3, 2]</p>
+<h3 id="6-补全代码，实现数组按姓名、年纪、任意字段排序。"><a href="#6-补全代码，实现数组按姓名、年纪、任意字段排序。" class="headerlink" title="6. 补全代码，实现数组按姓名、年纪、任意字段排序。"></a>6. 补全代码，实现数组按姓名、年纪、任意字段排序。</h3><p>自动检测<br>var users = [<br>{ name: “John”, age: 20, company: “Baidu” },<br>{ name: “Pete”, age: 18, company: “Alibaba” },<br>{ name: “Ann”, age: 19, company: “Tecent” }<br>]<br>users.sort(byField(‘age’))<br>users.sort(byField(‘company’))</p>
+<h3 id="7-用-splice-函数分别实现-push、pop、shift、unshift-方法。"><a href="#7-用-splice-函数分别实现-push、pop、shift、unshift-方法。" class="headerlink" title="7. 用 splice 函数分别实现 push、pop、shift、unshift 方法。"></a>7. 用 splice 函数分别实现 push、pop、shift、unshift 方法。</h3><p>如:<br>自动检测<br>function push(arr, value){<br>arr.splice(arr.length, 0, value)<br>return arr.length<br>}<br>var arr = [3, 4, 5]<br>arr.push(10) // arr 变成[3,4,5,10]，返回 4</p>
+<h3 id="8，简单实现-async-await-中的-async-函数"><a href="#8，简单实现-async-await-中的-async-函数" class="headerlink" title="8，简单实现 async/await 中的 async 函数"></a>8，简单实现 async/await 中的 async 函数</h3><p>sync 函数的实现原理，就是将 Generator 函数和自动执行器，包装在一个函数里</p>
+<h3 id="9，简单实现-promise-函数"><a href="#9，简单实现-promise-函数" class="headerlink" title="9，简单实现 promise 函数"></a>9，简单实现 promise 函数</h3><p><a target="_blank" rel="noopener" href="https://juejin.im/post/59dd8b3851882578e04aa05e?from=singlemessage">https://juejin.im/post/59dd8b3851882578e04aa05e?from=singlemessage</a></p>
+<h3 id="10，高级扩展"><a href="#10，高级扩展" class="headerlink" title="10，高级扩展"></a>10，高级扩展</h3><p><a target="_blank" rel="noopener" href="https://juejin.im/post/5cb0315f518825215e61ec14#heading-3">https://juejin.im/post/5cb0315f518825215e61ec14#heading-3</a></p>
+</div><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="Donate" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">I'm so cute. Please give me money.</div><div id="qr" style="display:none;"><div style="display:inline-block"><a href="/images/zfb-pay.png"><img loading="lazy" src="/images/zfb-pay.png" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-alipay-line"></use></svg></span></div></div><div style="display:inline-block"><a href="/images/qq-pay.png"><img loading="lazy" src="/images/qq-pay.png" alt="QQ 支付" title="QQ 支付"></a><div><span style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></span></div></div><div style="display:inline-block"><a href="/images/wx-pay.png"><img loading="lazy" src="/images/wx-pay.png" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-pay-line"></use></svg></span></div></div><div><img loading="lazy" src="/images/wantthis.gif" alt="想要这个" title="伸手要钱"></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author: </strong>彩鹏</li><li class="post-copyright-link"><strong>Post link: </strong><a href="https://blog.gaocaipeng.com/2019/03/06/igvdz9/" title="Javascript - 汇总2">https://blog.gaocaipeng.com/2019/03/06/igvdz9/</a></li><li class="post-copyright-license"><strong>Copyright Notice: </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> unless otherwise stated.</li></ul></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2019/03/08/uh5xg0/" rel="prev" title="Javascript - 垃圾回收机制"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">Javascript - 垃圾回收机制</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2019/03/03/grb145/" rel="next" title="Javascript - 遍历方法"><span class="post-nav-text">Javascript - 遍历方法</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>要不要和我说些什么？</span><br></div><div id="tcomment"></div><script src="https://cdn.jsdelivr.net/npm/twikoo@latest/dist/twikoo.all.min.js"></script><script>const twikooConfig = {"enable":true,"envId":"twikoo-1gdwtrnc57e907a9"}
+twikooConfig.el = '#tcomment'
+twikoo.init(twikooConfig)</script></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2022 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> 彩鹏</span></div><div class="powered"><span>Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> v5.4.0</span><span class="footer-separator">|</span><span>Theme - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.6.1</span></div><div class="live_time"><span>本博客已萌萌哒地运行</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  setTimeout(blog_live_time, 1000);
+  const start = new Date('2020-04-26T00:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = " " + passDay + " 天 " + passHour + " 小时 " + passMinute + " 分 " + passSecond + " 秒";
+}
+blog_live_time();
+</script></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><a class="popup-trigger hty-icon-button icon-search" id="search" href="javascript:;" title="Search"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-search-line"></use></svg></span></a><script>window.addEventListener("DOMContentLoaded", () => {
+  // Handle and trigger popup window
+  document.querySelector(".popup-trigger").addEventListener("click", () => {
+    document.querySelector(".popup").classList.add("show");
+    setTimeout(() => {
+      document.querySelector(".search-input").focus();
+    }, 100);
+  });
+
+  // Monitor main search box
+  const onPopupClose = () => {
+    document.querySelector(".popup").classList.remove("show");
+  };
+
+  document.querySelector(".popup-btn-close").addEventListener("click", () => {
+    onPopupClose();
+  });
+
+  window.addEventListener("keyup", event => {
+    if (event.key === "Escape") {
+      onPopupClose();
+    }
+  });
+});
+</script><script src="/js/search/local-search.js" defer></script><div class="popup search-popup"><div class="search-header"><span class="popup-btn-close close-icon hty-icon-button"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close-line"></use></svg></span></div><div class="search-input-container"><input class="search-input" id="local-search-input" type="text" placeholder="Searching..." value=""><div><img style="margin:0em 0em 0.1em 0em" loading="lazy" src="/images/run.gif" alt="来搜索啊" width="200px" title="wait a moment"></div></div><div id="local-search-result"></div></div><script>const date = new Date();
+const today = (date.getMonth() + 1) + "-" + date.getDate()
+const mourn_days = ["4-4"]
+if (mourn_days.includes(today)) {
+  document.documentElement.style.filter = "grayscale(1)";
+}</script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"live2d-widget-model-haruto"},"display":{"superSample":2,"width":160,"height":240,"position":"right","hOffset":20,"vOffset":50},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
